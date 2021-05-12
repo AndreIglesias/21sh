@@ -26,6 +26,82 @@ https://orgmode.org/manual/Checkboxes.html
   - [X] computer system
 
 * REFERENCE
+** ALLOWED FUNCTIONS
+
+|------------+-------------------------------------+---------------------------------------------------|
+| *lib*      | *function*                          | *description*                                     |
+|------------+-------------------------------------+---------------------------------------------------|
+| stdio      | printf                              | formated output conversion                        |
+|------------+-------------------------------------+---------------------------------------------------|
+| stdlib     | malloc                              | Allocate dynamic memory                           |
+|            | free                                | Free dynamic memory                               |
+|            | exit                                | Causes normal process termination                 |
+|            |                                     |                                                   |
+|            | getenv                              | Get an environment variable                       |
+|------------+-------------------------------------+---------------------------------------------------|
+| unistd     | write                               | Write to fd                                       |
+|            | read                                | Read from fd                                      |
+|            | close                               | Close a fd                                        |
+|            | fork (sys/types)                    | Create a child process                            |
+|            |                                     |                                                   |
+|            | getcwd                              | Get current working directory                     |
+|            | chdir                               | Change working directory                          |
+|            | execve                              | Execute program                                   |
+|            |                                     |                                                   |
+|            | dup                                 | Duplicate a fd                                    |
+|            | dup2                                | *Same as above*                                   |
+|            | pipe                                | Create pipe                                       |
+|            |                                     |                                                   |
+|            | isatty                              | Test whether a fd refers to a terminal            |
+|            | ttyname                             | Return name of a terminal                         |
+|            | ttyslot                             | Find slot of current user's term in a file        |
+|------------+-------------------------------------+---------------------------------------------------|
+| *fcntl*    | open                                | Open and possibly create a file                   |
+| sys/types  |                                     |                                                   |
+| sys/stat   |                                     |                                                   |
+|------------+-------------------------------------+---------------------------------------------------|
+| *sys/wait* | wait                                | Wait for process to change state                  |
+| sys/types  | waitpid                             | *Same as above*                                   |
+|            | wait3 (sys/resource & *time*)       | *Same as above*, BSD style                        |
+|            | wait4 (sys/resource & *time*)       | *Same as above*, BSD style                        |
+|------------+-------------------------------------+---------------------------------------------------|
+| signal     | signal                              | ANSI C signal handling                            |
+|            | kill (sys/types)                    | Send signal to a process                          |
+|------------+-------------------------------------+---------------------------------------------------|
+| *sys/stat* | stat                                | Get file status                                   |
+| unistd     | lstat                               | *Same as above*                                   |
+| sys/types  | fstat                               | *Same as above*                                   |
+|------------+-------------------------------------+---------------------------------------------------|
+| dirent     | opendir (sys/types)                 | Open a directory                                  |
+|            | readdir                             | Read a directory                                  |
+|            | closedir (sys/types)                | Close a directory                                 |
+|------------+-------------------------------------+---------------------------------------------------|
+| string     | strerror                            | Return string describing error number             |
+|------------+-------------------------------------+---------------------------------------------------|
+| errno      | errno                               | Number of last error                              |
+|------------+-------------------------------------+---------------------------------------------------|
+| sys/ioctl  | ioctl                               | Control device                                    |
+|------------+-------------------------------------+---------------------------------------------------|
+| *terminos* | tcsetattr                           | Set params associated with the terminal from      |
+|            |                                     | the terminos structure *terminos_p*               |
+|            |                                     |                                                   |
+| unistd     | tcgetattr                           | Get params associated with the object             |
+|            |                                     | referred by fd and stores them in the terminos    |
+|            |                                     | structure *terminos_p*                            |
+|------------+-------------------------------------+---------------------------------------------------|
+| curses     | tgetent (loads entry for name)      | Direct *curses* interface to the terminfo         |
+| term       | tgetflag (get boolean entry for id) | capability database                               |
+|            | tgetnum (get num entry for id)      |                                                   |
+|            | tgetstr (get string entry for id)   |                                                   |
+|            |                                     |                                                   |
+|            | tgoto                               | Instantiates the params into the given capability |
+|            |                                     | The output is passed to tputs                     |
+|            |                                     |                                                   |
+|            | tputs                               | Padds info to the str and outputs it              |
+|            |                                     |                                                   |
+|------------+-------------------------------------+---------------------------------------------------|
+
+
 ** PATH
 locations of executable bin
 ** CMD
