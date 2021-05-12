@@ -11,20 +11,22 @@ https://orgmode.org/manual/Checkboxes.html
 - [ ] what is an argumen't coding byte?
   * The [[ACB]] allows the VM to know how to *load* the arguments of an instruction
 
-** TODO [#B] DEV [80%]
-- [X] structures [3/3]
-  - [X] Registry
-  - [X] Champion
-  - [X] Virtual Arena
-- [X] initialize
-- [X] validate && fill structures
-- [-] zero leaks
-  - [X] without interface
-  - [ ] with ncurses
-- [X] implement
-  - [X] circular memory
-  - [X] computer system
-
+** TODO [#B] DEV [0%]
+- [ ] Environment [0%]
+  - [ ] Input capture
+  - [ ] Keyboard capture
+  - [ ] Signal Reciever
+- [ ] Analysis [0%]
+  - [ ] Lexer
+  - [ ] Tokens
+  - [ ] Parser
+  - [ ] Abstract Syntax Tree (AST)
+  - [ ] Semantic Analyzer
+  - [ ] Annotated AST
+- [ ] Synthesis [0%]
+  - [ ]Syntax Tree
+- [ ] Evaluator [0%]
+  - [ ] Environment
 * REFERENCE
 ** ALLOWED FUNCTIONS
 
@@ -91,7 +93,7 @@ https://orgmode.org/manual/Checkboxes.html
 |------------+-------------------------------------+---------------------------------------------------|
 | curses     | tgetent (loads entry for name)      | Direct *curses* interface to the terminfo         |
 | term       | tgetflag (get boolean entry for id) | capability database                               |
-|            | tgetnum (get num entry for id)      |                                                   |
+| ~termcap   | tgetnum (get num entry for id)      |                                                   |
 |            | tgetstr (get string entry for id)   |                                                   |
 |            |                                     |                                                   |
 |            | tgoto                               | Instantiates the params into the given capability |
@@ -100,7 +102,6 @@ https://orgmode.org/manual/Checkboxes.html
 |            | tputs                               | Padds info to the str and outputs it              |
 |            |                                     |                                                   |
 |------------+-------------------------------------+---------------------------------------------------|
-
 
 ** PATH
 locations of executable bin
@@ -210,9 +211,6 @@ locations of executable bin
 | pipe          |                         |
 |---------------+-------------------------|
 
-** SYNTAX
-modular cmd ; < > >> |
-first process env variables and sup syntax, after computing atomic cmd process operations between them.
 ** SIGNALS
 
 |--------+-------------------------------+---------------+----------------+-----|
@@ -223,4 +221,11 @@ first process env variables and sup syntax, after computing atomic cmd process o
 | CTRL-\ | File Separator (*FS*)         |               | ^\             |  28 |
 |--------+-------------------------------+---------------+----------------+-----|
 
+** ANALYSIS
+*** Lexer/Scanner (Lexical Analizer)
+verify '' "" ; > < >> |
+*** Parser (Syntax Analyzer)
+first process env variables and sup syntax, after computing atomic cmd process operations between them.
+*** Semantic Analyzer
+resolves semantic information, check the 3 analysis nodes for errors
 * USE && EXAMPLES
