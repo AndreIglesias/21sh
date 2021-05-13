@@ -23,10 +23,10 @@ https://orgmode.org/manual/Checkboxes.html
   - [ ] Abstract Syntax Tree (AST)
   - [ ] Semantic Analyzer
   - [ ] Annotated AST
-- [ ] Synthesis [0%]
-  - [ ]Syntax Tree
 - [ ] Evaluator [0%]
-  - [ ] Environment
+  - [ ] Process AST to yield a result
+- [ ] Environment [0%]
+  - [ ] To keep track of the values of variables
 * REFERENCE
 ** ALLOWED FUNCTIONS
 
