@@ -8,8 +8,8 @@ https://orgmode.org/manual/Checkboxes.html
 ** TODO [#A] FAQs [50%]
 - [X] what Display Environment?
   * *Termcap* that takes as _param_ a player number to qualify it as /alive/
-- [ ] what is an argumen't coding byte?
-  * The [[ACB]] allows the VM to know how to *load* the arguments of an instruction
+- [ ] where is the terminal history?
+  *
 
 ** TODO [#B] DEV [0%]
 - [ ] Environment [0%]
@@ -25,6 +25,7 @@ https://orgmode.org/manual/Checkboxes.html
   - [ ] Annotated AST
 - [ ] Evaluator [0%]
   - [ ] Process AST to yield a result
+  - [ ] Locate binaries
 - [ ] Environment [0%]
   - [ ] To keep track of the values of variables
 * REFERENCE
@@ -213,13 +214,13 @@ locations of executable bin
 
 ** SIGNALS
 
-|--------+-------------------------------+---------------+----------------+-----|
-|        | *NAME*                        | *DESCRIPTION* | caret notation | Dec |
-|--------+-------------------------------+---------------+----------------+-----|
-| CTRL-C | End-of-Text character (*ETX*) |               | ^C             |  03 |
-| CTRL-D | End-of-Transmission (*EOT*)   |               | ^D             |  04 |
-| CTRL-\ | File Separator (*FS*)         |               | ^\             |  28 |
-|--------+-------------------------------+---------------+----------------+-----|
+|--------+-------------------------------+-----------------------------------------------+----------------+-----|
+|        | *NAME*                        | *DESCRIPTION*                                 | caret notation | num |
+|--------+-------------------------------+-----------------------------------------------+----------------+-----|
+| CTRL-C | End-of-Text character (*ETX*) | Interrupt the process (SIGINT)                | ^C             |  02 |
+| CTRL-D | End-of-Transmission (*EOT*)   |                                               | ^D             |  04 |
+| CTRL-\ | File Separator (*FS*)         | Terminate the process and dump core (SIGQUIT) | ^\             |  28 |
+|--------+-------------------------------+-----------------------------------------------+----------------+-----|
 
 ** ANALYSIS
 *** Lexer/Scanner (Lexical Analizer)
