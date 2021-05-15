@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 18:08:10 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/15 21:12:49 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/16 01:36:33 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@
 # define E0M "\e[0m"
 
 # define MINERR "\e[38;2;255;0;0m\e[5mminishell: "
-
-typedef unsigned char	t_uchar;
 
 typedef struct s_envar
 {

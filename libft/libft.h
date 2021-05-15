@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:29:37 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/15 20:50:18 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/16 01:36:37 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@
 # include <unistd.h>
 
 # define BUFFER_SIZE 32
+
+typedef unsigned char	t_uchar;
+
+typedef struct s_trie
+{
+	t_uchar				children;
+	t_uchar				end;
+	struct s_trie		**map;
+	char				*value;
+}	t_trie;
 
 typedef struct s_list
 {
@@ -78,4 +88,10 @@ int					ft_rgbtoi(unsigned char r, unsigned char g,
 double				ft_sqrt(double n);
 t_list				*ft_newlist(void *data, size_t size);
 t_listi				*ft_newlisti(int data, size_t size);
+
+int					get_value(t_trie *root, char *cmd);
+t_trie				**delete_value(t_trie **root, char *key, int len,
+						int depth);
+void				insert_trie(t_trie **root, char *cmd, int eq);
+
 #endif

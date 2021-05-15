@@ -12,6 +12,7 @@ https://orgmode.org/manual/Checkboxes.html
   *
 
 ** TODO [#B] DEV [0%]
+- [ ] Libft new norme
 - [ ] Environment [0%]
   - [ ] Input capture
   - [ ] Keyboard capture
