@@ -6,12 +6,10 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 19:52:40 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/16 01:37:05 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/16 15:19:22 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-#include <stdio.h>
 #include "libft.h"
 
 t_trie	*new_node()
@@ -22,7 +20,7 @@ t_trie	*new_node()
 		return (NULL);
 	if (!(new->map = (t_trie**)malloc(sizeof(t_trie*) * 127)))
 		return (NULL);
-	memset(new->map, 0, sizeof(t_trie*) * 127);
+	ft_memset(new->map, 0, sizeof(t_trie*) * 127);
 	new->end = 0;
 	new->children = 0;
 	new->value = NULL;
@@ -54,19 +52,19 @@ void	insert_trie(t_trie **root, char *cmd, int eq)
 		return ;
 	temp->end = 1;
 	if (cmd[eq + 1])
-		temp->value = strdup(&cmd[eq + 1]);
+		temp->value = ft_strdup(&cmd[eq + 1]);
 	else
-		temp->value = strdup("");
+		temp->value = ft_strdup("");
 }
 
-int		get_value(t_trie *root, char *cmd)
+char		*get_value(t_trie *root, char *cmd)
 {
 	t_trie	*temp;
 	int		i;
 	char	x;
 
 	if (root == NULL)
-		return (printf("%s: Not found\n", cmd));
+		return (NULL);
 	i = 0;
 	temp = root;
 	while (cmd[i])
@@ -74,12 +72,12 @@ int		get_value(t_trie *root, char *cmd)
 		x = cmd[i];
 		temp = temp->map[(int)x];
 		if (temp == NULL)
-			return (printf("%s: Not found\n", cmd));
+			return (NULL);
 		i++;
 	}
 	if (temp->end)
-		return (printf("%s\n", temp->value));
-	return (printf("%s: Not found\n", cmd));
+		return (temp->value);
+	return (NULL);
 }
 
 void	delete_node(t_trie **node)

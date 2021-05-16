@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:29:37 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/16 01:36:37 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/16 15:18:52 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ double				ft_sqrt(double n);
 t_list				*ft_newlist(void *data, size_t size);
 t_listi				*ft_newlisti(int data, size_t size);
 
-int					get_value(t_trie *root, char *cmd);
+char				*get_value(t_trie *root, char *cmd);
 t_trie				**delete_value(t_trie **root, char *key, int len,
 						int depth);
 void				insert_trie(t_trie **root, char *cmd, int eq);

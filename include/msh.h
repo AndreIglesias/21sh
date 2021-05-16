@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 18:08:10 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/16 01:36:33 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/16 15:37:31 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ typedef struct s_shell
 {
 	struct termios	old_term;
 	struct termios	new_term;
+	char			*history;
+	char			*line;
+	t_trie			*ev;
 	t_events		*events;
 }	t_shell;
 

@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 07:13:31 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/15 20:52:12 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/16 15:49:38 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,15 @@ environmental variable TERM.\n"E0M, 0));
 
 static void	init_termios(t_shell *sh)
 {
+	(void)sh;
+	/*
 	tcgetattr(0, &(sh->old_term));
 	tcgetattr(0, &(sh->new_term));
 	sh->new_term.c_lflag &= ~(ICANON);
 	sh->new_term.c_lflag &= ~(ECHO);
 	sh->new_term.c_cc[VMIN] = 1;
 	sh->new_term.c_cc[VTIME] = 0;
-	tcsetattr(0, 0, &(sh->new_term));
+	tcsetattr(0, 0, &(sh->new_term));*/
 }
 
 t_shell	*ft_shell(void)
@@ -96,5 +98,7 @@ t_shell	*ft_shell(void)
 	sh->events = init_termcap();
 	if (!sh->events)
 		return (NULL);
+	sh->ev = NULL;
+	sh->line = NULL;
 	return (sh);
 }
