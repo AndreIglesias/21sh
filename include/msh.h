@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 18:08:10 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/16 15:37:31 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/17 20:59:05 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_shell
 {
 	struct termios	old_term;
 	struct termios	new_term;
-	char			*history;
+	char			*history_path;
 	char			*line;
 	t_trie			*ev;
 	t_events		*events;
@@ -95,5 +95,7 @@ void		sigquit_shell(int sig);
 
 t_shell		*ft_shell(void);
 void		store_envar(t_shell *sh, char **ev);
+ssize_t		get_cmd(t_shell *sh);
+void		keys_event(char *buf);
 
 #endif
