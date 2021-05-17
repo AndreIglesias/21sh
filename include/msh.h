@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 18:08:10 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/17 20:18:24 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/17 21:10:59 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,11 @@ void		sigquit_shell(int sig);
 
 t_shell		*ft_shell(void);
 void		store_envar(t_shell *sh, char **ev);
+
+/*
+**	history
+*/
+
+void		load_history(t_shell *sh);
 
 #endif
