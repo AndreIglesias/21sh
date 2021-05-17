@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/14 17:46:45 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/17 20:39:59 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/05/17 21:30:25 by ciglesia          #+#    #+#             */
+/*   Updated: 2021/05/17 21:30:36 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int ac, char **av, char **ev)
 		//free everything
 	}
 	sh->history_path = ft_strjoin(home, "/.minishell_history");//alias history=cat..
-	//load history
+	load_history(sh);
 	ft_minishell(sh);
 	return (EXIT_SUCCESS);
 }

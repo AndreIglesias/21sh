@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/05/14 23:06:57 by ciglesia          #+#    #+#              #
-#    Updated: 2021/05/17 20:56:05 by ciglesia         ###   ########.fr        #
+#    Created: 2021/05/17 21:28:12 by ciglesia          #+#    #+#              #
+#    Updated: 2021/05/17 21:28:53 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -32,12 +32,14 @@ DIRSIG		=	$(DIRSRC)/signal_handler/
 DIRTRM		=	$(DIRSRC)/terminal/
 DIRANA		=	$(DIRSRC)/analysis/
 DIREVL		=	$(DIRSRC)/evaluator/
+DIRHIS		=	$(DIRSRC)/history/
 
 SRC			=	main.c
 SIGNAL		=	signals.c
 TERM		=	terminal.c environment.c getcmd.c keys_events.c
+HISTORY		=	load_history.c
 
-SRCS		=	$(SRC) $(SIGNAL) $(TERM)
+SRCS		=	$(SRC) $(SIGNAL) $(TERM) $(HISTORY)
 
 #***************** DEPS ******************#
 
@@ -88,6 +90,9 @@ E0M			=	 "\e[0m"
 				$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRTRM)/%.c
+				$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
+
+%.o		:		../$(DIRHIS)/%.c
 				$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 

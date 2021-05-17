@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/14 18:08:10 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/17 20:59:05 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/05/17 21:29:09 by ciglesia          #+#    #+#             */
+/*   Updated: 2021/05/17 21:29:31 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define BLACKB "\e[40m"
 # define GRAY "\e[90m"
 # define E0M "\e[0m"
+# define HRY_SIZE 100
 
 # define MINERR "\e[38;2;255;0;0m\e[5mminishell: "
 
@@ -72,11 +73,21 @@ typedef struct s_events
 	char	*ce;
 }	t_events;
 
+typedef struct s_history
+{
+	char				*cmd;
+	t_uchar				writen;
+	struct s_history	*back;
+	struct s_history	*next;
+}	t_history;
+
 typedef struct s_shell
 {
 	struct termios	old_term;
 	struct termios	new_term;
 	char			*history_path;
+	t_uchar			history_on;
+	t_history		*history;
 	char			*line;
 	t_trie			*ev;
 	t_events		*events;
@@ -97,5 +108,11 @@ t_shell		*ft_shell(void);
 void		store_envar(t_shell *sh, char **ev);
 ssize_t		get_cmd(t_shell *sh);
 void		keys_event(char *buf);
+
+/*
+**	history
+*/
+
+void		load_history(t_shell *sh);
 
 #endif
