@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 17:46:45 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/16 18:52:15 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/17 19:16:43 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,18 @@
 
 void	ft_minishell(t_shell *sh)
 {
-    //size_t len;
-    ssize_t read;
+    ssize_t ready;
+	char	buf[4];
 
-	//len = 0;
-	read = 0;
-    while (read != -1)
+	ready = 0;
+    while (ready != -1)
 	{
 		ft_putstr(tgetstr("vi", NULL));
-		write(1, "$ ", 2);
+		write(1, "\n$ ", 2);
 		ft_putstr(tgetstr("ve", NULL));
-		//read = getline(&sh->line, &len, stdin);
-		read = get_next_line(STDIN_FILENO, &sh->line);
-		sh->line[ft_strlen(sh->line) - 1] = 0;
+		//getcmd(sh);
+		ready = read(STDIN_FILENO, buf, 1);
+		ft_putnbr(buf[0]);
 	}
 	if (sh->line)
 		free(sh->line);

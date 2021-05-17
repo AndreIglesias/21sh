@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/14 23:06:57 by ciglesia          #+#    #+#              #
-#    Updated: 2021/05/15 21:13:20 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/05/17 18:41:41 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -35,7 +35,7 @@ DIREVL		=	$(DIRSRC)/evaluator/
 
 SRC			=	main.c
 SIGNAL		=	signals.c
-TERM		=	terminal.c environment.c
+TERM		=	terminal.c environment.c getcmd.c
 
 SRCS		=	$(SRC) $(SIGNAL) $(TERM)
 
