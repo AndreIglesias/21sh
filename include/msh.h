@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/17 21:29:09 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/17 21:29:31 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/05/17 21:36:19 by ciglesia          #+#    #+#             */
+/*   Updated: 2021/05/17 21:36:21 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,12 @@ t_shell		*ft_shell(void);
 void		store_envar(t_shell *sh, char **ev);
 ssize_t		get_cmd(t_shell *sh);
 void		keys_event(char *buf);
+
+/*
+**	history
+*/
+
+void		load_history(t_shell *sh);
 
 /*
 **	history
