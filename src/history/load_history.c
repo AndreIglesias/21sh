@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 19:30:05 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 19:01:28 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/18 19:21:14 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,14 @@ static t_history	*init_history(void)
 
 void	save_cmdline(t_history **hst, char *line)
 {
-	(*hst)->back = init_history();
-	(*hst)->back->cmd = line;
-	line = NULL;
-	(*hst)->back->next = (*hst);
-	(*hst) = (*hst)->back;
+	t_history	*tmp;
+
+	tmp = init_history();
+	tmp->cmd = line;
+	tmp->next = (*hst);
+	if (*hst)
+		(*hst)->back = tmp;
+	(*hst) = tmp;
 }
 
 static void	fill_history(int fd, t_history **hst)
@@ -45,6 +48,7 @@ static void	fill_history(int fd, t_history **hst)
 	while (get_next_line(fd, &line) > 0 && i--)
 	{
 		save_cmdline(hst, line);
+		line = NULL;
 		(*hst)->writen = 1;
 	}
 	if (line)
@@ -69,7 +73,7 @@ void	put_history_fd(t_history *hst, int fd)
 
 	tmp = hst;
 	size = HRY_SIZE;
-	while (size-- && tmp->next)
+	while (size-- && tmp && tmp->next)
 		tmp = tmp->next;
 	while (tmp)
 	{
