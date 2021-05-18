@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:19 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/17 21:36:21 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/18 14:17:32 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ void		sigquit_shell(int sig);
 t_shell		*ft_shell(void);
 void		store_envar(t_shell *sh, char **ev);
 ssize_t		get_cmd(t_shell *sh);
-void		keys_event(char *buf);
-
+void		keys_event(char *buf, t_shell *sh);
+void		ft_prompt(t_shell *sh);
 /*
 **	history
 */

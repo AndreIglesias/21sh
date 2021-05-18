@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 21:08:33 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/17 21:22:30 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/18 14:18:08 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	input_handler(t_shell *sh)
 	{
 		len = read(STDIN_FILENO, buf, 1);
 		buf[len] = 0;
-		keys_event(buf);
+		keys_event(buf, sh);
 		ft_putstr(buf);
+		//ft_putnbr(buf[0]);
 	}
 }
 
 ssize_t	get_cmd(t_shell *sh)
 {
-
 	input_handler(sh);
 	return (0);
 }

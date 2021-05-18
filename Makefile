@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/17 21:36:47 by ciglesia          #+#    #+#              #
-#    Updated: 2021/05/17 21:37:02 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/05/18 13:08:18 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -36,7 +36,7 @@ DIRHIS		=	$(DIRSRC)/history/
 
 SRC			=	main.c
 SIGNAL		=	signals.c
-TERM		=	terminal.c environment.c getcmd.c keys_events.c
+TERM		=	terminal.c environment.c getcmd.c keys_events.c prompt.c
 HISTORY		=	load_history.c
 
 SRCS		=	$(SRC) $(SIGNAL) $(TERM) $(HISTORY)
