@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:19 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 19:03:57 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/18 20:23:00 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ typedef struct s_shell
 	struct termios	old_term;
 	struct termios	new_term;
 	char			*history_path;
-	t_uchar			history_on;
 	t_history		*history;
 	char			*line;
 	t_trie			*ev;
@@ -116,5 +115,11 @@ void		ft_prompt(t_shell *sh);
 void		load_history(t_shell *sh);
 void		save_cmdline(t_history **hst, char *line);
 void		put_history_fd(t_history *hst, int fd);
+
+/*
+**	builtins
+*/
+
+void		exit_minish(t_shell *sh);
 
 #endif
