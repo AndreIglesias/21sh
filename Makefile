@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/17 21:36:47 by ciglesia          #+#    #+#              #
-#    Updated: 2021/05/18 20:00:51 by jiglesia         ###   ########.fr        #
+#    Updated: 2021/05/18 20:40:34 by jiglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -38,7 +38,7 @@ DIRBIN		=	$(DIRSRC)/builtin/
 SRC			=	main.c
 SIGNAL		=	signals.c
 TERM		=	terminal.c environment.c getcmd.c keys_events.c prompt.c
-HISTORY		=	load_history.c
+HISTORY		=	load_history.c free_history.c
 BUILTIN		=	exit_minish.c
 
 SRCS		=	$(SRC) $(SIGNAL) $(TERM) $(HISTORY) $(BUILTIN)
