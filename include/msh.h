@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:19 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 19:03:57 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/18 20:10:33 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,10 @@
 # define BLACKB "\e[40m"
 # define GRAY "\e[90m"
 # define E0M "\e[0m"
-# define HRY_SIZE 100
 
 # define MINERR "\e[38;2;255;0;0m\e[5mminishell: "
+# define HRY_SIZE 100
+# define BUF_LINE 10
 
 typedef struct s_envar
 {
@@ -86,7 +87,6 @@ typedef struct s_shell
 	struct termios	old_term;
 	struct termios	new_term;
 	char			*history_path;
-	t_uchar			history_on;
 	t_history		*history;
 	char			*line;
 	t_trie			*ev;
@@ -107,7 +107,7 @@ void		sigquit_shell(int sig);
 t_shell		*ft_shell(void);
 void		store_envar(t_shell *sh, char **ev);
 ssize_t		get_cmd(t_shell *sh);
-void		keys_event(char *buf, t_shell *sh);
+int			keys_event(char *buf, t_shell *sh);
 void		ft_prompt(t_shell *sh);
 /*
 **	history
