@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 14:20:59 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 14:11:37 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/19 12:37:31 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/19 12:38:24 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <stdio.h>
-# include "libft.h"
+#include "libft.h"
 
-int		get_next_line(int fd, char **line);
-size_t	ft_strlen(const char *s);
-char	*ft_realloc(char *bowl);
+char	*ft_strndup(const char *s, size_t size)
+{
+	size_t		i;
+	char		*dup;
 
-#endif
+	i = 0;
+	while (s[i])
+		i++;
+	dup = (char *)malloc(sizeof(char) * (i + 1));
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (s[i] && i < size)
+	{
+		dup[i] = (char)s[i];
+		i++;
+	}
+	dup[i] = 0;
+	return (dup);
+}
