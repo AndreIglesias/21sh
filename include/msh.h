@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:19 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 20:10:33 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/19 17:13:44 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_shell
 	char			*history_path;
 	t_history		*history;
 	char			*line;
+	size_t			line_cursor;
 	t_trie			*ev;
 	t_events		*events;
 }	t_shell;

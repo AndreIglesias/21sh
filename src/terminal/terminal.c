@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 07:13:31 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 20:10:00 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/19 16:57:58 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ t_shell	*ft_shell(void)
 		return (NULL);
 	sh->ev = NULL;
 	sh->line = NULL;
+	sh->line_cursor = 0;
 	sh->history = NULL;
 	sh->history_path = NULL;
 	return (sh);

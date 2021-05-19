@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 21:08:33 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 21:42:14 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/19 19:18:42 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,26 @@ void	input_handler(t_shell *sh)
 	char	buf[4];
 	ssize_t	len;
 
-	buf[0] = 0;
 	while (!ft_strchr(buf, '\n'))
 	{
+		buf[0] = 0;
 		len = read(STDIN_FILENO, buf, 3);
 		buf[len] = 0;
 		e = keys_event(buf, sh);
 		if (e)
 			ft_putstr(buf);
 		if (e == 1 && buf[0] != '\n')
-			sh->line = ft_strjoin(sh->line, buf);
-		/*
-		ft_putstr("[");
-		ft_putstr(sh->line);
-		ft_putstr("] len: ");
-		ft_putnbr(ft_strlen(sh->line));
-		ft_putstr("\n");
-		*/
+		{
+			sh->line = ft_strins(sh->line, buf, sh->line_cursor - 1);
+			if (sh->line && sh->line_cursor < ft_strlen(sh->line))
+			{
+				ft_putstr_fd(sh->events->sc, 0);
+				ft_putstr(&sh->line[sh->line_cursor]);
+				ft_putstr_fd(sh->events->rc, 0);
+			}
+		}
 	}
-	printf("line: [%s] len: %zu\n", sh->line, ft_strlen(sh->line));
+	printf("line: [%s] len: %zu pos:%ld\n", sh->line, ft_strlen(sh->line), sh->line_cursor);
 }
 
 ssize_t	get_cmd(t_shell *sh)
