@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 13:43:51 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 12:46:32 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/19 14:25:50 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ static char	*fill_pitcher(const int fd, char *pitcher)
 	return (pitcher);
 }
 
-int	fill_line(int carret, char *pitcher, char *tmp, char **line)
+int	fill_line(int carret, char **pitcher, char *tmp, char **line)
 {
-	*line = ft_strndup(pitcher, carret);
+	*line = ft_strndup(*pitcher, carret);
 	if (!(*line))
 		return (-1);
-	pitcher = ft_fstrdup(tmp + 1, pitcher);
+	(*pitcher) = ft_fstrdup(tmp + 1, (*pitcher));
 	return (1);
 }
 
@@ -97,7 +97,7 @@ int	get_next_line(const int fd, char **line)
 		return (-1);
 	tmp = ft_strchr(pitcher, '\n');
 	if (tmp != 0)
-		return (fill_line(tmp - pitcher, pitcher, tmp, line));
+		return (fill_line(tmp - pitcher, &pitcher, tmp, line));
 	else
 	{
 		*line = ft_strdup(pitcher);
