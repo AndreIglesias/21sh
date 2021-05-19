@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 22:43:29 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/15 20:57:11 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/19 23:25:28 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void	sigint_shell(int sig)
 }
 
 void	sigquit_shell(int sig)
+{
+	(void)sig;
+}
+
+void	sigtstp_shell(int sig)
 {
 	(void)sig;
 }
