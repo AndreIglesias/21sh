@@ -6,32 +6,11 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 13:43:51 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 21:46:28 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/19 12:46:32 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-static char	*ft_strndup(const char *s, size_t size)
-{
-	size_t		i;
-	char		*dup;
-
-	i = 0;
-	while (s[i])
-		i++;
-	dup = (char *)malloc(sizeof(char) * (i + 1));
-	if (!dup)
-		return (NULL);
-	i = 0;
-	while (s[i] && i < size)
-	{
-		dup[i] = (char)s[i];
-		i++;
-	}
-	dup[i] = 0;
-	return (dup);
-}
 
 static char	*ft_fstrjoin(char *s1, char *s2)
 {
@@ -41,7 +20,8 @@ static char	*ft_fstrjoin(char *s1, char *s2)
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
 	len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	if (!(str = ft_memalloc(len)))
+	str = ft_memalloc(len);
+	if (!str)
 		return (NULL);
 	if (str)
 	{
@@ -60,7 +40,8 @@ static char	*ft_fstrdup(const char *s1, char *pitcher)
 	i = 0;
 	while (s1[i])
 		i++;
-	if (!(str = (char*)malloc(sizeof(char) * (i + 1))))
+	str = (char *)malloc(sizeof(char) * (i + 1));
+	if (!str)
 		return (NULL);
 	str[i] = '\0';
 	i--;
@@ -84,7 +65,8 @@ static char	*fill_pitcher(const int fd, char *pitcher)
 		pitcher = ft_strdup("");
 	while (!(ft_strchr(pitcher, '\n')))
 	{
-		if ((last = read(fd, guacal, BUFFER_SIZE)) < 0)
+		last = read(fd, guacal, BUFFER_SIZE);
+		if (last < 0)
 			return (0);
 		guacal[last] = '\0';
 		pitcher = ft_fstrjoin(pitcher, guacal);
@@ -94,28 +76,37 @@ static char	*fill_pitcher(const int fd, char *pitcher)
 	return (pitcher);
 }
 
-int			get_next_line(const int fd, char **line)
+int	fill_line(int carret, char *pitcher, char *tmp, char **line)
+{
+	*line = ft_strndup(pitcher, carret);
+	if (!(*line))
+		return (-1);
+	pitcher = ft_fstrdup(tmp + 1, pitcher);
+	return (1);
+}
+
+int	get_next_line(const int fd, char **line)
 {
 	static char	*pitcher;
 	char		*tmp;
-	int			carret;
 
-	if (!line || !(pitcher = fill_pitcher(fd, pitcher)))
+	if (!line)
 		return (-1);
-	if ((tmp = ft_strchr(pitcher, '\n')) != 0)
-	{
-		carret = tmp - pitcher;
-		if (!(*line = ft_strndup(pitcher, carret)))
-			return (-1);
-		pitcher = ft_fstrdup(tmp + 1, pitcher);
-		return (1);
-	}
+	pitcher = fill_pitcher(fd, pitcher);
+	if (!pitcher)
+		return (-1);
+	tmp = ft_strchr(pitcher, '\n');
+	if (tmp != 0)
+		return (fill_line(tmp - pitcher, pitcher, tmp, line));
 	else
 	{
-		if (!(*line = ft_strdup(pitcher)))
+		*line = ft_strdup(pitcher);
+		if (!(*line))
 			return (-1);
 		free(pitcher);
 		pitcher = NULL;
-		return (*line[0] == '\0') ? 0 : 1;
+		if ((*line)[0] == '\0')
+			return (0);
+		return (1);
 	}
 }

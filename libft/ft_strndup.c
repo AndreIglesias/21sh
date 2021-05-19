@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memalloc.c                                      :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/18 21:42:21 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 12:26:58 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/19 12:37:31 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/19 12:38:24 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memalloc(size_t size)
+char	*ft_strndup(const char *s, size_t size)
 {
-	void	*tmp;
+	size_t		i;
+	char		*dup;
 
-	tmp = malloc(sizeof(tmp) * (size));
-	if (!tmp)
+	i = 0;
+	while (s[i])
+		i++;
+	dup = (char *)malloc(sizeof(char) * (i + 1));
+	if (!dup)
 		return (NULL);
-	ft_memset(tmp, 0, size);
-	return (tmp);
+	i = 0;
+	while (s[i] && i < size)
+	{
+		dup[i] = (char)s[i];
+		i++;
+	}
+	dup[i] = 0;
+	return (dup);
 }
