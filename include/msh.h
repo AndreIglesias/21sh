@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:19 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 20:40:02 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/19 16:29:14 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void		free_history(t_history *hst);
 **	builtins
 */
 
-void		exit_minish(t_shell *sh);
+void		sh_exit(t_shell *sh);
+int			sh_pwd(void);
 
 #endif
