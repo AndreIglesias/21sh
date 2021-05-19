@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 21:43:10 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 21:43:45 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/19 12:27:22 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strcat(char *restrict s1, const char *restrict s2)
 {
-	unsigned int i;
-	unsigned int j;
+	unsigned int	i;
+	unsigned int	j;
 
 	i = 0;
 	while (s1[i])

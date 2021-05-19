@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:29:37 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 21:45:45 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/19 12:40:40 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ t_trie				**delete_value(t_trie **root, char *key, int len,
 void				insert_trie(t_trie **root, char *cmd, int eq);
 void				*ft_memalloc(size_t size);
 char				*ft_strcat(char *restrict s1, const char *restrict s2);
+char				*ft_strndup(const char *str, size_t size);
 
 #endif
