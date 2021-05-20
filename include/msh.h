@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 14:04:32 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/20 18:49:49 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 # define HRY_SIZE 100
 # define BUF_LINE 10
 
-typedef struct stat t_stat;
+typedef struct stat	t_stat;
 
 typedef struct s_envar
 {
@@ -98,6 +98,8 @@ typedef struct s_shell
 	t_events		*events;
 }	t_shell;
 
+extern t_shell		*g_sh;
+
 /*
 **  signal_handler
 */
@@ -111,24 +113,25 @@ void		sigtstp_shell(int sig);
 */
 
 t_shell		*ft_shell(void);
-void		store_envar(t_shell *sh, char **ev);
-ssize_t		get_cmd(t_shell *sh);
-int			keys_event(char *buf, t_shell *sh);
-void		ft_prompt(t_shell *sh);
+void		store_envar(char **ev);
+ssize_t		get_cmd(void);
+int			keys_event(char *buf);
+void		ft_prompt(void);
 /*
 **	history
 */
 
-void		load_history(t_shell *sh);
+void		load_history(void);
 void		save_cmdline(t_history **hst, char *line);
 void		put_history_fd(t_history *hst, int fd);
 void		free_history(t_history *hst);
+int			browse_history(char *buf);
 
 /*
 **	builtins
 */
 
-void		sh_exit(t_shell *sh);
+void		sh_exit(void);
 int			sh_pwd(void);
 int			sh_echo(char *value, t_uchar flag);
 void		sh_export(t_trie *ev, char *key, char *value);

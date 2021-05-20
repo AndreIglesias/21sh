@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/05/17 21:36:47 by ciglesia          #+#    #+#              #
-#    Updated: 2021/05/20 13:16:20 by jiglesia         ###   ########.fr        #
+#    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
+#    Updated: 2021/05/20 17:00:56 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -39,7 +39,7 @@ DIRBIN		=	$(DIRSRC)/builtin/
 SRC			=	main.c
 SIGNAL		=	signals.c
 TERM		=	terminal.c environment.c getcmd.c keys_events.c prompt.c
-HISTORY		=	load_history.c free_history.c
+HISTORY		=	load_history.c free_history.c browse_history.c
 BUILTIN		=	sh_exit.c sh_pwd.c sh_echo.c sh_export.c sh_cd.c
 EVAL		=	sh_which.c
 

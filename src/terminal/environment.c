@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 21:07:58 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/16 15:33:00 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/20 17:40:13 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	assignation(char *cmd)
 	return (0);
 }
 
-void	store_envar(t_shell *sh, char **ev)
+void	store_envar(char **ev)
 {
 	int	i;
 	int	assign;
@@ -35,7 +35,7 @@ void	store_envar(t_shell *sh, char **ev)
 	while (ev[i])
 	{
 		assign = assignation(ev[i]);
-		insert_trie(&sh->ev, ev[i], assign);
+		insert_trie(&g_sh->ev, ev[i], assign);
 		i++;
 	}
 }

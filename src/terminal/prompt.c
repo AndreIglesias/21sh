@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 12:54:30 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 13:59:36 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/20 17:43:55 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static char	*remove_home(char *dir)
 	return (&dir[i]);
 }
 
-void	ft_prompt(t_shell *sh)
+void	ft_prompt(void)
 {
 	char	*user;
 	char	*pwd;
 
-	user = get_value(sh->ev, "USER");
-	pwd = get_value(sh->ev, "PWD");
+	user = get_value(g_sh->ev, "USER");
+	pwd = get_value(g_sh->ev, "PWD");
 	if (user)
 	{
 		ft_putstr(GREEN""BOLD);
