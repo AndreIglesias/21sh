@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   free_history.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 14:20:59 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 14:11:37 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/18 20:38:23 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/18 20:39:16 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <stdio.h>
-# include "libft.h"
+#include "msh.h"
 
-int		get_next_line(int fd, char **line);
-size_t	ft_strlen(const char *s);
-char	*ft_realloc(char *bowl);
-
-#endif
+void	free_history(t_history *hst)
+{
+	while (hst)
+	{
+		if (!hst->next)
+		{
+			free(hst->cmd);
+			free(hst);
+			hst = NULL;
+			break ;
+		}
+		hst = hst->next;
+		free(hst->back->cmd);
+		free(hst->back);
+		hst->back = NULL;
+	}
+}

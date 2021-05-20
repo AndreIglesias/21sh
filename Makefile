@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/17 21:36:47 by ciglesia          #+#    #+#              #
-#    Updated: 2021/05/18 13:08:18 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/05/18 20:40:34 by jiglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -33,13 +33,15 @@ DIRTRM		=	$(DIRSRC)/terminal/
 DIRANA		=	$(DIRSRC)/analysis/
 DIREVL		=	$(DIRSRC)/evaluator/
 DIRHIS		=	$(DIRSRC)/history/
+DIRBIN		=	$(DIRSRC)/builtin/
 
 SRC			=	main.c
 SIGNAL		=	signals.c
 TERM		=	terminal.c environment.c getcmd.c keys_events.c prompt.c
-HISTORY		=	load_history.c
+HISTORY		=	load_history.c free_history.c
+BUILTIN		=	exit_minish.c
 
-SRCS		=	$(SRC) $(SIGNAL) $(TERM) $(HISTORY)
+SRCS		=	$(SRC) $(SIGNAL) $(TERM) $(HISTORY) $(BUILTIN)
 
 #***************** DEPS ******************#
 
@@ -93,6 +95,9 @@ E0M			=	 "\e[0m"
 				$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRHIS)/%.c
+				$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
+
+%.o		:		../$(DIRBIN)/%.c
 				$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 

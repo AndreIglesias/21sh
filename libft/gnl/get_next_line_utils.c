@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:56:23 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/06 20:23:07 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/19 14:11:01 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,4 @@ char	*ft_realloc(char *bowl)
 	if (dup)
 		free(dup);
 	return (bowl);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	int			i;
-	char		a;
-
-	i = 0;
-	a = (char)c;
-	while (s[i])
-	{
-		if (s[i++] == a)
-			return ((char *)s + --i);
-	}
-	if (a == '\0')
-		return ((char *)s + i);
-	return (NULL);
 }

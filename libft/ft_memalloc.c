@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 14:20:59 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 14:11:37 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/18 21:42:21 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/19 12:26:58 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <stdio.h>
-# include "libft.h"
+#include "libft.h"
 
-int		get_next_line(int fd, char **line);
-size_t	ft_strlen(const char *s);
-char	*ft_realloc(char *bowl);
+void	*ft_memalloc(size_t size)
+{
+	void	*tmp;
 
-#endif
+	tmp = malloc(sizeof(tmp) * (size));
+	if (!tmp)
+		return (NULL);
+	ft_memset(tmp, 0, size);
+	return (tmp);
+}

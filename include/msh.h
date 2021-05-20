@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/17 21:36:19 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 00:46:32 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
+/*   Updated: 2021/05/20 14:04:32 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,12 @@ void		ft_prompt(t_shell *sh);
 void		load_history(t_shell *sh);
 void		save_cmdline(t_history **hst, char *line);
 void		put_history_fd(t_history *hst, int fd);
+void		free_history(t_history *hst);
+
+/*
+**	builtins
+*/
+
+void		exit_minish(t_shell *sh);
 
 #endif

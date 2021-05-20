@@ -6,21 +6,23 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 19:52:40 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/16 15:19:22 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/19 13:02:17 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_trie	*new_node()
+t_trie	*new_node(void)
 {
 	t_trie	*new;
 
-	if (!(new = (t_trie*)malloc(sizeof(t_trie))))
+	new = (t_trie *)malloc(sizeof(t_trie));
+	if (!new)
 		return (NULL);
-	if (!(new->map = (t_trie**)malloc(sizeof(t_trie*) * 127)))
+	new->map = (t_trie **)malloc(sizeof(t_trie *) * 127);
+	if (!new->map)
 		return (NULL);
-	ft_memset(new->map, 0, sizeof(t_trie*) * 127);
+	ft_memset(new->map, 0, sizeof(t_trie *) * 127);
 	new->end = 0;
 	new->children = 0;
 	new->value = NULL;
@@ -57,7 +59,7 @@ void	insert_trie(t_trie **root, char *cmd, int eq)
 		temp->value = ft_strdup("");
 }
 
-char		*get_value(t_trie *root, char *cmd)
+char	*get_value(t_trie *root, char *cmd)
 {
 	t_trie	*temp;
 	int		i;
@@ -113,7 +115,7 @@ t_trie	**delete_value(t_trie **root, char *key, int len, int depth)
 		return (root);
 	}
 	if ((*root)->map[(int)key[depth]] && ((*root)->map[(int)key[depth]] =
-		 *delete_value(&(*root)->map[(int)key[depth]], key, len, depth + 1)) == NULL)
+			*delete_value(&(*root)->map[(int)key[depth]], key, len, depth + 1)) == NULL)
 		(*root)->children--;
 	if ((*root)->children == 0 && (*root)->end == 0)
 		delete_node(root);

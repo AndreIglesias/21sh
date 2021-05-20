@@ -6,116 +6,107 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 13:43:51 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/16 16:12:04 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/19 14:25:50 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*fill_bowl(char *bowl, char *spoon)
+static char	*ft_fstrjoin(char *s1, char *s2)
 {
-	char	*dup;
-	int		i;
-	int		j;
+	char	*str;
+	int		len;
 
-	i = 0;
-	dup = bowl;
-	bowl = (char *)malloc(ft_strlen(dup) + BUFFER_SIZE + 1);
-	if (!bowl)
-		return (ft_strdup(""));
-	while (dup && dup[i])
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2) + 1;
+	str = ft_memalloc(len);
+	if (!str)
+		return (NULL);
+	if (str)
 	{
-		bowl[i] = dup[i];
-		i++;
+		str = ft_strcat(str, s1);
+		str = ft_strcat(str, s2);
 	}
-	bowl[i] = 0;
-	if (dup)
-		free(dup);
-	j = 0;
-	while (spoon[j])
-	{
-		bowl[i + j] = spoon[j];
-		j++;
-	}
-	return (bowl);
+	free(s1);
+	return (str);
 }
 
-int	check_jump(char *bowl)
+static char	*ft_fstrdup(const char *s1, char *pitcher)
 {
-	int	i;
+	char	*str;
+	int		i;
 
 	i = 0;
-	while (bowl[i])
-		if (bowl[i++] == '\n')
+	while (s1[i])
+		i++;
+	str = (char *)malloc(sizeof(char) * (i + 1));
+	if (!str)
+		return (NULL);
+	str[i] = '\0';
+	i--;
+	while (i >= 0)
+	{
+		str[i] = s1[i];
+		i--;
+	}
+	free(pitcher);
+	return (str);
+}
+
+static char	*fill_pitcher(const int fd, char *pitcher)
+{
+	char	guacal[BUFFER_SIZE + 1];
+	int		last;
+
+	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, guacal, 0))
+		return (0);
+	if (pitcher == NULL)
+		pitcher = ft_strdup("");
+	while (!(ft_strchr(pitcher, '\n')))
+	{
+		last = read(fd, guacal, BUFFER_SIZE);
+		if (last < 0)
 			return (0);
+		guacal[last] = '\0';
+		pitcher = ft_fstrjoin(pitcher, guacal);
+		if (!last || !pitcher[0])
+			break ;
+	}
+	return (pitcher);
+}
+
+int	fill_line(int carret, char **pitcher, char *tmp, char **line)
+{
+	*line = ft_strndup(*pitcher, carret);
+	if (!(*line))
+		return (-1);
+	(*pitcher) = ft_fstrdup(tmp + 1, (*pitcher));
 	return (1);
 }
 
-void	scrap_bowl(char **bowl, int i)
+int	get_next_line(const int fd, char **line)
 {
-	char *dup;
+	static char	*pitcher;
+	char		*tmp;
 
-	if ((*bowl)[i] && (*bowl)[i + 1])
-	{
-		dup = ft_strdup(&(*bowl)[i + 1]);
-		free(*bowl);
-		(*bowl) = dup;
-	}
+	if (!line)
+		return (-1);
+	pitcher = fill_pitcher(fd, pitcher);
+	if (!pitcher)
+		return (-1);
+	tmp = ft_strchr(pitcher, '\n');
+	if (tmp != 0)
+		return (fill_line(tmp - pitcher, &pitcher, tmp, line));
 	else
 	{
-		free(*bowl);
-		(*bowl) = ft_strdup("");
-	}
-}
-
-int	fill_line(char **bowl, char **line)
-{
-	int	i;
-
-	i = 0;
-	(*line) = (char *)malloc(sizeof(char) * (ft_strlen(*bowl) + 1));
-	if (!(*line))
-		return (-1);
-	(*line)[i] = 0;
-	while (*bowl && (*bowl)[i] && (*bowl)[i] != '\n')
-	{
-		(*line)[i] = (*bowl)[i];
-		(*line)[++i] = 0;
-	}
-	if (*bowl && (*bowl)[i])
-	{
-		scrap_bowl(bowl, i);
+		*line = ft_strdup(pitcher);
+		if (!(*line))
+			return (-1);
+		free(pitcher);
+		pitcher = NULL;
+		if ((*line)[0] == '\0')
+			return (0);
 		return (1);
 	}
-	else
-	{
-		if (*bowl)
-			free(*bowl);
-		(*bowl) = NULL;
-		return (0);
-	}
-}
-
-int	get_next_line(int fd, char **line)
-{
-	char			spoon[BUFFER_SIZE + 1];
-	static char		*bowl = NULL;
-	size_t			j;
-
-	if (!bowl)
-		bowl = ft_strdup("");
-	if (fd >= 0 && line && !(read(fd, spoon, 0)))
-	{
-		j = read(fd, spoon, BUFFER_SIZE);
-		while (j > 0)
-		{
-			spoon[j] = 0;
-			bowl = fill_bowl(bowl, spoon);
-			if (!check_jump(bowl))
-				break ;
-			j = read(fd, spoon, BUFFER_SIZE);
-		}
-		return (fill_line(&bowl, line));
-	}
-	return (-1);
 }
