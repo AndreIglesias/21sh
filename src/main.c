@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 17:44:18 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/20 18:48:50 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_minishell(void)
 		ft_prompt();
 		ft_putstr(tgetstr("ve", NULL));
 		ready = get_cmd();
+		ft_putstr(tgetstr("vi", NULL));
 		free(g_sh->line);
 	}
 	if (g_sh->line)
@@ -52,9 +53,9 @@ int	main(int ac, char **av, char **ev)
 	if (!home)
 	{
 		ft_puterror(MINERR"HOME environmental variable not set\n"E0M, (void *)1);
-		//free everything
+		sh_exit();
 	}
-	g_sh->history_path = ft_strjoin(home, "/.minishell_history");//alias history
+	g_sh->history_path = ft_strjoin(home, "/.minishell_history");
 	load_history();
 	ft_minishell();
 	return (EXIT_SUCCESS);
