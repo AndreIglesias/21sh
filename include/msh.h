@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 14:04:32 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/20 16:49:53 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void		load_history(t_shell *sh);
 void		save_cmdline(t_history **hst, char *line);
 void		put_history_fd(t_history *hst, int fd);
 void		free_history(t_history *hst);
-
+int			browse_history(t_shell *sh,char *buf);
 /*
 **	builtins
 */

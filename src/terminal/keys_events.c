@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 00:56:25 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/20 16:49:37 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,42 +38,6 @@ static void	del_ins(t_shell *sh)
 		sh->line = ft_strjoin(sh->line, &sh->line[sh->line_cursor]);
 		ft_putstr_fd(&sh->line[sh->line_cursor - 1], 0);
 	}
-}
-
-static void	change_history(t_shell *sh)
-{
-	int	i;
-
-	i = sh->line_cursor;
-	while (i-- > 0)
-		ft_putstr_fd(sh->events->lf, 0);
-	ft_putstr_fd(sh->events->ce, 0);
-}
-
-int	browse_history(t_shell *sh,char *buf)
-{
-
-
-	if (!ft_strcmp(sh->events->up, buf) && sh->history_cursor->next)
-	{
-		change_history(sh);
-		free(sh->line);
-		sh->history_cursor = sh->history_cursor->next;
-		sh->line = ft_strdup(sh->history_cursor->cmd);
-		sh->line_cursor = ft_strlen(sh->line);
-		ft_putstr(sh->line);
-		return (0);
-	}
-	else if (!ft_strcmp(sh->events->dw, buf) && sh->history_cursor->back)
-	{
-		change_history(sh);
-		free(sh->line);
-		sh->history_cursor = sh->history_cursor->back;
-		sh->line = ft_strdup(sh->history_cursor->cmd);
-		sh->line_cursor = ft_strlen(sh->line);
-		ft_putstr(sh->line);
-	}
-	return (0);
 }
 
 /*

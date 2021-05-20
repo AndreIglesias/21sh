@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 23:31:09 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/20 16:57:52 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_minishell(t_shell *sh)
 	{
 		sh->history_cursor = sh->history;
 		sh->line = NULL;
+		sh->line_tmp = NULL;
 		sh->line_cursor = 0;
 		ft_putstr(tgetstr("vi", NULL));
 		ft_prompt(sh);
