@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 14:56:23 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 14:11:01 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/19 19:36:41 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/19 20:01:21 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
-char	*ft_realloc(char *bowl)
+char	*ft_realloc(char *bowl, size_t size)
 {
 	char		*dup;
 	int			i;
@@ -21,7 +21,7 @@ char	*ft_realloc(char *bowl)
 	dup = ft_strdup(bowl);
 	if (bowl)
 		free(bowl);
-	bowl = (char *)malloc(sizeof(char) * (ft_strlen(dup) + BUFFER_SIZE + 1));
+	bowl = (char *)malloc(sizeof(char) * (ft_strlen(dup) + size + 1));
 	if (!bowl)
 		return (NULL);
 	while (dup[++i])

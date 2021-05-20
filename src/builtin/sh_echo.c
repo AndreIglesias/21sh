@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_pwd.c                                           :+:      :+:    :+:   */
+/*   sh_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/19 16:16:39 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 00:58:26 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/19 23:36:58 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/19 23:42:19 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-int	sh_pwd(void)
+int	sh_echo(char *value, t_uchar flag)
 {
-	char	*tmp;
-
-	tmp = getcwd(NULL, 0);
-	if (!tmp)
-	{
-		ft_putstr_fd(BOLD"minishell: pwd: ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n"E0M, 2);
-		return (0);
-	}
-	printf("%s\n", tmp);
-	free(tmp);
-	return (1);
+	ft_putstr(value);
+	if (flag)
+		return (ft_strlen(value));
+	write(1, "\n", 1);
+	return (ft_strlen(value) + 1);
 }

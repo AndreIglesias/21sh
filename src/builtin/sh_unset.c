@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_pwd.c                                           :+:      :+:    :+:   */
+/*   sh_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/19 16:16:39 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 00:58:26 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/19 23:46:17 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/20 12:06:12 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-int	sh_pwd(void)
+void	sh_unset(t_trie *ev, char *key)
 {
-	char	*tmp;
+	t_trie	*tmp;
 
-	tmp = getcwd(NULL, 0);
+	tmp = delete_value(ev, key, ft_strlen(key), 0);
 	if (!tmp)
 	{
-		ft_putstr_fd(BOLD"minishell: pwd: ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n"E0M, 2);
-		return (0);
+		ft_putstr_fd(BOLD"minishell: unset: ", 2);
+		ft_putstr_fd("invalid parameter name"E0M, 2);
+		ft_putchar_fd('\n', 2);
 	}
-	printf("%s\n", tmp);
-	free(tmp);
-	return (1);
 }
