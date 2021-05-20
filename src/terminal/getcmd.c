@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 21:08:33 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 18:49:04 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/20 23:57:55 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,17 @@ void	input_handler(void)
 			}
 		}
 	}
-	printf(GREEN"line: [%s] len: %zu pos:%ld\n"E0M, g_sh->line, ft_strlen(g_sh->line), g_sh->line_cursor);
 }
 
 ssize_t	get_cmd(void)
 {
 	input_handler();
+	if (g_sh->line && !g_sh->line[0])
+	{
+		free(g_sh->line);
+		g_sh->line = NULL;
+	}
+	if (g_sh->line)
+		save_cmdline(&g_sh->history, ft_strdup(g_sh->line));
 	return (0);
 }

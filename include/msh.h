@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 18:49:49 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/21 01:11:43 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,27 @@
 
 typedef struct stat	t_stat;
 
+/*
+** type (1, cmd) (2, op)
+** op (1, <) (2, >) (3, >>) (4, |)
+*/
+
+typedef struct s_ast
+{
+	struct s_ast	*next;
+	struct s_ast	*back;
+	t_uchar			type;
+	struct s_ast	*left;
+	struct s_ast	*right;
+
+	char			*bin;
+	char			**av;
+	int				ac;
+
+	t_uchar			op;
+
+}	t_ast;
+
 typedef struct s_envar
 {
 	char			*key;
@@ -96,6 +117,7 @@ typedef struct s_shell
 	size_t			line_cursor;
 	t_trie			*ev;
 	t_events		*events;
+	t_ast			**cmds;
 }	t_shell;
 
 extern t_shell		*g_sh;
@@ -136,6 +158,14 @@ int			sh_pwd(void);
 int			sh_echo(char *value, t_uchar flag);
 void		sh_export(t_trie *ev, char *key, char *value);
 int			sh_cd(t_trie *ev, char *path);
+
+/*
+**	analizer
+*/
+
+void		ft_analizer(void);
+int			ft_lexer(void);
+t_ast		**new_astvec(int size);
 
 /*
 **	evaluator
