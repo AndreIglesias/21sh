@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   sh_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 14:56:23 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 14:11:01 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/20 12:23:41 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/20 14:22:54 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "msh.h"
 
-char	*ft_realloc(char *bowl)
+void	sh_export(t_trie *ev, char *key, char *value)
 {
-	char		*dup;
-	int			i;
+	char	*check;
+	char	*tmp;
+	char	*tmp2;
 
-	i = -1;
-	dup = ft_strdup(bowl);
-	if (bowl)
-		free(bowl);
-	bowl = (char *)malloc(sizeof(char) * (ft_strlen(dup) + BUFFER_SIZE + 1));
-	if (!bowl)
-		return (NULL);
-	while (dup[++i])
-		bowl[i] = dup[i];
-	bowl[i] = 0;
-	if (dup)
-		free(dup);
-	return (bowl);
+	if (key)
+	{
+		check = get_value(ev, key);
+		if (check)
+			delete_value(&ev, key, ft_strlen(key), 0);
+		tmp = ft_strjoin(key, "=");
+		tmp2 = ft_strjoin(tmp, value);
+		free(tmp);
+		insert_trie(&ev, tmp2, ft_strlen(key));
+		free(tmp2);
+	}
+	//else
+		//sh_env(ev);
 }

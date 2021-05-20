@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   sh_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 14:20:59 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 21:05:53 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/19 16:14:52 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/19 16:15:26 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <stdio.h>
-# include "libft.h"
+#include "msh.h"
 
-int		get_next_line(int fd, char **line);
-size_t	ft_strlen(const char *s);
-
-#endif
+void	sh_exit(t_shell *sh)
+{
+	free_history(sh->history);
+	free(sh->history_path);
+	free(sh->events);
+	exit(EXIT_SUCCESS);
+}

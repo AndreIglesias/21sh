@@ -49,10 +49,12 @@ static void	fill_history(int fd, t_history **hst)
 	{
 		save_cmdline(hst, line);
 		line = NULL;
-		(*hst)->writen = 1;
 	}
 	if (line)
-		free(line);
+	{
+		save_cmdline(hst, line);
+		line = NULL;
+	}
 	get_next_line(-1, &line);
 	close(fd);
 }

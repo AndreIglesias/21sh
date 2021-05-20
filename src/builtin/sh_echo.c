@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   sh_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 14:20:59 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 21:05:53 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/19 23:36:58 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/19 23:42:19 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <stdio.h>
-# include "libft.h"
+#include "msh.h"
 
-int		get_next_line(int fd, char **line);
-size_t	ft_strlen(const char *s);
-
-#endif
+int	sh_echo(char *value, t_uchar flag)
+{
+	ft_putstr(value);
+	if (flag)
+		return (ft_strlen(value));
+	write(1, "\n", 1);
+	return (ft_strlen(value) + 1);
+}
