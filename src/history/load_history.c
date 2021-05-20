@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 19:30:05 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 17:17:36 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/20 17:42:05 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ static void	fill_history(int fd, t_history **hst)
 	close(fd);
 }
 
-void	load_history(t_shell *sh)
+void	load_history(void)
 {
 	int	fd;
 
-	fd = open(sh->history_path, O_RDONLY);
+	fd = open(g_sh->history_path, O_RDONLY);
 	if (fd > 0)
-		fill_history(fd, &sh->history);
+		fill_history(fd, &g_sh->history);
 }
 
 void	put_history_fd(t_history *hst, int fd)

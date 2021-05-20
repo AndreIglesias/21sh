@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 21:08:33 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 14:20:02 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/20 17:46:00 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **	dw 27 91 66
 */
 
-void	input_handler(t_shell *sh)
+void	input_handler(void)
 {
 	int		e;
 	char	buf[4];
@@ -29,25 +29,25 @@ void	input_handler(t_shell *sh)
 		buf[0] = 0;
 		len = read(STDIN_FILENO, buf, 3);
 		buf[len] = 0;
-		e = keys_event(buf, sh);
+		e = keys_event(buf);
 		if (e)
 			ft_putstr(buf);
 		if (e == 1 && buf[0] != '\n')
 		{
-			sh->line = ft_strins(sh->line, buf, sh->line_cursor - 1);
-			if (sh->line && sh->line_cursor < ft_strlen(sh->line))
+			g_sh->line = ft_strins(g_sh->line, buf, g_sh->line_cursor - 1);
+			if (g_sh->line && g_sh->line_cursor < ft_strlen(g_sh->line))
 			{
-				ft_putstr_fd(sh->events->sc, 0);
-				ft_putstr(&sh->line[sh->line_cursor]);
-				ft_putstr_fd(sh->events->rc, 0);
+				ft_putstr_fd(g_sh->events->sc, 0);
+				ft_putstr(&g_sh->line[g_sh->line_cursor]);
+				ft_putstr_fd(g_sh->events->rc, 0);
 			}
 		}
 	}
-	printf(GREEN"line: [%s] len: %zu pos:%ld\n"E0M, sh->line, ft_strlen(sh->line), sh->line_cursor);
+	printf(GREEN"line: [%s] len: %zu pos:%ld\n"E0M, g_sh->line, ft_strlen(g_sh->line), g_sh->line_cursor);
 }
 
-ssize_t	get_cmd(t_shell *sh)
+ssize_t	get_cmd(void)
 {
-	input_handler(sh);
+	input_handler();
 	return (0);
 }
