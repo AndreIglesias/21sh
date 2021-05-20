@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/17 21:36:19 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 13:14:58 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
+/*   Updated: 2021/05/20 14:04:32 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,9 @@ typedef struct s_shell
 	struct termios	new_term;
 	char			*history_path;
 	t_history		*history;
+	t_history		*history_cursor;
 	char			*line;
+	char			*line_tmp;
 	size_t			line_cursor;
 	t_trie			*ev;
 	t_events		*events;
@@ -102,6 +104,7 @@ typedef struct s_shell
 
 void		sigint_shell(int sig);
 void		sigquit_shell(int sig);
+void		sigtstp_shell(int sig);
 
 /*
 **	terminal

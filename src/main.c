@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 16:58:21 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/19 23:31:09 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	ft_minishell(t_shell *sh)
 	ready = 0;
 	while (ready != -1)
 	{
+		sh->history_cursor = sh->history;
 		sh->line = NULL;
 		sh->line_cursor = 0;
 		ft_putstr(tgetstr("vi", NULL));
@@ -40,6 +41,7 @@ int	main(int ac, char **av, char **ev)
 	(void)av;
 	signal(SIGINT, sigint_shell);
 	signal(SIGQUIT, sigquit_shell);
+	signal(SIGTSTP, sigtstp_shell);
 	sh = ft_shell();
 	if (!sh)
 		exit(EXIT_FAILURE);
