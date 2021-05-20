@@ -48,9 +48,10 @@
 # define BLACKB "\e[40m"
 # define GRAY "\e[90m"
 # define E0M "\e[0m"
-# define HRY_SIZE 100
 
 # define MINERR "\e[38;2;255;0;0m\e[5mminishell: "
+# define HRY_SIZE 100
+# define BUF_LINE 10
 
 typedef struct stat t_stat;
 
@@ -90,6 +91,7 @@ typedef struct s_shell
 	char			*history_path;
 	t_history		*history;
 	char			*line;
+	size_t			line_cursor;
 	t_trie			*ev;
 	t_events		*events;
 }	t_shell;
@@ -108,7 +110,7 @@ void		sigquit_shell(int sig);
 t_shell		*ft_shell(void);
 void		store_envar(t_shell *sh, char **ev);
 ssize_t		get_cmd(t_shell *sh);
-void		keys_event(char *buf, t_shell *sh);
+int			keys_event(char *buf, t_shell *sh);
 void		ft_prompt(t_shell *sh);
 /*
 **	history
