@@ -53,6 +53,8 @@
 # define HRY_SIZE 100
 # define BUF_LINE 10
 
+typedef struct stat t_stat;
+
 typedef struct s_envar
 {
 	char			*key;
@@ -126,6 +128,17 @@ int			browse_history(t_shell *sh,char *buf);
 **	builtins
 */
 
-void		exit_minish(t_shell *sh);
+void		sh_exit(t_shell *sh);
+int			sh_pwd(void);
+int			sh_echo(char *value, t_uchar flag);
+void		sh_export(t_trie *ev, char *key, char *value);
+int			sh_cd(t_trie *ev, char *path);
+
+/*
+**	evaluator
+*/
+
+char		*sh_which(char *name, t_trie *ev);
+int			is_builtin(char *name);
 
 #endif

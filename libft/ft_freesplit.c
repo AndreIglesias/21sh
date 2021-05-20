@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_freesplit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 14:20:59 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 21:05:53 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/19 19:50:17 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/20 12:07:55 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <stdio.h>
-# include "libft.h"
+#include "libft.h"
 
-int		get_next_line(int fd, char **line);
-size_t	ft_strlen(const char *s);
+void	ft_freesplit(char **split)
+{
+	int	i;
 
-#endif
+	i = 0;
+	if (*split)
+	{
+		while (split[i])
+			i++;
+		while (i)
+			free(split[--i]);
+	}
+	free(split);
+	split = NULL;
+}

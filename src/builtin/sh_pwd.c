@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   sh_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 14:20:59 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 21:05:53 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/19 16:16:39 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/20 00:58:26 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <stdio.h>
-# include "libft.h"
+#include "msh.h"
 
-int		get_next_line(int fd, char **line);
-size_t	ft_strlen(const char *s);
+int	sh_pwd(void)
+{
+	char	*tmp;
 
-#endif
+	tmp = getcwd(NULL, 0);
+	if (!tmp)
+	{
+		ft_putstr_fd(BOLD"minishell: pwd: ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd("\n"E0M, 2);
+		return (0);
+	}
+	printf("%s\n", tmp);
+	free(tmp);
+	return (1);
+}

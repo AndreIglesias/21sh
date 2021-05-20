@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 19:30:05 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 00:30:15 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/20 17:17:36 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ static void	fill_history(int fd, t_history **hst)
 	{
 		save_cmdline(hst, line);
 		line = NULL;
-		(*hst)->writen = 1;
 	}
-	if (line)
-		free(line);
 	get_next_line(-1, &line);
 	close(fd);
 }
