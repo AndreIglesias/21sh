@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:19 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 20:40:02 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/20 13:14:58 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@
 # define MINERR "\e[38;2;255;0;0m\e[5mminishell: "
 # define HRY_SIZE 100
 # define BUF_LINE 10
+
+typedef struct stat t_stat;
 
 typedef struct s_envar
 {
@@ -123,6 +125,17 @@ void		free_history(t_history *hst);
 **	builtins
 */
 
-void		exit_minish(t_shell *sh);
+void		sh_exit(t_shell *sh);
+int			sh_pwd(void);
+int			sh_echo(char *value, t_uchar flag);
+void		sh_export(t_trie *ev, char *key, char *value);
+int			sh_cd(t_trie *ev, char *path);
+
+/*
+**	evaluator
+*/
+
+char		*sh_which(char *name, t_trie *ev);
+int			is_builtin(char *name);
 
 #endif

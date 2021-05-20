@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   sh_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 14:20:59 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 21:05:53 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/19 23:46:17 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/20 12:06:12 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <stdio.h>
-# include "libft.h"
+#include "msh.h"
 
-int		get_next_line(int fd, char **line);
-size_t	ft_strlen(const char *s);
+void	sh_unset(t_trie *ev, char *key)
+{
+	t_trie	*tmp;
 
-#endif
+	tmp = delete_value(ev, key, ft_strlen(key), 0);
+	if (!tmp)
+	{
+		ft_putstr_fd(BOLD"minishell: unset: ", 2);
+		ft_putstr_fd("invalid parameter name"E0M, 2);
+		ft_putchar_fd('\n', 2);
+	}
+}
