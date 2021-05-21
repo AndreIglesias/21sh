@@ -12,12 +12,17 @@
 
 #include "msh.h"
 
-void	sh_exit(t_shell *sh)
+void	sh_exit(void)
 {
-	free_history(sh->history);
-	free(sh->history_path);
-	free(sh->events);
-	ft_freetrie(&sh->ev);
-	free(sh);
+	if (g_sh->history)
+		free_history(g_sh->history);
+	if (g_sh->history_path)
+		free(g_sh->history_path);
+	if (g_sh->history_path)
+		free(g_sh->events);
+  if (g_sh->ev)
+    ft_freetrie(&g_sh->ev);
+	if (g_sh)
+		free(g_sh);
 	exit(EXIT_SUCCESS);
 }
