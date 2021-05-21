@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:29:37 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 20:08:41 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/21 15:49:49 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ t_listi				*ft_newlisti(int data, size_t size);
 char				*get_value(t_trie *root, char *cmd);
 t_trie				**delete_value(t_trie **root, char *key, int len,
 						int depth);
+void				delete_node(t_trie **node);
 void				insert_trie(t_trie **root, char *cmd, int eq);
 void				*ft_memalloc(size_t size);
 char				*ft_strcat(char *restrict s1, const char *restrict s2);
@@ -102,5 +103,7 @@ char				*ft_strndup(const char *str, size_t size);
 char				*ft_realloc(char *str, size_t size);
 int					ft_strcmp(const char *s1, const char *s2);
 void				ft_freesplit(char **split);
+void				ft_puttrie(t_trie *root, char *str, int lvl);
+void				ft_freetrie(t_trie **root);
 
 #endif
