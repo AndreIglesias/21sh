@@ -1,28 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_exit.c                                          :+:      :+:    :+:   */
+/*   ft_puttrie.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/19 16:14:52 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/21 16:17:58 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/20 16:31:24 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/20 18:22:42 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "msh.h"
+#include "libft.h"
 
-void	sh_exit(void)
+void	ft_puttrie(t_trie *root, char *str, int lvl)
 {
-	if (g_sh->history)
-		free_history(g_sh->history);
-	if (g_sh->history_path)
-		free(g_sh->history_path);
-	if (g_sh->history_path)
-		free(g_sh->events);
-  if (g_sh->ev)
-    ft_freetrie(&g_sh->ev);
-	if (g_sh)
-		free(g_sh);
-	exit(EXIT_SUCCESS);
+	int		i;
+
+	if (root->end)
+	{
+		str[lvl] = 0;
+		ft_putstr(str);
+		ft_putstr("=");
+		ft_putstr(root->value);
+		ft_putchar('\n');
+		return ;
+	}
+	i = 0;
+	while (i < 127)
+	{
+		if (root->children && root->map[i])
+		{
+			str[lvl] = (char)i;
+			str[lvl + 1] = 0;
+			ft_puttrie(root->map[i], str, lvl + 1);
+		}
+		i++;
+	}
 }

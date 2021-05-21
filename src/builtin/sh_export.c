@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 12:23:41 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 14:22:54 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/20 18:32:09 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ void	sh_export(t_trie *ev, char *key, char *value)
 		insert_trie(&ev, tmp2, ft_strlen(key));
 		free(tmp2);
 	}
-	//else
-		//sh_env(ev);
+	else
+		sh_env(ev);
 }

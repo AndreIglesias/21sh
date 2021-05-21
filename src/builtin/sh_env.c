@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_exit.c                                          :+:      :+:    :+:   */
+/*   sh_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/19 16:14:52 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/21 16:17:58 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/20 18:26:00 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/20 18:27:53 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-void	sh_exit(void)
+void	sh_env(t_trie *ev)
 {
-	if (g_sh->history)
-		free_history(g_sh->history);
-	if (g_sh->history_path)
-		free(g_sh->history_path);
-	if (g_sh->history_path)
-		free(g_sh->events);
-  if (g_sh->ev)
-    ft_freetrie(&g_sh->ev);
-	if (g_sh)
-		free(g_sh);
-	exit(EXIT_SUCCESS);
+	char	tmp[200];
+
+	ft_puttrie(ev, tmp, 0);
 }

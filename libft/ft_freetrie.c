@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_exit.c                                          :+:      :+:    :+:   */
+/*   ft_freetrie.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/19 16:14:52 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/21 16:17:58 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/05/20 18:38:17 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/21 15:50:39 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "msh.h"
+#include "libft.h"
 
-void	sh_exit(void)
+void	ft_freetrie(t_trie **root)
 {
-	if (g_sh->history)
-		free_history(g_sh->history);
-	if (g_sh->history_path)
-		free(g_sh->history_path);
-	if (g_sh->history_path)
-		free(g_sh->events);
-  if (g_sh->ev)
-    ft_freetrie(&g_sh->ev);
-	if (g_sh)
-		free(g_sh);
-	exit(EXIT_SUCCESS);
+	int		i;
+
+	if (!(*root)->children)
+	{
+		delete_node(root);
+		return ;
+	}
+	i = 0;
+	while (i < 127)
+	{
+		if ((*root)->children && (*root)->map[i])
+		{
+			ft_freetrie(&(*root)->map[i]);
+			(*root)->children--;
+		}
+		i++;
+	}
+	delete_node(root);
+	return ;
 }
