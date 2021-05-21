@@ -6,71 +6,129 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 21:19:24 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/21 01:40:48 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/21 19:34:58 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
+/*
+** op: | < > >>
+** param: 2 non-op (spc: "" '' $)
+*/
 
-static int	ft_cspecial(const char *c)
+static char	*save_string(char *str, int i, char quote)
 {
-	int i;
+	char	*new;
 
-	i = 0;
-	while (c[i] == ' ' || (c[i] >= 9 && c[i] <= 13))
-		i++;
-	return (i);
+	new = ft_fchrjoin(NULL, str[i++]);
+	while (str[i] && str[i] != quote)
+		new = ft_fchrjoin(new, str[i++]);
+	if (str[i] == quote)
+		new = ft_fchrjoin(new, str[i++]);
+	return (new);
 }
 
-int		empty_cmds(void)
+static t_uchar	is_op(char *str)
 {
-	int	i;
-	int	spc;
-	int	content;
-
-	i = 0;
-	spc = 0;
-	content = 0;
-	while (g_sh->line[i])
+	if (str && str[0])
 	{
-		spc = ft_cspecial(&g_sh->line[i]);
-		i += spc;
-		if (g_sh->line[i])
-		{
-			if (g_sh->line[i] != ';')
-				content++;
-			else
-			{
-				if (!content)
-					return (1);
-				content = 0;
-			}
-			i++;
-		}
+		if (str[0] == '<')
+			return (1);
+		if (str[0] == '>' && str[1] && str[1] == '>')
+			return (3);
+		if (str[0] == '>')
+			return (2);
+		if (str[0] == '|')
+			return (4);
 	}
 	return (0);
 }
 
-
-
-int	ft_lexer(void)
+static int	save_token(char *str, int i, int x)
 {
-	int	c;
+	char	*new;
+	t_uchar	op;
 
-	if (empty_cmds())//verify inside quotes too and its consistency
-		return ((int)ft_puterror(BOLD"minishell: syntax error near unexpected \
-token `;'\n"E0M, (void*)EXIT_FAILURE));
-	c = ft_countchr(g_sh->line, '"');
-	if (c % 2 != 0)//verify its not inside single quotes ''
-		return ((int)ft_puterror(BOLD"minishell: syntax error ending quote not \
-found `\"'\n"E0M, (void*)EXIT_FAILURE));
-	c = ft_countchr(g_sh->line, '\'');
-	if (c % 2 != 0)//verify if not inside double quotes ""
-		return ((int)ft_puterror(BOLD"minishell: syntax error ending quote not \
-found `'\"\n"E0M, (void*)EXIT_FAILURE));
-	c = ft_countchr(g_sh->line, ';');
-	g_sh->cmds = new_astvec(ft_countchr(g_sh->line, ';'));
-	printf(BLUE"lexer: [%s] cmds: %d\n"E0M, g_sh->line, c);
+	op = is_op(&str[i]);
+	if (op)
+	{
+		add_ast(&g_sh->cmds[x], new_astop(op));
+		if (op == 3)
+			i += 2;
+		else
+			i++;
+	}
+	else
+	{
+		new = NULL;
+		if (str[i])
+			new = ft_fchrjoin(NULL, str[i++]);
+		while (str[i] && !ft_cspecial(&str[i]) && !is_op(&str[i]))
+			new = ft_fchrjoin(new, str[i++]);
+		if (new)
+			add_ast(&g_sh->cmds[x], new_astcmd(new, NULL));
+	}
+	return (i);
+}
+
+int	new_token(char *str, int i, int x)
+{
+	char	*string;
+
+	if (str[i] == '\'')
+	{
+		string = save_string(str, i, '\'');
+		i += ft_strlen(string);
+		add_ast(&g_sh->cmds[x], new_astcmd(string, NULL));
+	}
+	else if (str[i] == '"')
+	{
+		string = save_string(str, i, '"');
+		i += ft_strlen(string);
+		add_ast(&g_sh->cmds[x], new_astcmd(string, NULL));
+	}
+	else
+		i = save_token(str, i, x);
+	return (i);
+}
+
+static void	create_tokens(char *str, int x)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		i += ft_cspecial(&str[i]);
+		if (str[i])
+			i = new_token(str, i, x);
+	}
+}
+
+int	ft_lexer(int x)
+{
+	t_ast	*tmp;
+
+	create_tokens(g_sh->cmd_line[x], x);
+	printf(BLUE"lexer: [%s] cmdid: %d\n"E0M, g_sh->cmd_line[x], x);
+	ft_putstr(E0M"tokens: ");
+	tmp = g_sh->cmds[x];
+	while (tmp)
+	{
+		if (tmp->bin)
+		{
+			ft_putstr(YELLOW"[");
+			ft_putstr(tmp->bin);
+		}
+		else
+		{
+			ft_putstr(GREEN"[");
+			ft_putnbr(tmp->op);
+		}
+		ft_putstr("] "E0M);
+		tmp = tmp->next;
+	}
+	ft_putstr("\n");
 	return (0);
 }

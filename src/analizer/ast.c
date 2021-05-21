@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 21:26:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/21 01:11:34 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/21 19:27:13 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,24 @@ t_ast	*init_ast(void)
 	return (new);
 }
 
+void	add_ast(t_ast **head, t_ast *node)
+{
+	int		i;
+	t_ast	*tmp;
+
+	if (*head == NULL)
+		*head = node;
+	else
+	{
+		i = 0;
+		tmp = *head;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = node;
+		node->back = tmp;
+	}
+}
+
 t_ast	*new_astcmd(char *cmd, char **av)
 {
 	t_ast	*new;
@@ -59,19 +77,26 @@ t_ast	*new_astcmd(char *cmd, char **av)
 	new->type = 1;
 	new->bin = cmd;
 	new->av = av;
-	i = 0;
-	while (av[i])
-		i++;
-	new->ac = i;
+	if (av)
+	{
+		i = 0;
+		while (av[i])
+			i++;
+		new->ac = i;
+	}
+	else
+		new->ac = 0;
 	return (new);
 }
 
-t_ast	*new_astop(char *op)
+t_ast	*new_astop(t_uchar op)
 {
 	t_ast	*new;
 
 	new = init_ast();
 	new->type = 2;
+	new->op = op;
+	/*
 	if (!ft_strcmp(op, "<"))
 		new->op = 1;
 	else if (!ft_strcmp(op, ">"))
@@ -81,6 +106,7 @@ t_ast	*new_astop(char *op)
 	else if (!ft_strcmp(op, "|"))
 		new->op = 4;
 	else
-		new->op = 5;
+		new->op = 0;
+	*/
 	return (new);
 }

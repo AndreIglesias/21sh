@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/21 01:11:43 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/21 19:27:44 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ typedef struct s_shell
 	t_history		*history;
 	t_history		*history_cursor;
 	char			*line;
+	char			**cmd_line;
+	int				ncmd;
 	char			*line_tmp;
 	size_t			line_cursor;
 	t_trie			*ev;
@@ -163,9 +165,13 @@ int			sh_cd(t_trie *ev, char *path);
 **	analizer
 */
 
+int			ft_cspecial(const char *c);
 void		ft_analizer(void);
-int			ft_lexer(void);
+int			ft_lexer(int x);
 t_ast		**new_astvec(int size);
+void		add_ast(t_ast **head, t_ast *node);
+t_ast		*new_astcmd(char *cmd, char **av);
+t_ast		*new_astop(t_uchar op);
 
 /*
 **	evaluator
