@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 21:05:45 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/21 16:18:17 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/21 22:03:41 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ void	ft_analizer(void)
 	while (g_sh->cmd_line[i])
 	{
 		if (ft_lexer(i) == EXIT_FAILURE)
+			return ;
+		if (ft_parser(i) == EXIT_FAILURE)
 			return ;
 		i++;
 	}

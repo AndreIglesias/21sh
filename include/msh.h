@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/21 19:27:44 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/21 23:51:04 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ typedef struct s_shell
 	t_trie			*ev;
 	t_events		*events;
 	t_ast			**cmds;
+	t_uchar			last_status;
 }	t_shell;
 
 extern t_shell		*g_sh;
@@ -168,7 +169,9 @@ int			sh_cd(t_trie *ev, char *path);
 int			ft_cspecial(const char *c);
 void		ft_analizer(void);
 int			ft_lexer(int x);
+int			ft_parser(int x);
 t_ast		**new_astvec(int size);
+void		delete_astnode(t_ast *node);
 void		add_ast(t_ast **head, t_ast *node);
 t_ast		*new_astcmd(char *cmd, char **av);
 t_ast		*new_astop(t_uchar op);

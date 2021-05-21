@@ -6,11 +6,30 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 21:26:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/21 19:27:13 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/21 23:00:12 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
+
+void	delete_astnode(t_ast *node)
+{
+	int	i;
+
+	if (node->back)
+		node->back->next = node->next;
+	if (node->next)
+		node->next->back = node->back;
+	if (node->bin)
+		free(node->bin);
+	if (node->av)
+	{
+		i = 0;
+		while (i < node->ac)
+			free(node->av[i++]);
+		free(node->av);
+	}
+}
 
 /*
 ** type (1, cmd) (2, op)
