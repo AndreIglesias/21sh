@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/05/22 07:57:43 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/05/22 09:07:18 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -35,6 +35,7 @@ DIREVL		=	$(DIRSRC)/evaluator/
 DIRHIS		=	$(DIRSRC)/history/
 DIRBIN		=	$(DIRSRC)/builtin/
 
+DIRS		=	$(DIRSRC) $(DIRSIG) $(DIRTRM) $(DIRANA) $(DIREVL) $(DIRHIS) $(DIRBIN)
 
 SRC			=	main.c
 SIGNAL		=	signals.c
@@ -69,52 +70,42 @@ CC			=	/usr/bin/clang
 RM			=	/bin/rm -f
 ECHO		=	/bin/echo -e
 BOLD		=	"\e[1m"
-DIM			=	 "\e[2m"
-ITALIC		=	 "\e[3m"
-UNDERL		=	 "\e[4m"
 BLINK		=	 "\e[5m"
-REVER		=	 "\e[7m"
-INVIS		=	 "\e[8m"
 RED			=	 "\e[38;2;255;0;0m"
-CEL			=	 "\e[38;2;114;159;207m"
 GREEN		=	 "\e[92m"
-CYAN		=	 "\e[96m"
 BLUE		=	 "\e[34m"
 YELLOW		=	 "\e[33m"
-ERROR		=	 "\e[38;2;255;0;0m\e[1mERROR\e[0m\e[38;2;255;0;0m"
-BLACKB		=	 "\e[40m"
-GRAY		=	 "\e[90m"
 E0M			=	 "\e[0m"
 
 #************************ DEPS COMPILATION *************************
 
 %.o		:		../$(DIRSRC)/%.c
 				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
-				@${CC} ${CFLAGS} ${INCLUDE} -MMD -o $@ -c $<
+				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRSIG)/%.c
 				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
-				@${CC} ${CFLAGS} ${INCLUDE} -MMD -o $@ -c $<
+				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRTRM)/%.c
 				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
-				@${CC} ${CFLAGS} ${INCLUDE} -MMD -o $@ -c $<
+				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRHIS)/%.c
 				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
-				@${CC} ${CFLAGS} ${INCLUDE} -MMD -o $@ -c $<
+				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRBIN)/%.c
 				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
-				@${CC} ${CFLAGS} ${INCLUDE} -MMD -o $@ -c $<
+				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRANA)/%.c
 				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
-				@${CC} ${CFLAGS} ${INCLUDE} -MMD -o $@ -c $<
+				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIREVL)/%.c
 				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
-				@${CC} ${CFLAGS} ${INCLUDE} -MMD -o $@ -c $<
+				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 #************************ MAIN COMPILATION *************************
 
@@ -143,6 +134,9 @@ $(NAME)	:		ftlib $(OBJS)
 				@$(ECHO) '/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/ /'
 				@$(ECHO) '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
 				@$(ECHO) $(E0M)
+				@for dir in $(DIRS); do \
+					echo $$dir ; \
+				done
 				@$(ECHO) $(BOLD)$(GREEN)'> Compiled'$(E0M)
 
 clean	:
