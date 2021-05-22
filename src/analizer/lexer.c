@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 21:19:24 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/22 00:12:27 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/22 19:53:12 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,7 @@
 ** param: 2 non-op (spc: "" '' $)
 */
 
-static char	*save_string(char *str, int i, char quote)// replace env var!
-{
-	char	*new;
-
-	new = ft_fchrjoin(NULL, str[i++]);
-	while (str[i] && str[i] != quote)
-	{
-		if (str[i] == '$')//$?
-		new = ft_fchrjoin(new, str[i++]);
-	}
-	if (str[i] == quote)
-		new = ft_fchrjoin(new, str[i++]);
-	return (new);
-}
-
-static t_uchar	is_op(char *str)
+t_uchar	is_op(char *str)
 {
 	if (str && str[0])
 	{
@@ -45,6 +30,36 @@ static t_uchar	is_op(char *str)
 		if (str[0] == '|')
 			return (4);
 	}
+	return (0);
+}
+
+static char	*save_string(char *str, int *i, char quote)
+{
+	char	*new;
+	int		k;
+
+	new = ft_fchrjoin(NULL, str[(*i)++]);
+	while (str[*i] && str[*i] != quote)
+	{
+		if (is_envar(str, *i, quote))
+		{
+			k = (*i);
+			new = string_envar(str, new, &k, quote);
+			(*i) = k;
+		}
+		else
+			new = ft_fchrjoin(new, str[(*i)++]);
+	}
+	if (str[*i] == quote)
+		new = ft_fchrjoin(new, str[(*i)++]);
+	return (new);
+}
+
+static int	end_of_token(char *str, int i)
+{
+	if (str[i] && !ft_cspecial(&str[i]) && !is_op(&str[i])
+		&& (str[i] != '$' || str[i + 1] == '$' || !str[i + 1]))
+		return (1);
 	return (0);
 }
 
@@ -65,9 +80,7 @@ static int	save_token(char *str, int i, int x)
 	else
 	{
 		new = NULL;
-		if (str[i])
-			new = ft_fchrjoin(NULL, str[i++]);
-		while (str[i] && !ft_cspecial(&str[i]) && !is_op(&str[i]))
+		while (end_of_token(str, i))
 			new = ft_fchrjoin(new, str[i++]);
 		if (new)
 			add_ast(&g_sh->cmds[x], new_astcmd(new, NULL));
@@ -75,47 +88,21 @@ static int	save_token(char *str, int i, int x)
 	return (i);
 }
 
-static int	save_envnode(char *str, int i, int x)
-{
-	char	*tmp;
-	char	*string;
-	int		c;
-	int		k;
-
-	c = 0;
-	k = i;
-	while (str[k] && !ft_cspecial(&str[k]) && !is_op(&str[k]))
-	{
-		k++;
-		c++;
-	}
-	tmp = ft_strndup(&str[i + 1], c - 1);
-	string = get_value(g_sh->ev, tmp);
-	free(tmp);
-	if (string)
-		add_ast(&g_sh->cmds[x], new_astcmd(ft_strdup(string), NULL));
-	else
-		add_ast(&g_sh->cmds[x], new_astcmd(ft_strdup(""), NULL));
-	return (k);
-}
-
-int	new_token(char *str, int i, int x)
+static int	new_token(char *str, int i, int x)
 {
 	char	*string;
 
 	if (str[i] == '\'')
 	{
-		string = save_string(str, i, '\'');
-		i += ft_strlen(string);
+		string = save_string(str, &i, '\'');
 		add_ast(&g_sh->cmds[x], new_astcmd(string, NULL));
 	}
 	else if (str[i] == '"')
 	{
-		string = save_string(str, i, '"');
-		i += ft_strlen(string);
+		string = save_string(str, &i, '"');
 		add_ast(&g_sh->cmds[x], new_astcmd(string, NULL));
 	}
-	else if(str[i] == '$' && str[i + 1] && str[i + 1] != '?')//send $? to save_envnode
+	else if(is_envar(str, i, 0))
 		i = save_envnode(str, i, x);
 	else
 		i = save_token(str, i, x);

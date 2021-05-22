@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/21 23:51:04 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/22 19:46:55 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,10 +166,17 @@ int			sh_cd(t_trie *ev, char *path);
 **	analizer
 */
 
+t_uchar		is_op(char *str);
 int			ft_cspecial(const char *c);
 void		ft_analizer(void);
+
 int			ft_lexer(int x);
+int			is_envar(char *str, int i, char q);
+char		*string_envar(char *str, char *new, int *i, char quote);
+int			save_envnode(char *str, int i, int x);
+
 int			ft_parser(int x);
+
 t_ast		**new_astvec(int size);
 void		delete_astnode(t_ast *node);
 void		add_ast(t_ast **head, t_ast *node);
