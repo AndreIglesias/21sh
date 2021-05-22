@@ -6,7 +6,7 @@
 #    By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/30 14:10:41 by jiglesia          #+#    #+#              #
-#    Updated: 2021/05/21 15:25:40 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/05/22 07:33:36 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -21,11 +21,16 @@ CFLAGS		=	-Wall -Wextra -Werror
 CC			=	/usr/bin/gcc
 RM			=	/bin/rm -f
 
+GREEN		=	 "\e[92m"
+E0M			=	 "\e[0m"
+
 %.o: %.c
-				-@$(CC) $(CFLAGS) -I $(INCLUDE) -c $< -o $@
+				@printf $(GREEN)"Generating libft objects... %-33.33s\r" $@
+				@${CC} ${CFLAGS} -I ${INCLUDE} -c $< -o $@
 
 $(NAME)	:		$(OBJS)
 				-@ar rc $(NAME) $(OBJS)
+				@printf $(E0M)"\n"
 				ranlib $(NAME)
 
 clean	:

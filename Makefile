@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/05/21 22:05:05 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/05/22 07:48:04 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -89,29 +89,37 @@ E0M			=	 "\e[0m"
 #************************ DEPS COMPILATION *************************
 
 %.o		:		../$(DIRSRC)/%.c
-				$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
+				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@${CC} ${CFLAGS} ${INCLUDE} -MMD -o $@ -c $<
 
 %.o		:		../$(DIRSIG)/%.c
-				$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
+				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@${CC} ${CFLAGS} ${INCLUDE} -MMD -o $@ -c $<
 
 %.o		:		../$(DIRTRM)/%.c
-				$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
+				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@${CC} ${CFLAGS} ${INCLUDE} -MMD -o $@ -c $<
 
 %.o		:		../$(DIRHIS)/%.c
-				$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
+				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@${CC} ${CFLAGS} ${INCLUDE} -MMD -o $@ -c $<
 
 %.o		:		../$(DIRBIN)/%.c
-				$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
+				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@${CC} ${CFLAGS} ${INCLUDE} -MMD -o $@ -c $<
 
 %.o		:		../$(DIRANA)/%.c
-				$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
+				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@${CC} ${CFLAGS} ${INCLUDE} -MMD -o $@ -c $<
 
 %.o		:		../$(DIREVL)/%.c
-				$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
+				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@${CC} ${CFLAGS} ${INCLUDE} -MMD -o $@ -c $<
 
 #************************ MAIN COMPILATION *************************
 
 $(NAME)	:		ftlib $(OBJS)
+				@printf $(E0M)"\n"
 				@$(CC)  $(INCLUDE) $(CFLAGS) -o $(NAME) $(OBJS) $(INC_LIB)
 				@$(ECHO) $(RED) $(BOLD)
 				@$(ECHO) '              ,---------------------------,'
@@ -135,20 +143,20 @@ $(NAME)	:		ftlib $(OBJS)
 				@$(ECHO) '/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/ /'
 				@$(ECHO) '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
 				@$(ECHO) $(E0M)
-				@$(ECHO) '> Compiled'
+				@$(ECHO) $(GREEN)'> Compiled'$(E0M)
 
 clean	:
 				@($(RM) $(OBJS))
 				@($(RM) $(DEPS))
 				@(cd $(SUB_MAKE) && $(MAKE) clean)
-				@$(ECHO) '> Directory cleaned'
+				@$(ECHO) $(RED)'> Directory cleaned'$(E0M)
 
 all		:		$(NAME)
 
 fclean	:		clean
 				@$(RM) $(NAME)
 				@(cd $(SUB_MAKE) && $(MAKE) fclean)
-				@$(ECHO) '> Remove executable'
+				@$(ECHO) $(RED)'> Executable removed'$(E0M)
 
 re		:		fclean all
 
