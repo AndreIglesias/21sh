@@ -6,17 +6,26 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 23:36:58 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 23:42:19 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/22 11:05:57 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-int	sh_echo(char *value, t_uchar flag)
+int	sh_echo(char **value, t_uchar flag)
 {
-	ft_putstr(value);
+	int	i;
+	int	a;
+
+	i = 0;
+	a = 0;
+	while (value[i])
+	{
+		a += ft_putstr(value[i++]);
+		a += ft_putstr(" ");
+	}
 	if (flag)
-		return (ft_strlen(value));
-	write(1, "\n", 1);
-	return (ft_strlen(value) + 1);
+		return (a);
+	a += write(1, "\n", 1);
+	return (a);
 }
