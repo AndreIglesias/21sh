@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 18:02:34 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 12:05:48 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/23 23:57:42 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int	is_builtin(char *name)
 
 char	*sh_which(char *name, t_trie *ev)
 {
-	char	*path;
-	char	**split;
-	int		i;
-	t_stat	buf;
+	char		*path;
+	char		**split;
+	int			i;
+	struct stat	buf;
 
 	path = get_value(ev, "PATH");
 	split = ft_split(path, ':');

@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 21:19:24 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/22 19:53:12 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/23 21:29:51 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ static char	*save_string(char *str, int *i, char quote)
 	return (new);
 }
 
-static int	end_of_token(char *str, int i)
+static int	end_of_token(char *str, int i, char quote)
 {
-	if (str[i] && !ft_cspecial(&str[i]) && !is_op(&str[i])
-		&& (str[i] != '$' || str[i + 1] == '$' || !str[i + 1]))
+	if (str[i] && (quote || (!ft_cspecial(&str[i]) && !is_op(&str[i])
+				&& (str[i] != '$' || str[i + 1] == '$' || !str[i + 1]))))
 		return (1);
 	return (0);
 }
@@ -67,6 +67,7 @@ static int	save_token(char *str, int i, int x)
 {
 	char	*new;
 	t_uchar	op;
+	char	quote;
 
 	op = is_op(&str[i]);
 	if (op)
@@ -80,10 +81,26 @@ static int	save_token(char *str, int i, int x)
 	else
 	{
 		new = NULL;
-		while (end_of_token(str, i))
+		quote = 0;
+		while (end_of_token(str, i, quote))
+		{
+			if (str[i] == '\'' || str[i] == '"')
+			{
+				if (!quote)
+					quote = str[i];
+				else if (str[i] == quote)
+					quote = 0;
+				else
+					new = ft_fchrjoin(new, str[i++]);
+				i++;
+				continue ;
+			}
 			new = ft_fchrjoin(new, str[i++]);
+		}
 		if (new)
 			add_ast(&g_sh->cmds[x], new_astcmd(new, NULL));
+		else
+			return (-1);
 	}
 	return (i);
 }
@@ -91,6 +108,7 @@ static int	save_token(char *str, int i, int x)
 static int	new_token(char *str, int i, int x)
 {
 	char	*string;
+	int		error;
 
 	if (str[i] == '\'')
 	{
@@ -105,25 +123,34 @@ static int	new_token(char *str, int i, int x)
 	else if(is_envar(str, i, 0))
 		i = save_envnode(str, i, x);
 	else
-		i = save_token(str, i, x);
+	{
+		error = save_token(str, i, x);
+		if (error < 0)
+			return (-1);
+		i = error;
+	}
 	return (i);
 }
 
-static void	create_tokens(char *str, int x)
+int	ft_lexer(int x)
 {
-	int	i;
+	int		i;
+	int		error;
+	char	*str;
 
+	str = g_sh->cmd_line[x];
 	i = 0;
 	while (str[i])
 	{
 		i += ft_cspecial(&str[i]);
 		if (str[i])
-			i = new_token(str, i, x);
+		{
+			error = new_token(str, i, x);
+			if (error < 0)
+				return ((int)ft_puterror(BOLD"lexical error near \
+unexpected token\n", (void *)EXIT_FAILURE));
+			i = error;
+		}
 	}
-}
-
-int	ft_lexer(int x)
-{
-	create_tokens(g_sh->cmd_line[x], x);
 	return (EXIT_SUCCESS);
 }
