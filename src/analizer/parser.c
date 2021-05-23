@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 22:04:34 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/23 15:04:59 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/23 20:28:10 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,121 +63,34 @@ static void	construct_cmds(t_ast **head)
 	}
 }
 
-void	print_btree(t_ast *node, char *prefix, t_uchar is_left)
+static int	consistent_operations(t_ast *node)
 {
-	static char end[] = {0xe2,0x94,0x94,0xe2,0x94,0x80,0xe2,0x94,0x80,32,0x00};
-	static char mid[] = {0xe2,0x94,0x8c,32,32,32,0x00};
-	static char pip[] = {0xe2,0x94,0x82,32,32,32,0x00};
-	static char *ops[] = {NULL,"<",">",">>","|"};
-	char	*str;
+	int	i;
 
+	i = 1;
 	if (node)
 	{
-		if (is_left)
-			str = mid;
-		else
-			str = end;
-		if (node->bin)
-			printf("%s%s"BOLD""BLUE"%s\n"E0M, prefix, str, node->bin);
-		else
-			printf("%s%s"BOLD""YELLOW"%s\n"E0M, prefix, str, ops[node->op]);
-		if (is_left)
-			str = ft_strjoin(prefix, pip);
-		else
-			str = ft_strjoin(prefix, "    ");
-		print_btree(node->left, str, 1);
-		print_btree(node->right, str, 0);
-		free(str);
+		if (!node->bin && (!node->right || !node->right->bin))
+			return (0);
+		i *= consistent_operations(node->left);
+		i *= consistent_operations(node->right);
 	}
-}
-
-static void	add_children(t_ast *op, t_ast *left, t_ast *right)
-{
-	if (!op->left && left)
-		op->left = left;
-	if (right)
-		op->right = right;
-}
-
-static t_ast	*arrange_ast(t_ast *head)
-{
-	t_ast	*tmp;
-	t_ast	*left;
-	t_ast	*right;
-	t_ast	*op;
-
-	left = NULL;
-	right = NULL;
-	op = NULL;
-	tmp = head;
-	while (tmp)
-	{
-		if (!left && tmp->bin)
-			left = tmp;
-		else if (!tmp->bin)
-		{
-			if (op)
-				tmp->left = op;
-			op = tmp;
-			if (op == head && op->next && op->next->bin)
-			{
-				op->right = op->next;
-				tmp = tmp->next;
-			}
-			if (!op->next)
-				add_children(op, left, right);
-		}
-		else if (!right && tmp->bin)
-		{
-			add_children(op, left, tmp);
-			left = op;
-			right = NULL;
-		}
-		tmp = tmp->next;
-	}
-	return (op);
+	return (i);
 }
 
 int	ft_parser(int x)
 {
-	t_ast	*tmp;
-	int		i;
 	t_ast	*op;
 
 	construct_cmds(&g_sh->cmds[x]);
-	op = arrange_ast(g_sh->cmds[x]);
-
-	//printf(BLUE"parser: [%s] cmdid: %d\n"E0M, g_sh->cmd_line[x], x);
-	ft_putstr(E0M"tokens: ");
-	tmp = g_sh->cmds[x];
-	while (tmp)
-	{
-		if (tmp->bin)
-		{
-			ft_putstr(YELLOW"[");
-			ft_putstr(tmp->bin);
-			ft_putstr("] "E0M);
-			i = 0;
-			while (i < tmp->ac)
-			{
-				ft_putstr(CYAN"[");
-				ft_putstr(tmp->av[i]);
-				ft_putstr("] "E0M);
-				i++;
-			}
-		}
-		else
-		{
-			ft_putstr(GREEN"[");
-			ft_putnbr(tmp->op);
-			ft_putstr("] "E0M);
-		}
-		tmp = tmp->next;
-	}
-	ft_putstr("\n");
+	op = arrange_ast(g_sh->cmds[x], NULL, NULL);
+	if (!consistent_operations(op))
+		return ((int)ft_puterror(BOLD"syntax error inconsistent redirection\n"
+							E0M, (void *)EXIT_FAILURE));
+	print_tokens(g_sh->cmds[x], 0);
 	if (op)
 		g_sh->cmds[x] = op;
 	print_btree(g_sh->cmds[x], "", 0);
-	printf("\n");
+	ft_putstr("\n");
 	return (EXIT_SUCCESS);
 }
