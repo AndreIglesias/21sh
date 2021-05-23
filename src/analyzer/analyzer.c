@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   analizer.c                                         :+:      :+:    :+:   */
+/*   analyzer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/20 21:05:45 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/21 22:03:41 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/05/23 23:56:02 by ciglesia          #+#    #+#             */
+/*   Updated: 2021/05/24 00:01:17 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static void	save_cmds(void)
 	}
 }
 
-void	ft_analizer(void)
+void	ft_analyze(void)
 {
 	int	i;
 
@@ -125,6 +125,8 @@ void	ft_analizer(void)
 		if (ft_lexer(i) == EXIT_FAILURE)
 			return ;
 		if (ft_parser(i) == EXIT_FAILURE)
+			return ;
+		if (ft_semantic(i) == EXIT_FAILURE)
 			return ;
 		i++;
 	}
