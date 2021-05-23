@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 12:54:30 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 17:43:55 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/23 15:18:49 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ static char	*remove_home(char *dir)
 
 void	ft_prompt(void)
 {
-	char	*user;
-	char	*pwd;
+	char		*user;
+	char		*pwd;
+	static char bar[] = {32,0xe2,0x9d,0x99,32,0x00};
+	static char	point[] = {32,0xe2,0x9d,0xb1,32,0x00};
 
 	user = get_value(g_sh->ev, "USER");
 	pwd = get_value(g_sh->ev, "PWD");
@@ -44,7 +46,7 @@ void	ft_prompt(void)
 		ft_putstr(E0M);
 	}
 	if (user && pwd)
-		ft_putstr(BOLD" | "E0M);
+		ft_putstr(bar);
 	if (pwd)
 	{
 		ft_putstr(BOLD""BLUE"~/");
@@ -52,7 +54,7 @@ void	ft_prompt(void)
 		ft_putstr(E0M);
 	}
 	if (user || pwd)
-		ft_putstr(BOLD" > "E0M);
+		ft_putstr(point);
 	else
 		ft_putstr(BOLD" $ "E0M);
 }
