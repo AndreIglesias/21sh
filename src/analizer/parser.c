@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 22:04:34 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/23 00:34:30 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/23 13:18:13 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void	construct_cmds(t_ast **head)
 void	print_btree(t_ast *node, char *prefix, t_uchar is_left)
 {
 	static char end[] = {0xe2,0x94,0x94,0xe2,0x94,0x80,0xe2,0x94,0x80,32,0x00};
+	static char mid[] = {0xe2,0x94,0x8c,32,32,32,0x00};
 	static char pip[] = {0xe2,0x94,0x82,32,32,32,0x00};
 	static char *ops[] = {NULL,"<",">",">>","|"};
 	char	*str;
@@ -73,7 +74,7 @@ void	print_btree(t_ast *node, char *prefix, t_uchar is_left)
 	if (node)
 	{
 		if (is_left)
-			str = pip;
+			str = mid;
 		else
 			str = end;
 		if (node->bin)
@@ -132,8 +133,6 @@ int	ft_parser(int x)
 
 	construct_cmds(&g_sh->cmds[x]);
 	op = arrange_ast(g_sh->cmds[x]);
-	print_btree(op, "", 0);
-	printf("\n");
 
 	//printf(BLUE"parser: [%s] cmdid: %d\n"E0M, g_sh->cmd_line[x], x);
 	ft_putstr(E0M"tokens: ");
@@ -163,5 +162,9 @@ int	ft_parser(int x)
 		tmp = tmp->next;
 	}
 	ft_putstr("\n");
+	if (op)
+		g_sh->cmds[x] = op;
+	print_btree(g_sh->cmds[x], "", 0);
+	printf("\n");
 	return (EXIT_SUCCESS);
 }
