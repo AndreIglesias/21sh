@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 18:29:29 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/22 19:46:55 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,27 @@
 
 typedef struct stat	t_stat;
 
+/*
+** type (1, cmd) (2, op)
+** op (1, <) (2, >) (3, >>) (4, |)
+*/
+
+typedef struct s_ast
+{
+	struct s_ast	*next;
+	struct s_ast	*back;
+	t_uchar			type;
+	struct s_ast	*left;
+	struct s_ast	*right;
+
+	char			*bin;
+	char			**av;
+	int				ac;
+
+	t_uchar			op;
+
+}	t_ast;
+
 typedef struct s_envar
 {
 	char			*key;
@@ -92,10 +113,14 @@ typedef struct s_shell
 	t_history		*history;
 	t_history		*history_cursor;
 	char			*line;
+	char			**cmd_line;
+	int				ncmd;
 	char			*line_tmp;
 	size_t			line_cursor;
 	t_trie			*ev;
 	t_events		*events;
+	t_ast			**cmds;
+	t_uchar			last_status;
 }	t_shell;
 
 extern t_shell		*g_sh;
@@ -137,6 +162,27 @@ int			sh_echo(char *value, t_uchar flag);
 void		sh_export(t_trie *ev, char *key, char *value);
 int			sh_cd(t_trie *ev, char *path);
 void		sh_env(t_trie *ev);
+
+/*
+**	analizer
+*/
+
+t_uchar		is_op(char *str);
+int			ft_cspecial(const char *c);
+void		ft_analizer(void);
+
+int			ft_lexer(int x);
+int			is_envar(char *str, int i, char q);
+char		*string_envar(char *str, char *new, int *i, char quote);
+int			save_envnode(char *str, int i, int x);
+
+int			ft_parser(int x);
+
+t_ast		**new_astvec(int size);
+void		delete_astnode(t_ast *node);
+void		add_ast(t_ast **head, t_ast *node);
+t_ast		*new_astcmd(char *cmd, char **av);
+t_ast		*new_astop(t_uchar op);
 
 /*
 **	evaluator
