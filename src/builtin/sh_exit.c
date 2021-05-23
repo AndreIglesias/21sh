@@ -26,6 +26,8 @@ void	sh_exit(void)
 		free(g_sh->history_path);
 	if (g_sh->history_path)
 		free(g_sh->events);
+  if (g_sh->ev)
+    ft_freetrie(&g_sh->ev);
 	if (g_sh)
 		free(g_sh);
 	if (fd == -1)

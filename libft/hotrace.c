@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 19:52:40 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 13:02:17 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/20 20:00:51 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,13 @@ t_trie	**delete_value(t_trie **root, char *key, int len, int depth)
 			delete_node(root);
 		return (root);
 	}
-	if ((*root)->map[(int)key[depth]] && ((*root)->map[(int)key[depth]] =
-			*delete_value(&(*root)->map[(int)key[depth]], key, len, depth + 1)) == NULL)
-		(*root)->children--;
+	if ((*root)->map[(int)key[depth]])
+	{
+		(*root)->map[(int)key[depth]] = *delete_value(
+				&(*root)->map[(int)key[depth]], key, len, depth + 1);
+		if ((*root)->map[(int)key[depth]] == NULL)
+			(*root)->children--;
+	}
 	if ((*root)->children == 0 && (*root)->end == 0)
 		delete_node(root);
 	return (root);
