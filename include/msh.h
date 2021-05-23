@@ -158,10 +158,11 @@ int			browse_history(char *buf);
 
 void		sh_exit(void);
 int			sh_pwd(void);
-int			sh_echo(char *value, t_uchar flag);
+int			sh_echo(char **value, t_uchar flag);
 void		sh_export(t_trie *ev, char *key, char *value);
 int			sh_cd(t_trie *ev, char *path);
 void		sh_env(t_trie *ev);
+void		sh_history(t_history *hst);
 
 /*
 **	analizer
