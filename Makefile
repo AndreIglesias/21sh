@@ -41,7 +41,7 @@ SRC			=	main.c
 SIGNAL		=	signals.c
 TERM		=	terminal.c environment.c getcmd.c keys_events.c prompt.c
 HISTORY		=	load_history.c free_history.c browse_history.c
-BUILTIN		=	sh_exit.c sh_pwd.c sh_echo.c sh_export.c sh_cd.c sh_env.c
+BUILTIN		=	sh_exit.c sh_pwd.c sh_echo.c sh_export.c sh_cd.c sh_env.c sh_history.c
 ANALIZE		=	analizer.c ast.c lexer.c parser.c get_envar.c print_syntax.c construct_ast.c
 EVAL		=	sh_which.c
 
