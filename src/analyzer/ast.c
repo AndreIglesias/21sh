@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 21:26:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/23 19:52:31 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 00:41:04 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ t_ast	*new_astcmd(char *cmd, char **av)
 	int		i;
 
 	new = init_ast();
-	new->type = 1;
 	new->bin = cmd;
 	new->av = av;
 	if (av)
@@ -95,7 +94,6 @@ t_ast	*new_astop(t_uchar op)
 	t_ast	*new;
 
 	new = init_ast();
-	new->type = 2;
 	new->op = op;
 	return (new);
 }
