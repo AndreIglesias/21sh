@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 22:04:34 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/23 13:18:13 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/23 14:36:14 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,14 @@ void	print_btree(t_ast *node, char *prefix, t_uchar is_left)
 	}
 }
 
+static void	add_children(t_ast *op, t_ast *left, t_ast *right)
+{
+	if (!op->left && left)
+		op->left = left;
+	if (right)
+		op->right = right;
+}
+
 static t_ast	*arrange_ast(t_ast *head)
 {
 	t_ast	*tmp;
@@ -111,12 +119,17 @@ static t_ast	*arrange_ast(t_ast *head)
 			if (op)
 				tmp->left = op;
 			op = tmp;
+			if (op == head && op->next && op->next->bin)
+			{
+				op->right = op->next;
+				tmp = tmp->next;
+			}
+			if (!op->next)
+				add_children(op, left, right);
 		}
 		else if (!right && tmp->bin)
 		{
-			if (!op->left)
-				op->left = left;
-			op->right = tmp;
+			add_children(op, left, tmp);
 			left = op;
 			right = NULL;
 		}
