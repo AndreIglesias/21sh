@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/22 19:46:55 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/23 20:13:08 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,9 @@ typedef struct s_shell
 	t_trie			*ev;
 	t_events		*events;
 	t_ast			**cmds;
+	char			**ops;
 	t_uchar			last_status;
+	char			**envp;
 }	t_shell;
 
 extern t_shell		*g_sh;
@@ -178,7 +180,10 @@ char		*string_envar(char *str, char *new, int *i, char quote);
 int			save_envnode(char *str, int i, int x);
 
 int			ft_parser(int x);
+t_ast		*arrange_ast(t_ast *head, t_ast *left, t_ast *op);
 
+void		print_tokens(t_ast *tmp, int i);
+void		print_btree(t_ast *node, char *prefix, t_uchar is_left);
 t_ast		**new_astvec(int size);
 void		delete_astnode(t_ast *node);
 void		add_ast(t_ast **head, t_ast *node);

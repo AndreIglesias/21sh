@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 12:54:30 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/23 15:18:49 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/23 18:43:47 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,22 @@ static char	*remove_home(char *dir)
 	return (&dir[i]);
 }
 
+static void	print_pwd(char *pwd)
+{
+	char	*home;
+
+	home = get_value(g_sh->ev, "HOME");
+	ft_putstr(BOLD""BLUE);
+	if (home && !ft_strncmp(home, pwd, ft_strlen(home)))
+	{
+		ft_putstr("~/");
+		ft_putstr(remove_home(pwd));
+	}
+	else
+		ft_putstr(pwd);
+	ft_putstr(E0M);
+}
+
 void	ft_prompt(void)
 {
 	char		*user;
@@ -38,7 +54,7 @@ void	ft_prompt(void)
 	static char	point[] = {32,0xe2,0x9d,0xb1,32,0x00};
 
 	user = get_value(g_sh->ev, "USER");
-	pwd = get_value(g_sh->ev, "PWD");
+	pwd = getcwd(NULL, 0);
 	if (user)
 	{
 		ft_putstr(GREEN""BOLD);
@@ -48,11 +64,7 @@ void	ft_prompt(void)
 	if (user && pwd)
 		ft_putstr(bar);
 	if (pwd)
-	{
-		ft_putstr(BOLD""BLUE"~/");
-		ft_putstr(remove_home(pwd));
-		ft_putstr(E0M);
-	}
+		print_pwd(pwd);
 	if (user || pwd)
 		ft_putstr(point);
 	else

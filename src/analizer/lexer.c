@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 21:19:24 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/22 19:53:12 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/23 18:57:29 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,12 @@ static int	new_token(char *str, int i, int x)
 	return (i);
 }
 
-static void	create_tokens(char *str, int x)
+int	ft_lexer(int x)
 {
-	int	i;
+	int		i;
+	char	*str;
 
+	str = g_sh->cmd_line[x];
 	i = 0;
 	while (str[i])
 	{
@@ -120,10 +122,5 @@ static void	create_tokens(char *str, int x)
 		if (str[i])
 			i = new_token(str, i, x);
 	}
-}
-
-int	ft_lexer(int x)
-{
-	create_tokens(g_sh->cmd_line[x], x);
 	return (EXIT_SUCCESS);
 }
