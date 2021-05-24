@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 00:01:40 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 09:27:32 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ typedef struct s_shell
 	t_ast			**cmds;
 	char			**ops;
 	t_uchar			last_status;
+	t_uchar			syntax;
 	char			**envp;
 }	t_shell;
 
@@ -163,7 +164,7 @@ void		sh_export(t_trie *ev, char *key, char *value);
 int			sh_cd(t_trie *ev, char *path);
 void		sh_env(t_trie *ev);
 void		sh_history(t_history *hst);
-
+int			sh_syntax(int ac, char	**av);
 /*
 **	analyzer
 */
@@ -182,6 +183,7 @@ t_ast		*arrange_ast(t_ast *head, t_ast *left, t_ast *op);
 
 int			ft_semantic(int x);
 
+t_ast		*first_in_list(t_ast *node);
 void		print_tokens(t_ast *tmp, int i);
 void		print_btree(t_ast *node, char *prefix, t_uchar is_left);
 t_ast		**new_astvec(int size);
