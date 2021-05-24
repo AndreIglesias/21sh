@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 22:04:34 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/23 20:28:10 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 12:41:03 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	construct_cmds(t_ast **head)
 	tmp = *head;
 	while (tmp)
 	{
-		if (tmp->bin)
+		if (tmp->bin)//add itself
 			tmp = add_param(tmp);
 		else
 			tmp = tmp->next;
@@ -85,12 +85,9 @@ int	ft_parser(int x)
 	construct_cmds(&g_sh->cmds[x]);
 	op = arrange_ast(g_sh->cmds[x], NULL, NULL);
 	if (!consistent_operations(op))
-		return ((int)ft_puterror(BOLD"syntax error inconsistent redirection\n"
-							E0M, (void *)EXIT_FAILURE));
-	print_tokens(g_sh->cmds[x], 0);
+		return ((int)ft_puterror(BOLD"minishell: syntax error inconsistent \
+redirection\n"E0M, (void *)EXIT_FAILURE));
 	if (op)
 		g_sh->cmds[x] = op;
-	print_btree(g_sh->cmds[x], "", 0);
-	ft_putstr("\n");
 	return (EXIT_SUCCESS);
 }

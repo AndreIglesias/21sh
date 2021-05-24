@@ -6,11 +6,18 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 18:45:24 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/23 19:34:02 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:34:48 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
+
+t_ast	*first_in_list(t_ast *node)
+{
+	while (node->back)
+		node = node->back;
+	return (node);
+}
 
 static void	print_branch(char *prefix, char *str, char *node, char *color)
 {
@@ -35,8 +42,10 @@ void	print_btree(t_ast *node, char *prefix, t_uchar is_left)
 			str = mid;
 		else
 			str = end;
-		if (node->bin)
+		if (node->bin && node->type < 3)
 			print_branch(prefix, str, node->bin, BLUE);
+		else if (node->bin)
+			print_branch(prefix, str, node->bin, "");
 		else
 			print_branch(prefix, str, g_sh->ops[node->op], YELLOW);
 		if (is_left)
@@ -63,7 +72,9 @@ void	print_tokens(t_ast *tmp, int i)
 	{
 		if (tmp->bin)
 		{
-			ft_putstr(CEL);
+			if (tmp->type < 3)
+				ft_putstr(CEL);
+			ft_putnbr(tmp->type);
 			print_box(tmp->bin);
 			i = 0;
 			while (i < tmp->ac)
