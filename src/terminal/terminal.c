@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 07:13:31 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/21 23:51:15 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 09:29:46 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static void	init_termios(t_shell *sh)
 
 t_shell	*ft_shell(void)
 {
+	static char *ops[] = {NULL,"<",">",">>","|"};
 	t_shell	*sh;
 
 	sh = malloc(sizeof(t_shell));
@@ -105,5 +106,8 @@ t_shell	*ft_shell(void)
 	sh->cmd_line = NULL;
 	sh->ncmd = 1;
 	sh->last_status = 0;
+	sh->envp = NULL;
+	sh->ops = ops;
+	sh->syntax = 0;
 	return (sh);
 }

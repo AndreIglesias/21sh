@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 12:49:56 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 14:56:56 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@
 # define MINERR "\e[38;2;255;0;0m\e[5mminishell: "
 # define HRY_SIZE 100
 # define BUF_LINE 10
-
-typedef struct stat	t_stat;
 
 /*
 ** type (1, cmd) (2, op)
@@ -120,7 +118,9 @@ typedef struct s_shell
 	t_trie			*ev;
 	t_events		*events;
 	t_ast			**cmds;
+	char			**ops;
 	t_uchar			last_status;
+	t_uchar			syntax;
 	char			**envp;
 }	t_shell;
 
@@ -165,14 +165,15 @@ int			sh_cd(t_trie *ev, char *path);
 void		sh_env(t_trie *ev);
 void		sh_history(t_history *hst);
 void		sh_unset(t_trie *ev, char *key);
+int			sh_syntax(int ac, char	**av);
 
 /*
-**	analizer
+**	analyzer
 */
 
 t_uchar		is_op(char *str);
 int			ft_cspecial(const char *c);
-void		ft_analizer(void);
+void		ft_analyze(void);
 
 int			ft_lexer(int x);
 int			is_envar(char *str, int i, char q);
@@ -180,7 +181,13 @@ char		*string_envar(char *str, char *new, int *i, char quote);
 int			save_envnode(char *str, int i, int x);
 
 int			ft_parser(int x);
+t_ast		*arrange_ast(t_ast *head, t_ast *left, t_ast *op);
 
+int			ft_semantic(int x);
+
+t_ast		*first_in_list(t_ast *node);
+void		print_tokens(t_ast *tmp, int i);
+void		print_btree(t_ast *node, char *prefix, t_uchar is_left);
 t_ast		**new_astvec(int size);
 void		delete_astnode(t_ast *node);
 void		add_ast(t_ast **head, t_ast *node);

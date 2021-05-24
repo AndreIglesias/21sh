@@ -6,11 +6,16 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 21:26:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/21 23:00:12 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 00:41:04 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
+
+/*
+** type (1, cmd) (2, op)
+** op (1, <) (2, >) (3, >>) (4, |)
+*/
 
 void	delete_astnode(t_ast *node)
 {
@@ -31,11 +36,6 @@ void	delete_astnode(t_ast *node)
 	}
 }
 
-/*
-** type (1, cmd) (2, op)
-** op (1, <) (2, >) (3, >>) (4, |)
-*/
-
 t_ast	**new_astvec(int size)
 {
 	t_ast	**new;
@@ -50,7 +50,7 @@ t_ast	**new_astvec(int size)
 	return (new);
 }
 
-t_ast	*init_ast(void)
+static t_ast	*init_ast(void)
 {
 	t_ast	*new;
 
@@ -69,31 +69,12 @@ t_ast	*init_ast(void)
 	return (new);
 }
 
-void	add_ast(t_ast **head, t_ast *node)
-{
-	int		i;
-	t_ast	*tmp;
-
-	if (*head == NULL)
-		*head = node;
-	else
-	{
-		i = 0;
-		tmp = *head;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = node;
-		node->back = tmp;
-	}
-}
-
 t_ast	*new_astcmd(char *cmd, char **av)
 {
 	t_ast	*new;
 	int		i;
 
 	new = init_ast();
-	new->type = 1;
 	new->bin = cmd;
 	new->av = av;
 	if (av)
@@ -113,19 +94,6 @@ t_ast	*new_astop(t_uchar op)
 	t_ast	*new;
 
 	new = init_ast();
-	new->type = 2;
 	new->op = op;
-	/*
-	if (!ft_strcmp(op, "<"))
-		new->op = 1;
-	else if (!ft_strcmp(op, ">"))
-		new->op = 2;
-	else if (!ft_strcmp(op, ">>"))
-		new->op = 3;
-	else if (!ft_strcmp(op, "|"))
-		new->op = 4;
-	else
-		new->op = 0;
-	*/
 	return (new);
 }

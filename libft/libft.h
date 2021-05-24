@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:29:37 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/23 18:26:28 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 14:55:28 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
-#include <sys/types.h>
 #include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 # define BUFFER_SIZE 32
 
@@ -43,6 +44,7 @@ typedef struct s_listi
 	struct s_listi	*next;
 }					t_listi;
 
+int					is_file(char *filename);
 int					ft_countchr(const char *s, int c);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);

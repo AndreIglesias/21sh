@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/23 15:35:49 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 14:54:30 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_minishell(void)
 		ft_putstr(tgetstr("vi", NULL));
 		if (g_sh->line)
 		{
-			ft_analizer();
+			ft_analyze();
 			ft_evaluate();
 		}
 		free(g_sh->line);
