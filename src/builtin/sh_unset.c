@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 23:46:17 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 12:06:12 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 12:51:11 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	sh_unset(t_trie *ev, char *key)
 {
-	t_trie	*tmp;
+	t_trie	**tmp;
 
-	tmp = delete_value(ev, key, ft_strlen(key), 0);
+	tmp = delete_value(&ev, key, ft_strlen(key), 0);
 	if (!tmp)
 	{
 		ft_putstr_fd(BOLD"minishell: unset: ", 2);

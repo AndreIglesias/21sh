@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/22 19:46:55 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 12:49:56 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct s_shell
 	t_events		*events;
 	t_ast			**cmds;
 	t_uchar			last_status;
+	char			**envp;
 }	t_shell;
 
 extern t_shell		*g_sh;
@@ -163,6 +164,7 @@ void		sh_export(t_trie *ev, char *key, char *value);
 int			sh_cd(t_trie *ev, char *path);
 void		sh_env(t_trie *ev);
 void		sh_history(t_history *hst);
+void		sh_unset(t_trie *ev, char *key);
 
 /*
 **	analizer
@@ -191,5 +193,9 @@ t_ast		*new_astop(t_uchar op);
 
 char		*sh_which(char *name, t_trie *ev);
 int			is_builtin(char *name);
+void		ft_evaluate(void);
+void		evaluate_redirect(t_ast *op);
+void		op_or_cmds(t_ast *cmds);
+void		evaluate_builtin(t_ast *op);
 
 #endif

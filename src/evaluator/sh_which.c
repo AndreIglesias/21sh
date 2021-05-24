@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 18:02:34 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 12:05:48 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 10:32:24 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,19 @@ int	is_builtin(char *name)
 		return (1);
 	if (!ft_strcmp(name, "exit"))
 		return (1);
+	if (!ft_strcmp(name, "history"))
+		return (1);
+	//if (!ft_strcmp(name, "syntax"))
+	//return (1);
 	return (0);
 }
 
-char	*sh_which(char *name, t_trie *ev)
+char	*check_bin_path(char *path, char *name)
 {
-	char	*path;
-	char	**split;
-	int		i;
-	t_stat	buf;
+	char		**split;
+	int			i;
+	struct stat	buf;
 
-	path = get_value(ev, "PATH");
 	split = ft_split(path, ':');
 	path = NULL;
 	i = 0;
@@ -46,16 +48,31 @@ char	*sh_which(char *name, t_trie *ev)
 	{
 		split[i] = ft_realloc(split[i], 1);
 		split[i] = ft_strcat(split[i], "/");
-		path = ft_strjoin(split[i], name);
-		if (stat(path, &buf) == 0)
+		path = ft_strjoin(split[i++], name);
+		if (stat(path, &buf) == 0 && buf.st_mode & S_IXUSR)
 		{
 			ft_freesplit(split);
 			return (path);
 		}
 		free(path);
 		path = NULL;
-		i++;
 	}
 	ft_freesplit(split);
 	return (NULL);
+}
+
+char	*sh_which(char *name, t_trie *ev)
+{
+	char		*path;
+	struct stat	buf;
+
+	path = NULL;
+	if (ft_strchr(name, '/'))
+	{
+		if (stat(name, &buf) == 0 && buf.st_mode & S_IXUSR)
+			return (name);
+	}
+	else
+		path = check_bin_path(get_value(ev, "PATH"), name);
+	return (path);
 }
