@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:29:37 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 01:05:41 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 14:55:28 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
+#include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/stat.h>
-# include <unistd.h>
 
 # define BUFFER_SIZE 32
 

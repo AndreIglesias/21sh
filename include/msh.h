@@ -164,7 +164,9 @@ void		sh_export(t_trie *ev, char *key, char *value);
 int			sh_cd(t_trie *ev, char *path);
 void		sh_env(t_trie *ev);
 void		sh_history(t_history *hst);
+void		sh_unset(t_trie *ev, char *key);
 int			sh_syntax(int ac, char	**av);
+
 /*
 **	analyzer
 */
@@ -199,5 +201,9 @@ t_ast		*new_astop(t_uchar op);
 
 char		*sh_which(char *name, t_trie *ev);
 int			is_builtin(char *name);
+void		ft_evaluate(void);
+void		evaluate_redirect(t_ast *op);
+void		op_or_cmds(t_ast *cmds);
+void		evaluate_builtin(t_ast *op);
 
 #endif

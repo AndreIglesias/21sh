@@ -31,7 +31,7 @@ void	ft_minishell(void)
 		ready = get_cmd();
 		ft_putstr(tgetstr("vi", NULL));
 		if (g_sh->line && ft_analyze() == EXIT_SUCCESS)
-			printf("SUCCESS\n");
+			ft_evaluate();
 		free(g_sh->line);
 	}
 	if (g_sh->line)
