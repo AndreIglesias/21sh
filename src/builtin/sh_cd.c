@@ -6,13 +6,13 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:04:58 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 09:24:56 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 23:49:25 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-char	*get_home_dir(t_trie *ev, char *path)
+static char	*get_home_dir(t_trie *ev, char *path)
 {
 	char	*tmp;
 
@@ -25,29 +25,45 @@ char	*get_home_dir(t_trie *ev, char *path)
 	return (NULL);
 }
 
-int	sh_cd(t_trie *ev, char *path)
+static void	update_ev(char *key, char *argv)
+{
+	char	*check;
+	char	*tmp;
+	char	*tmp2;
+
+	check = get_value(g_sh->ev, key);
+	if (check)
+		delete_value(&g_sh->ev, key, ft_strlen(key), 0);
+	tmp = ft_strjoin(argv, "=");
+	tmp2 = ft_strjoin(tmp, argv);
+	free(tmp);
+	insert_trie(&g_sh->ev, tmp2, ft_strlen(key));
+	free(tmp2);
+}
+
+int	sh_cd(int argv, char **argc)
 {
 	char	*tmp;
 
-	if (path && path[0] == '~')
-		tmp = get_home_dir(ev, path);
-	else
-		tmp = ft_strdup(path);
-	if (!chdir(tmp))
+	if (argv == 2)
 	{
-		if (tmp)
+		if (argc[1] && argc[1][0] == '~')
+			tmp = get_home_dir(g_sh->ev, argc[1]);
+		else
+			tmp = ft_strdup(argc[1]);
+		if (!chdir(tmp))
+		{
+			update_ev("PWD", tmp);
 			free(tmp);
-		tmp = getcwd(NULL, 0);
-		sh_export(ev, "PWD", tmp);
+			return (EXIT_SUCCESS);
+		}
+		else
+		{
+			ft_putstr_fd(BOLD"minishell: cd: "BLUE, 2);
+			ft_putstr_fd(argc[1], 2);
+			ft_putstr_fd(E0M""BOLD" :no such file or directory\n"E0M, 2);
+		}
 		free(tmp);
-		return (EXIT_SUCCESS);
 	}
-	else
-	{
-		ft_putstr_fd(BOLD"minishell: cd: "BLUE, 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(E0M""BOLD" :no such file or directory\n"E0M, 2);
-	}
-	free(tmp);
 	return (EXIT_FAILURE);
 }

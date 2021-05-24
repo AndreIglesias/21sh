@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 19:30:05 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/21 17:06:03 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 17:19:12 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	put_history_fd(t_history *hst, int fd)
 
 	tmp = hst;
 	size = HRY_SIZE;
-	while (size-- && tmp && tmp->next)
+	while (--size && tmp && tmp->next)
 		tmp = tmp->next;
 	while (tmp)
 	{

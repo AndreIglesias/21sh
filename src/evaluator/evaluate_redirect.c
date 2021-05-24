@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:06:39 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 12:29:33 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 23:37:56 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void	stdin_to_bin(t_ast *op)
 		close(0);
 		dup(fd);
 		op_or_cmds(op->left);
-		//execve(cmd->bin, cmd->av, arbol(ev));
 		close(fd);
 	}
 	else
@@ -39,7 +38,6 @@ static void	bin_stdout_to_file(t_ast *op)
 		close(1);
 		dup(fd);
 		op_or_cmds(op->left);
-		//execv(name, argv);
 		close(fd);
 	}
 	else
@@ -59,7 +57,6 @@ static void	bin_stdout_to_eof(t_ast *op)
 		close(1);
 		dup(fdpip[1]);
 		op_or_cmds(op->left);
-		//execv(name, argv);
 	}
 	else
 	{
@@ -87,7 +84,6 @@ static void	stdout_to_stdin(t_ast *op)
 			close(1);
 			dup(fd[1]);
 			op_or_cmds(op->left);
-			//execv(op->left->left->bin, op->left->left->av);
 		}
 		else
 		{
@@ -96,7 +92,6 @@ static void	stdout_to_stdin(t_ast *op)
 			dup(fd[0]);
 			wait(NULL);
 			op_or_cmds(op->right);
-			//execv(op->left->bin, op->left->av);
 		}
 	}
 	else
