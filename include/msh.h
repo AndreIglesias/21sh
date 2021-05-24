@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 14:56:56 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 22:54:24 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ int			sh_syntax(int ac, char	**av);
 
 t_uchar		is_op(char *str);
 int			ft_cspecial(const char *c);
-void		ft_analyze(void);
+int			ft_analyze(void);
 
 int			ft_lexer(int x);
 int			is_envar(char *str, int i, char q);
@@ -181,12 +181,13 @@ char		*string_envar(char *str, char *new, int *i, char quote);
 int			save_envnode(char *str, int i, int x);
 
 int			ft_parser(int x);
-t_ast		*arrange_ast(t_ast *head, t_ast *left, t_ast *op);
+t_ast		*arrange_ast(t_ast *head, t_ast *left, t_ast *op, t_uchar opp);
+t_ast		*construct_tree(t_ast **head);
 
 int			ft_semantic(int x);
 
-t_ast		*first_in_list(t_ast *node);
-void		print_tokens(t_ast *tmp, int i);
+t_ast		*first_in_list(t_ast *node, t_uchar opp);
+void		print_tokens(t_ast *tmp, int i, t_uchar opp);
 void		print_btree(t_ast *node, char *prefix, t_uchar is_left);
 t_ast		**new_astvec(int size);
 void		delete_astnode(t_ast *node);

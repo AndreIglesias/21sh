@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 23:56:02 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 00:01:17 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 23:37:48 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,13 @@ static void	save_cmds(void)
 	}
 }
 
-void	ft_analyze(void)
+int	ft_analyze(void)
 {
 	int	i;
 
 	g_sh->ncmd = 1;
 	if (!consistent_cmd())
-		return ;
+		return (EXIT_FAILURE);
 	g_sh->cmd_line = malloc(sizeof(char *) * (g_sh->ncmd + 1));
 	i = 0;
 	while (i < g_sh->ncmd + 1)
@@ -123,11 +123,11 @@ void	ft_analyze(void)
 	while (g_sh->cmd_line[i])
 	{
 		if (ft_lexer(i) == EXIT_FAILURE)
-			return ;
+			return (EXIT_FAILURE);
 		if (ft_parser(i) == EXIT_FAILURE)
-			return ;
-		if (ft_semantic(i) == EXIT_FAILURE)
-			return ;
+			return (EXIT_FAILURE);
+		ft_semantic(i);
 		i++;
 	}
+	return (EXIT_SUCCESS);
 }

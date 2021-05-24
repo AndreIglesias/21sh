@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/05/24 14:58:49 by jiglesia         ###   ########.fr        #
+#    Updated: 2021/05/24 22:54:55 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -41,8 +41,8 @@ SRC			=	main.c
 SIGNAL		=	signals.c
 TERM		=	terminal.c environment.c getcmd.c keys_events.c prompt.c
 HISTORY		=	load_history.c free_history.c browse_history.c
-BUILTIN		=	sh_exit.c sh_pwd.c sh_echo.c sh_export.c sh_cd.c sh_env.c sh_history.c sh_unset.c sh_syntax.c
-ANALIZE		=	analyzer.c ast.c construct_ast.c get_envar.c print_syntax.c lexer.c parser.c semantic.c
+BUILTIN		=	sh_exit.c sh_pwd.c sh_echo.c sh_export.c sh_cd.c sh_env.c sh_history.c sh_syntax.c sh_unset.c
+ANALIZE		=	analyzer.c ast.c construct_ast.c get_envar.c print_syntax.c lexer.c parser.c semantic.c inception_tree.c
 EVAL		=	sh_which.c ft_evaluate.c evaluate_redirect.c evaluate_cmd.c
 
 SRCS		=	$(SRC) $(SIGNAL) $(TERM) $(HISTORY) $(BUILTIN) $(EVAL) $(ANALIZE)

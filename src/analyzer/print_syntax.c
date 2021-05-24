@@ -6,15 +6,15 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 18:45:24 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 13:34:48 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 20:07:05 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-t_ast	*first_in_list(t_ast *node)
+t_ast	*first_in_list(t_ast *node, t_uchar opp)
 {
-	while (node->back)
+	while (node->back && node->back->op != opp)
 		node = node->back;
 	return (node);
 }
@@ -58,36 +58,40 @@ void	print_btree(t_ast *node, char *prefix, t_uchar is_left)
 	}
 }
 
-static void	print_box(char *str)
+static void	print_box(char *str, int type)
 {
 	ft_putstr("[");
 	ft_putstr(str);
+	if (type >= 0)
+	{
+		ft_putstr("|");
+		ft_putnbr(type);
+	}
 	ft_putstr("] "E0M);
 }
 
-void	print_tokens(t_ast *tmp, int i)
+void	print_tokens(t_ast *tmp, int i, t_uchar opp)
 {
 	ft_putstr(BOLD"tokens: "E0M);
-	while (tmp)
+	while (tmp && tmp->op != opp)
 	{
 		if (tmp->bin)
 		{
 			if (tmp->type < 3)
 				ft_putstr(CEL);
-			ft_putnbr(tmp->type);
-			print_box(tmp->bin);
+			print_box(tmp->bin, tmp->type);
 			i = 0;
 			while (i < tmp->ac)
 			{
 				ft_putstr(BLUE);
-				print_box(tmp->av[i]);
+				print_box(tmp->av[i], -1);
 				i++;
 			}
 		}
 		else
 		{
 			ft_putstr(BOLD""GRAY);
-			print_box(g_sh->ops[tmp->op]);
+			print_box(g_sh->ops[tmp->op], -1);
 		}
 		tmp = tmp->next;
 	}
