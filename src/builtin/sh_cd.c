@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:04:58 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 14:23:32 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 09:24:56 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ int	sh_cd(t_trie *ev, char *path)
 {
 	char	*tmp;
 
-	tmp = ft_strdup(path);
 	if (path && path[0] == '~')
 		tmp = get_home_dir(ev, path);
+	else
+		tmp = ft_strdup(path);
 	if (!chdir(tmp))
 	{
 		if (tmp)
@@ -39,13 +40,14 @@ int	sh_cd(t_trie *ev, char *path)
 		tmp = getcwd(NULL, 0);
 		sh_export(ev, "PWD", tmp);
 		free(tmp);
-		return (1);
+		return (EXIT_SUCCESS);
 	}
 	else
 	{
-		ft_putstr_fd(BOLD"minishell: cd: no such file or directory: ", 2);
+		ft_putstr_fd(BOLD"minishell: cd: "BLUE, 2);
 		ft_putstr_fd(path, 2);
-		ft_putstr_fd("\n"E0M, 2);
+		ft_putstr_fd(E0M""BOLD" :no such file or directory\n"E0M, 2);
 	}
-	return (0);
+	free(tmp);
+	return (EXIT_FAILURE);
 }
