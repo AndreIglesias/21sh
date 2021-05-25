@@ -6,15 +6,15 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 18:26:00 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 18:27:53 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 16:37:28 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-void	sh_env(t_trie *ev)
+void	sh_env(void)
 {
 	char	tmp[200];
 
-	ft_puttrie(ev, tmp, 0);
+	ft_puttrie(g_sh->ev, tmp, 0);
 }

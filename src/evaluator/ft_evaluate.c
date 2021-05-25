@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 12:33:44 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 12:46:01 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/25 00:13:15 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,14 @@ void	op_or_cmds(t_ast *cmds)
 		evaluate_redirect(cmds);
 	else
 	{
-		if (cmds->type == 0)
-		{
-			ft_putstr_fd("minishell: command not found: ", 2);
-			ft_putstr_fd(cmds->bin, 2);
-			ft_putstr_fd("\n",2);
-		}
-		else if (cmds->type == 1)
+		if (cmds->type == 1)
 			evaluate_builtin(cmds);
 		else if (cmds->type == 2)
 			execve(cmds->bin, cmds->av, g_sh->envp);
-		//evaluate_bin(cmds);
 	}
 }
 
-void	add_str(char *str, char *value)
+static void	add_str(char *str, char *value)
 {
 	int		i;
 	char	**dup;
@@ -54,7 +47,7 @@ void	add_str(char *str, char *value)
 	g_sh->envp[i] = NULL;
 }
 
-void	save_envp(t_trie *root, char *str, int lvl)
+static void	save_envp(t_trie *root, char *str, int lvl)
 {
 	int		i;
 
@@ -80,7 +73,6 @@ void	save_envp(t_trie *root, char *str, int lvl)
 
 void	ft_evaluate(void)
 {
-	g_sh->envp = NULL;
 	char	str[200];
 	int		i;
 
@@ -89,7 +81,8 @@ void	ft_evaluate(void)
 	{
 		save_envp(g_sh->ev, str, 0);
 		op_or_cmds(g_sh->cmds[i]);
-		ft_freesplit(g_sh->envp);
+		if (g_sh->envp)
+			ft_freesplit(g_sh->envp);
 		i++;
 	}
 }

@@ -6,29 +6,29 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 12:23:41 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 18:32:09 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 23:27:41 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-void	sh_export(t_trie *ev, char *key, char *value)
+void	sh_export(int argc, char **argv)
 {
 	char	*check;
 	char	*tmp;
 	char	*tmp2;
 
-	if (key)
+	if (argc > 1 && argv[1])
 	{
-		check = get_value(ev, key);
+		check = get_value(g_sh->ev, argv[1]);
 		if (check)
-			delete_value(&ev, key, ft_strlen(key), 0);
-		tmp = ft_strjoin(key, "=");
-		tmp2 = ft_strjoin(tmp, value);
+			delete_value(&g_sh->ev, argv[1], ft_strlen(argv[1]), 0);
+		tmp = ft_strjoin(argv[1], "=");
+		tmp2 = ft_strjoin(tmp, argv[2]);
 		free(tmp);
-		insert_trie(&ev, tmp2, ft_strlen(key));
+		insert_trie(&g_sh->ev, tmp2, ft_strlen(argv[1]));
 		free(tmp2);
 	}
 	else
-		sh_env(ev);
+		sh_env();
 }

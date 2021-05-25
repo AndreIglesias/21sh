@@ -170,12 +170,12 @@ int			browse_history(char *buf);
 
 void		sh_exit(void);
 int			sh_pwd(void);
-int			sh_echo(char **value, t_uchar flag);
-void		sh_export(t_trie *ev, char *key, char *value);
-int			sh_cd(t_trie *ev, char *path);
-void		sh_env(t_trie *ev);
-void		sh_history(t_history *hst);
-void		sh_unset(t_trie *ev, char *key);
+int			sh_echo(int argc, char **value);
+void		sh_export(int argc, char **key);
+int			sh_cd(int argv, char **argc);
+void		sh_env(void);
+void		sh_history(void);
+void		sh_unset(int argc, char **key);
 int			sh_syntax(int ac, char	**av);
 
 /*
