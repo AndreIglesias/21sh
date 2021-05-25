@@ -6,12 +6,11 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/22 16:41:38 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/23 21:23:34 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/25 18:18:01 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
-
 
 int	is_envar(char *str, int i, char q)
 {
@@ -40,7 +39,7 @@ static char	*get_envnode(char *str, int i, int *k, char q)
 		(*k)++;
 		c++;
 		if (str[*k] == '$')
-			break;
+			break ;
 	}
 	tmp = ft_strndup(&str[i + 1], c - 1);
 	string = get_value(g_sh->ev, tmp);

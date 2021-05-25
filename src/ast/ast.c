@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 21:26:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 00:41:04 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/25 20:10:45 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,6 @@
 ** type (1, cmd) (2, op)
 ** op (1, <) (2, >) (3, >>) (4, |)
 */
-
-void	delete_astnode(t_ast *node)
-{
-	int	i;
-
-	if (node->back)
-		node->back->next = node->next;
-	if (node->next)
-		node->next->back = node->back;
-	if (node->bin)
-		free(node->bin);
-	if (node->av)
-	{
-		i = 0;
-		while (i < node->ac)
-			free(node->av[i++]);
-		free(node->av);
-	}
-}
 
 t_ast	**new_astvec(int size)
 {
@@ -60,6 +41,7 @@ static t_ast	*init_ast(void)
 	new->next = NULL;
 	new->back = NULL;
 	new->type = 0;
+	new->valid = 1;
 	new->left = NULL;
 	new->right = NULL;
 	new->bin = NULL;
