@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 18:45:24 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 20:07:05 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/25 15:04:33 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,16 @@ static void	print_box(char *str, int type)
 
 void	print_tokens(t_ast *tmp, int i, t_uchar opp)
 {
+	static char pip[] = {0xe2,0x94,0x82,32,32,32,0x00};
+
 	ft_putstr(BOLD"tokens: "E0M);
 	while (tmp && tmp->op != opp)
 	{
 		if (tmp->bin)
 		{
+			ft_putstr("\n");
+			ft_putstr(pip);
+			ft_putstr("\t");
 			if (tmp->type < 3)
 				ft_putstr(CEL);
 			print_box(tmp->bin, tmp->type);
@@ -90,7 +95,7 @@ void	print_tokens(t_ast *tmp, int i, t_uchar opp)
 		}
 		else
 		{
-			ft_putstr(BOLD""GRAY);
+			ft_putstr(BOLD""LIGHT_GRAY);
 			print_box(g_sh->ops[tmp->op], -1);
 		}
 		tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 22:04:34 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 00:08:34 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/25 14:51:51 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,8 @@ int	ft_parser(int x)
 
 	construct_cmds(&g_sh->cmds[x]);
 	tree = construct_tree(&g_sh->cmds[x]);
-	if (tree)
-	{
-		//print_tokens(first_in_list(g_sh->cmds[x], -1), 0, -1);
-		//print_btree(tree, "", 0);
-		g_sh->cmds[x] = tree;
-	}
-	else
-		return ((int)ft_puterror(BOLD"minishell: syntax error inconsistent \
-pipe or redirection\n"E0M, (void *)EXIT_FAILURE));
+	if (!tree)
+		return (EXIT_FAILURE);
+	g_sh->cmds[x] = tree;
 	return (EXIT_SUCCESS);
 }
