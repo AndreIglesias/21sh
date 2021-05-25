@@ -6,31 +6,11 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 00:00:07 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 13:57:10 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/25 19:22:52 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
-
-static int	is_bin(t_ast *node)
-{
-	char	*str;
-	if (is_builtin(node->bin))
-		node->type = 1;
-	else
-	{
-		str = sh_which(node->bin, g_sh->ev);
-		if (str)
-		{
-			node->type = 2;
-			free (node->bin);
-			node->bin = str;
-		}
-		else
-			return (0);
-	}
-	return (1);
-}
 
 static int	right_file(t_ast *node)
 {
@@ -95,28 +75,6 @@ static int	consistent_subtrees(t_ast *node)
 	return (i);
 }
 
-static int	is_pipe(t_ast *node)
-{
-	if (!node->right || !node->left || node->right->op == 4)
-	{
-		ft_puterror(BOLD"minishell: syntax error inconsistent pipe\n", NULL);
-		return (0);
-	}
-	if (node->right && node->right->bin && !is_bin(node->right))
-	{
-		ft_puterror(BOLD"minishell: semantic error after pipe:", NULL);
-		if (node->left && node->left->bin)
-		{
-			ft_putstr_fd(" "BLUE, 2);
-			ft_putstr_fd(node->right->bin, 2);
-			ft_putstr_fd(E0M""BOLD, 2);
-		}
-		ft_puterror(" command not found\n"E0M, NULL);
-		node->right->type = 0;
-	}
-	return (1);
-}
-
 static int	consistent_trees(t_ast *node)
 {
 	int	i;
@@ -135,6 +93,8 @@ static int	consistent_trees(t_ast *node)
 			else if (node->left)
 				return (consistent_subtrees(node->left));
 		}
+		else
+			return (consistent_subtrees(node));
 	}
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 22:50:36 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 14:57:07 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/25 18:55:29 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static int	consistent_redirections(t_ast *node)
 	{
 		if (0 < node->op && node->op < 4 && (!node->right || !node->right->bin))
 		{
-			ft_puterror(BOLD"minishell: syntax error inconsistent redirection: \
-`"BLUE, NULL);
+			ft_puterror(SYE"inconsistent redirection: `"BLUE, NULL);
 			ft_puterror(g_sh->ops[node->op], NULL);
 			ft_puterror(COLOR_E0M"'\n"E0M, NULL);
 			return (0);
@@ -43,8 +42,6 @@ static t_ast	*collect_tree(t_ast *tmp, t_ast **n, int *incon)
 	*n = tmp;
 	if (tree)
 		*n = tree;
-	//print_tokens(first_in_list(*n, 4), 0, 4);
-	//print_btree(*n, "", 0);
 	while (tmp && tmp->op != 4)
 		tmp = tmp->next;
 	return (tmp);
@@ -74,15 +71,11 @@ static t_ast	*append_tree(t_ast **tmp, t_ast **pipe, t_ast *n)
 	return (n);
 }
 
-t_ast	*construct_tree(t_ast **head)
+t_ast	*construct_tree(t_ast **head, t_ast *pipe, t_ast *n, int incon)
 {
 	t_ast	*tmp;
-	t_ast	*n;
-	t_ast	*pipe;
-	int		incon;
 
 	tmp = *head;
-	pipe = NULL;
 	while (tmp)
 	{
 		if (tmp->op != 4)
@@ -95,17 +88,14 @@ t_ast	*construct_tree(t_ast **head)
 			if (n)
 				return (n);
 		}
-		else if (tmp == *head || (tmp->next && tmp->next->op == 4))
-			return (ft_puterror(BOLD"minishell: syntax error inconsistent pipe: \
-`"BLUE"|"COLOR_E0M"'\n"E0M, NULL));
+		else if (tmp == *head)
+			return (ft_puterror(SYE"inconsistent pipe: `"BLUE"|"E0M"'\n", NULL));
 		if (tmp)
 			tmp = tmp->next;
 		if (tmp && tmp->op == 4)
-			return (ft_puterror(BOLD"minishell: syntax error inconsistent pipe: \
-`"BLUE"|"COLOR_E0M"'\n"E0M, NULL));
+			return (ft_puterror(SYE"inconsistent pipe: `"BLUE"|"E0M"'\n", NULL));
 	}
 	if (!pipe->left || !pipe->right)
-		return (ft_puterror(BOLD"minishell: syntax error inconsistent pipe: \
-`"BLUE"|"COLOR_E0M"'\n"E0M, NULL));
+		return (ft_puterror(SYE"inconsistent pipe: `"BLUE"|"E0M"'\n", NULL));
 	return (pipe);
 }

@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 22:04:34 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 14:51:51 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/25 18:56:23 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static char	*extract_param(t_ast *tmp)
 	str = ft_strdup(tmp->bin);
 	delete_astnode(tmp);
 	return (str);
-
 }
 
 static t_ast	*add_param(t_ast *cmd, int c)
@@ -75,7 +74,7 @@ int	ft_parser(int x)
 	t_ast	*tree;
 
 	construct_cmds(&g_sh->cmds[x]);
-	tree = construct_tree(&g_sh->cmds[x]);
+	tree = construct_tree(&g_sh->cmds[x], NULL, NULL, 0);
 	if (!tree)
 		return (EXIT_FAILURE);
 	g_sh->cmds[x] = tree;

@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 12:54:30 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 13:36:33 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/25 18:19:27 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,35 @@ static void	print_pwd(char *pwd)
 	ft_putstr(E0M);
 }
 
+static void	prompt_status(char *user)
+{
+	static char	success[] = {0xe2, 0x9c, 0x94, 0x00};
+	static char	fail[] = {0xe2, 0x9c, 0x98, 0x00};
+
+	ft_putstr(BG_LIGHT_GRAY" ");
+	if (g_sh->last_status == EXIT_SUCCESS)
+		ft_putstr(success);
+	else
+	{
+		ft_putstr(BLACK);
+		ft_putstr(fail);
+	}
+	if (user)
+		ft_putstr(" "BG_GRAY""LIGHT_GRAY);
+	else
+		ft_putstr(" "BG_CYAN""LIGHT_GRAY);
+	ft_putstr(ARROW);
+}
+
 void	ft_prompt(void)
 {
 	char		*user;
 	char		*pwd;
-	static char	point[] = {32,0xe2,0x9d,0xb1,32,0x00};
+	static char	point[] = {32, 0xe2, 0x9d, 0xb1, 32, 0x00};
 
 	user = get_value(g_sh->ev, "USER");
 	pwd = getcwd(NULL, 0);
+	prompt_status(user);
 	if (user)
 	{
 		ft_putstr(GREEN""BG_GRAY" ");
@@ -53,8 +74,5 @@ void	ft_prompt(void)
 	}
 	if (pwd)
 		print_pwd(pwd);
-	if (user || pwd)
-		ft_putstr(point);
-	else
-		ft_putstr(BOLD" $ "E0M);
+	ft_putstr(point);
 }
