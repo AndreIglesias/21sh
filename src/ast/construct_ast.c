@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 19:46:54 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/23 20:23:11 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 19:52:14 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ static void	add_op(t_ast **tmp, t_ast **op, t_ast *left, t_ast *head)
 	}
 }
 
-t_ast	*arrange_ast(t_ast *head, t_ast *left, t_ast *op)
+t_ast	*arrange_ast(t_ast *head, t_ast *left, t_ast *op, t_uchar opp)
 {
 	t_ast	*tmp;
 
 	tmp = head;
-	while (tmp)
+	while (tmp && tmp->op != opp)
 	{
 		if (!left && tmp->bin)
 			left = tmp;

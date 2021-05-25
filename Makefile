@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/05/24 09:27:47 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/05/25 19:40:24 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -34,18 +34,18 @@ DIRANA		=	$(DIRSRC)/analyzer/
 DIREVL		=	$(DIRSRC)/evaluator/
 DIRHIS		=	$(DIRSRC)/history/
 DIRBIN		=	$(DIRSRC)/builtin/
-
-DIRS		=	$(DIRSRC) $(DIRSIG) $(DIRTRM) $(DIRANA) $(DIREVL) $(DIRHIS) $(DIRBIN)
+DIRAST		=	$(DIRSRC)/ast/
 
 SRC			=	main.c
 SIGNAL		=	signals.c
 TERM		=	terminal.c environment.c getcmd.c keys_events.c prompt.c
 HISTORY		=	load_history.c free_history.c browse_history.c
-BUILTIN		=	sh_exit.c sh_pwd.c sh_echo.c sh_export.c sh_cd.c sh_env.c sh_history.c sh_syntax.c
-ANALIZE		=	analyzer.c ast.c construct_ast.c get_envar.c print_syntax.c lexer.c parser.c semantic.c
-EVAL		=	sh_which.c
+BUILTIN		=	sh_exit.c sh_pwd.c sh_echo.c sh_export.c sh_cd.c sh_env.c sh_history.c sh_syntax.c sh_unset.c
+AST			=	ast.c construct_ast.c free_ast.c print_ast.c
+ANALIZE		=	analyzer.c lexer.c get_envar.c parser.c semantic.c  boolean.c inception_tree.c
+EVAL		=	sh_which.c ft_evaluate.c evaluate_redirect.c evaluate_cmd.c
 
-SRCS		=	$(SRC) $(SIGNAL) $(TERM) $(HISTORY) $(BUILTIN) $(EVAL) $(ANALIZE)
+SRCS		=	$(SRC) $(SIGNAL) $(TERM) $(HISTORY) $(BUILTIN) $(EVAL) $(ANALIZE) $(AST)
 
 #***************** DEPS ******************#
 
@@ -100,6 +100,10 @@ E0M			=	 "\e[0m"
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRANA)/%.c
+				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
+
+%.o		:		../$(DIRAST)/%.c
 				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 

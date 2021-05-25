@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 23:56:02 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 00:01:17 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/25 20:00:49 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_cspecial(const char *c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (c[i] == ' ' || (c[i] >= 9 && c[i] <= 13))
@@ -73,7 +73,7 @@ static int	consistent_cmd(void)
 	}
 	if (dq || sq)
 		return ((int)ft_puterror(BOLD"minishell: syntax error ending quote not \
-found `\"'\n"E0M, (void*)0));
+found `\"'\n"E0M, (void *)0));
 	return (1);
 }
 
@@ -100,34 +100,34 @@ static void	save_cmds(void)
 			g_sh->cmd_line[x] = ft_fchrjoin(g_sh->cmd_line[x], g_sh->line[i]);
 		i++;
 	}
+	i = 0;
+	while (g_sh->cmd_line[i])
+		i++;
+	g_sh->ncmd = i;
 }
 
-void	ft_analyze(void)
+int	ft_analyze(void)
 {
 	int	i;
 
 	g_sh->ncmd = 1;
 	if (!consistent_cmd())
-		return ;
-	g_sh->cmd_line = malloc(sizeof(char *) * (g_sh->ncmd + 1));
-	i = 0;
-	while (i < g_sh->ncmd + 1)
-		g_sh->cmd_line[i++] = NULL;
+		return (EXIT_FAILURE);
+	g_sh->cmd_line = ft_memalloc(sizeof(char *) * (g_sh->ncmd + 1));
 	save_cmds();
-	i = 0;
-	while (g_sh->cmd_line[i])
-		i++;
-	g_sh->ncmd = i;
 	g_sh->cmds = new_astvec(g_sh->ncmd);
 	i = 0;
 	while (g_sh->cmd_line[i])
 	{
-		if (ft_lexer(i) == EXIT_FAILURE)
-			return ;
-		if (ft_parser(i) == EXIT_FAILURE)
-			return ;
-		if (ft_semantic(i) == EXIT_FAILURE)
-			return ;
+		if (ft_lexer(i) == EXIT_FAILURE || ft_parser(i) == EXIT_FAILURE)
+		{
+			g_sh->cmds[i]->valid = 0;
+			g_sh->last_status = EXIT_FAILURE;
+		}
+		else
+			ft_semantic(i);
 		i++;
 	}
+	free_cmd_line();
+	return (EXIT_SUCCESS);
 }
