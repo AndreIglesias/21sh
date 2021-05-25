@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 00:29:10 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/25 19:00:59 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ typedef struct s_shell
 	t_events		*events;
 	t_ast			**cmds;
 	char			**ops;
-	t_uchar			last_status;
+	int				last_status;
 	t_uchar			syntax;
 	char			**envp;
 }	t_shell;
@@ -133,6 +133,7 @@ extern t_shell		*g_sh;
 void		sigint_shell(int sig);
 void		sigquit_shell(int sig);
 void		sigtstp_shell(int sig);
+void		sig_child(int sig);
 
 /*
 **	terminal
@@ -203,7 +204,8 @@ char		*sh_which(char *name, t_trie *ev);
 int			is_builtin(char *name);
 void		ft_evaluate(void);
 void		evaluate_redirect(t_ast *op);
-void		op_or_cmds(t_ast *cmds);
+int			op_or_cmds(t_ast *cmds);
 void		evaluate_builtin(t_ast *op);
+void		parent_fork(int sig);
 
 #endif
