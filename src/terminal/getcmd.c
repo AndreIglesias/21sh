@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 21:08:33 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 23:57:55 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/26 19:01:03 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,25 @@
 
 /*
 **	buf[4] up & dw have 3 chars + '\0'
+**	buf[7] ctrl+lf & ctrl+rg have 6 chars + '\0'
 **	up 27 91 65
 **	dw 27 91 66
+**	ctr + left: 27 91 49   59 53 67 | ^[[1;5D
+**	ctr + left: 27 91 49   59 53 68 | ^[[1;5C
+**	FIN 27 91 70
+**	HOME 27 91 72
 */
 
 void	input_handler(void)
 {
 	int		e;
-	char	buf[4];
+	char	buf[7];
 	ssize_t	len;
 
 	while (!ft_strchr(buf, '\n'))
 	{
 		buf[0] = 0;
-		len = read(STDIN_FILENO, buf, 3);
+		len = read(STDIN_FILENO, buf, 6);
 		buf[len] = 0;
 		e = keys_event(buf);
 		if (e)
@@ -47,8 +52,17 @@ void	input_handler(void)
 
 ssize_t	get_cmd(void)
 {
+	int	s;
+
 	input_handler();
-	if (g_sh->line && !g_sh->line[0])
+	if (g_sh->line)
+	{
+		s = 0;
+		while (g_sh->line[s] && g_sh->line[s] == ' ')
+			s++;
+
+	}
+	if (g_sh->line && (!g_sh->line[0] || !g_sh->line[s]))
 	{
 		free(g_sh->line);
 		g_sh->line = NULL;
