@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 21:08:33 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 18:05:15 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/26 19:01:03 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,17 @@ void	input_handler(void)
 
 ssize_t	get_cmd(void)
 {
+	int	s;
+
 	input_handler();
-	if (g_sh->line && !g_sh->line[0])
+	if (g_sh->line)
+	{
+		s = 0;
+		while (g_sh->line[s] && g_sh->line[s] == ' ')
+			s++;
+
+	}
+	if (g_sh->line && (!g_sh->line[0] || !g_sh->line[s]))
 	{
 		free(g_sh->line);
 		g_sh->line = NULL;
