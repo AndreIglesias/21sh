@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 13:54:11 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/26 17:44:20 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,74 @@ static int	delete_key()
 	return (2);
 }
 
+static int	next_space(char *str, int i)
+{
+	int	my_space;
+
+	if (str && str[i - 1])
+	{
+		my_space = 0;
+		i--;
+		if (str[i] == ' ')
+			my_space = 1;
+		while (i && (str[i] != ' ' || my_space))
+		{
+			if (str[i] != ' ')
+				my_space = 0;
+			i--;
+		}
+		if (!my_space && str[i] == ' ')
+			i++;
+	}
+	return (i);
+}
+
+static int	next_char(char *str, int i)
+{
+	int	my_char;
+
+	if (str && str[i])
+	{
+		my_char = 0;
+		i++;
+		if (str[i] != ' ')
+			my_char = 1;
+		while (str[i] && (str[i] == ' ' || my_char))
+		{
+			if (str[i] == ' ')
+				my_char = 0;
+			i++;
+		}
+	}
+	return (i);
+}
+
+static int	move_ctrl(char *buf, char *cl, char *cr)
+{
+	size_t	x;
+
+	if (!ft_strcmp(cl, buf) && g_sh->line_cursor)
+	{
+		x = next_space(g_sh->line, g_sh->line_cursor);
+		while (x < g_sh->line_cursor)
+		{
+			ft_putstr_fd(g_sh->events->lf, 0);
+			g_sh->line_cursor--;
+		}
+	}
+	else if (!ft_strcmp(cr, buf) && g_sh->line_cursor
+		< ft_strlen(g_sh->line))
+	{
+		x = next_char(g_sh->line, g_sh->line_cursor);
+		while (g_sh->line_cursor < x)
+		{
+			ft_putstr_fd(g_sh->events->rg, 0);
+			g_sh->line_cursor++;
+		}
+	}
+	return (0);
+}
+
 /*
 **	ascii
 **	4 = EOT
@@ -59,8 +127,13 @@ static int	delete_key()
 
 int	keys_event(char *buf)
 {
+	static char	cr[] = {27, 91, 49, 59, 53, 67, 0};
+	static char	cl[] = {27, 91, 49, 59, 53, 68, 0};
+
 	if (buf[0] == 4)
 		sh_exit();
+	if (ft_strlen(buf) == 6 && (!ft_strcmp(cl, buf) || !ft_strcmp(cr, buf)))
+		return (move_ctrl(buf, cl, cr));
 	if (buf[0] == 127 && g_sh->line && g_sh->line[0] && g_sh->line_cursor > 0)
 		return (delete_key());
 	if (!ft_strcmp(g_sh->events->up, buf) || !ft_strcmp(g_sh->events->dw, buf))
