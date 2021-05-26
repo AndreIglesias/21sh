@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/05/25 19:40:24 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/05/26 13:26:14 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -24,6 +24,7 @@ INCLUDE		=	-O3 -I $(INCFT) -I $(INC)
 
 INC_LIB		=	-L$(INCFT) -lft -lcurses
 
+FONTS		=	powerline
 
 #***************** SRC* *******************#
 
@@ -139,6 +140,10 @@ $(NAME)	:		ftlib $(OBJS)
 				@$(ECHO) '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
 				@$(ECHO) $(E0M)
 				@$(ECHO) $(BOLD)$(GREEN)'> Compiled'$(E0M)
+				@for font in $(FONTS); do \
+					command -v $$font > /dev/null 2>&1 \
+					|| echo >&2 "Could not find '$$font', you can install it with:\e[34m\e[1m Make fonts\e[0m";  \
+				done
 
 clean	:
 				@($(RM) $(OBJS))
@@ -157,6 +162,10 @@ re		:		fclean all
 
 ftlib	:
 				@(cd $(SUB_MAKE) && $(MAKE))
+
+fonts	:
+				sudo apt install $(FONTS)
+				fc-cache -fv
 
 .PHONY	:		all clean re
 

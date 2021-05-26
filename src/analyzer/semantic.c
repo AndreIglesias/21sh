@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 00:00:07 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 19:22:52 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/26 14:09:14 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	consistent_subtrees(t_ast *node)
 			ft_putstr_fd(BLUE, 2);
 			ft_putstr_fd(node->bin, 2);
 			ft_puterror(E0M""BOLD": command not found\n"E0M, NULL);
-			return (0);
+			//return (0);
 		}
 		else if (node->op == 1 && !right_file(node))
 			return (0);
@@ -87,11 +87,11 @@ static int	consistent_trees(t_ast *node)
 			if (!is_pipe(node))
 				return (0);
 			if (node->right)
-				return (consistent_subtrees(node->right));
+				i *= consistent_subtrees(node->right);
 			if (node->left && node->op == 4)
 				i *= consistent_trees(node->left);
 			else if (node->left)
-				return (consistent_subtrees(node->left));
+				i *= consistent_subtrees(node->left);
 		}
 		else
 			return (consistent_subtrees(node));
@@ -101,10 +101,10 @@ static int	consistent_trees(t_ast *node)
 
 int	ft_semantic(int x)
 {
+	if (!consistent_trees(g_sh->cmds[x]))
+		return (EXIT_FAILURE);
 	print_tokens(first_in_list(g_sh->cmds[x], -1), 0, -1);
 	print_btree(g_sh->cmds[x], "", 0);
 	ft_putstr("\n");
-	if (!consistent_trees(g_sh->cmds[x]))
-		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
