@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/22 16:41:38 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 18:18:01 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/26 21:08:37 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*get_envnode(char *str, int i, int *k, char q)
 	*k = i;
 	while (str[*k] && !ft_cspecial(&str[*k]) && !is_op(&str[*k]))
 	{
-		if (q && str[*k] == q)
+		if ((q && str[*k] == q) || str[*k] == '\'' || str[*k] == '"')
 			break ;
 		(*k)++;
 		c++;
@@ -79,7 +79,5 @@ int	save_envnode(char *str, int i, int x)
 	string = get_envnode(str, i, &k, 0);
 	if (string)
 		add_ast(&g_sh->cmds[x], new_astcmd(ft_strdup(string), NULL));
-	else
-		add_ast(&g_sh->cmds[x], new_astcmd(ft_strdup(""), NULL));
 	return (k);
 }

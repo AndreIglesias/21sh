@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 00:00:07 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 14:09:14 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/26 19:43:44 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ static int	consistent_trees(t_ast *node)
 
 int	ft_semantic(int x)
 {
+	if (!g_sh->cmds[x])
+		return (EXIT_SUCCESS);
 	if (!consistent_trees(g_sh->cmds[x]))
 		return (EXIT_FAILURE);
 	print_tokens(first_in_list(g_sh->cmds[x], -1), 0, -1);
