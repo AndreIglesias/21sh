@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 18:02:34 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 16:53:28 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/26 19:24:02 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ char	*sh_which(char *name, t_trie *ev)
 	char		*path;
 	struct stat	buf;
 
+	if (!name || !name[0])
+		return (NULL);
 	path = NULL;
 	if (ft_strchr(name, '/'))
 	{
