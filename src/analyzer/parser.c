@@ -6,18 +6,21 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 22:04:34 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 19:43:22 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/27 21:02:47 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-static char	*extract_param(t_ast *tmp)
+static char	*extract_param(t_ast **tmp)
 {
 	char	*str;
+	t_ast	*del;
 
-	str = ft_strdup(tmp->bin);
-	delete_astnode(tmp);
+	str = ft_strdup((*tmp)->bin);
+	del = *tmp;
+	*tmp = (*tmp)->next;
+	delete_astnode(del);
 	return (str);
 }
 
@@ -38,10 +41,7 @@ static t_ast	*add_param(t_ast *cmd, int c)
 		c = 1;
 		tmp = cmd->next;
 		while (tmp && tmp->bin)
-		{
-			cmd->av[c++] = extract_param(tmp);
-			tmp = tmp->next;
-		}
+			cmd->av[c++] = extract_param(&tmp);
 		return (tmp);
 	}
 	cmd->av = ft_memalloc(sizeof(char *) * 2);
