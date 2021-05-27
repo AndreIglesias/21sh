@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:09:10 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 23:54:15 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/27 18:59:03 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	evaluate_builtin(t_ast *op)
 	else if (!ft_strcmp(op->bin, "env"))
 		sh_env();
 	else if (!ft_strcmp(op->bin, "exit"))
-		sh_exit();
+		sh_exit(op->av[1]);
 	else if (!ft_strcmp(op->bin, "history"))
 		sh_history();
 }

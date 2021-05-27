@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 22:34:21 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/27 18:53:46 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct s_shell
 	int				last_status;
 	t_uchar			syntax;
 	char			**envp;
+	t_ast			*pid;
 }	t_shell;
 
 extern t_shell		*g_sh;
@@ -169,7 +170,7 @@ int			browse_history(char *buf);
 **	builtins
 */
 
-void		sh_exit(void);
+void		sh_exit(char *value);
 int			sh_pwd(void);
 int			sh_echo(int argc, char **value);
 void		sh_export(int argc, char **key);

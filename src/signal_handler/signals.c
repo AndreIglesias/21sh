@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 22:43:29 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 18:23:34 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/26 14:15:04 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,29 @@
 
 void	sig_child(int sig)
 {
-	static int pid;
+	t_ast	*tmp;
 
-    if (pid)
+	tmp = g_sh->pid;
+    if (sig == SIGQUIT || sig == SIGINT)
     {
-        kill(pid, sig);
+		while (tmp->next)
+			tmp = tmp->next;
+        kill(tmp->ac, sig);
         if (sig == SIGQUIT)
             ft_putstr_fd("Quit (core dumped)\n", 1);
-        else if (sig == SIGINT || sig == SIGQUIT)
+        else
             ft_putstr_fd("\n", 1);
-        pid = 0;
-    }
-    else
-        pid = sig;
+		delete_astnode(tmp);
+	}
+	else
+	{
+		while (tmp)
+		{
+			if (tmp->ac == sig)
+				delete_astnode(tmp);
+			tmp = tmp->next;
+		}
+	}
 }
 
 void	sigint_shell(int sig)

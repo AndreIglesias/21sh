@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:29:37 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 14:55:28 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/27 18:30:54 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ int					ft_strcmp(const char *s1, const char *s2);
 void				ft_freesplit(char **split);
 void				ft_puttrie(t_trie *root, char *str, int lvl);
 void				ft_freetrie(t_trie **root);
+long long			ft_atoll(char *nb);
 
 #endif

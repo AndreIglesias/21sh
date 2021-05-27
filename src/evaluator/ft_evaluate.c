@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 12:33:44 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 19:15:48 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/27 19:45:16 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ int	op_or_cmds(t_ast *cmds)
 			if (pid)
 				parent_fork(pid);
 			else
+			{
 				execve(cmds->bin, cmds->av, g_sh->envp);
+				sh_exit(NULL);
+			}
 			tcsetattr(0, 0, &g_sh->new_term);
 			return (EXIT_SUCCESS);
 		}
@@ -95,13 +98,15 @@ void	ft_evaluate(void)
 	int		i;
 
 	i = 0;
-	if (!g_sh->envp)//
-		save_envp(g_sh->ev, str, 0);
 	while (g_sh->cmds[i])
 	{
+		save_envp(g_sh->ev, str, 0);
 		op_or_cmds(g_sh->cmds[i]);
+		if (g_sh->envp)
+		{
+			ft_freesplit(g_sh->envp);
+			g_sh->envp = NULL;
+		}
 		i++;
 	}
-	//if (g_sh->envp)
-	//ft_freesplit(g_sh->envp);
 }

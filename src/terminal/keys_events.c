@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 18:05:09 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/27 18:55:22 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int	keys_event(char *buf)
 	static char	end[] = {27, 91, 70, 0};
 
 	if (buf[0] == 4)
-		sh_exit();
+		sh_exit(NULL);
 	if (ft_strlen(buf) == 6 && (!ft_strcmp(cl, buf) || !ft_strcmp(cr, buf)))
 		return (move_ctrl(buf, cl, cr));
 	if (ft_strlen(buf) == 3 && (!ft_strcmp(home, buf) || !ft_strcmp(end, buf)))

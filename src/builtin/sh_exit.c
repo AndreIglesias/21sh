@@ -6,13 +6,29 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 16:14:52 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 19:39:07 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/27 19:24:44 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-void	sh_exit(void)
+static int	ll_to_uchar(char *value)
+{
+	t_uchar		a;
+	long long	tmp;
+
+	tmp = ft_atoll(value);
+	if (!tmp)
+	{
+		ft_putstr_fd(BOLD"minishell: exit: ", 2);
+		ft_putstr_fd(value, 2);
+		ft_putstr_fd(": numeric argument required\n"E0M, 2);
+	}
+	a = (t_uchar)tmp;
+	return ((int)a);
+}
+
+void	sh_exit(char *value)
 {
 	int	fd;
 
@@ -32,5 +48,7 @@ void	sh_exit(void)
 		free(g_sh);
 	if (fd == -1)
 		ft_puterror(BOLD"minishell: ~/.minishell_history not generated\n"E0M, 0);
+	if (value && value[0] != '0')
+		exit(ll_to_uchar(value));
 	exit(EXIT_SUCCESS);
 }
