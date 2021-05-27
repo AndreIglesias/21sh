@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 22:04:34 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 18:56:23 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/26 19:43:22 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	ft_parser(int x)
 {
 	t_ast	*tree;
 
+	if (!g_sh->cmds[x])
+		return (EXIT_SUCCESS);
 	construct_cmds(&g_sh->cmds[x]);
 	tree = construct_tree(&g_sh->cmds[x], NULL, NULL, 0);
 	if (!tree)
