@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 00:00:07 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 19:43:44 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/27 13:50:13 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,13 @@ static int	consistent_subtrees(t_ast *node)
 			ft_putstr_fd(BLUE, 2);
 			ft_putstr_fd(node->bin, 2);
 			ft_puterror(E0M""BOLD": command not found\n"E0M, NULL);
-			//return (0);
+			return (0);
 		}
 		else if (node->op == 1 && !right_file(node))
 			return (0);
 		else if ((node->op == 2 || node->op == 3) && !left_cmd(node))
 			return (0);
 		i *= consistent_subtrees(node->left);
-		i *= consistent_subtrees(node->right);
 	}
 	return (i);
 }
