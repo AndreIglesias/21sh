@@ -144,6 +144,7 @@ extern t_shell		*g_sh;
 void		sigint_shell(int sig);
 void		sigquit_shell(int sig);
 void		sigtstp_shell(int sig);
+void		sig_child(int sig);
 
 /*
 **	terminal
@@ -223,7 +224,8 @@ char		*sh_which(char *name, t_trie *ev);
 int			is_builtin(char *name);
 void		ft_evaluate(void);
 void		evaluate_redirect(t_ast *op);
-void		op_or_cmds(t_ast *cmds);
+int			op_or_cmds(t_ast *cmds);
 void		evaluate_builtin(t_ast *op);
+void		parent_fork(int sig);
 
 #endif

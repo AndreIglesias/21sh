@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 19:50:17 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/23 23:47:19 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/25 00:45:23 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	ft_freesplit(char **split)
 	{
 		while (split[i])
 			i++;
-		while (i)
-			free(split[--i]);
+		while (i--)
+			free(split[i]);
 	}
 	free(split);
 	split = NULL;

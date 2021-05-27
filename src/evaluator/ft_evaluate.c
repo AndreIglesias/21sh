@@ -6,23 +6,41 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 12:33:44 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 00:13:15 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/25 19:15:48 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-void	op_or_cmds(t_ast *cmds)
+int	op_or_cmds(t_ast *cmds)
 {
+	int	pid;
+
 	if (cmds->op)
+	{
 		evaluate_redirect(cmds);
+		return (EXIT_SUCCESS);
+	}
 	else
 	{
 		if (cmds->type == 1)
+		{
 			evaluate_builtin(cmds);
+			return (EXIT_SUCCESS);
+		}
 		else if (cmds->type == 2)
-			execve(cmds->bin, cmds->av, g_sh->envp);
+		{
+			tcsetattr(0, 0, &g_sh->old_term);
+			pid = fork();
+			if (pid)
+				parent_fork(pid);
+			else
+				execve(cmds->bin, cmds->av, g_sh->envp);
+			tcsetattr(0, 0, &g_sh->new_term);
+			return (EXIT_SUCCESS);
+		}
 	}
+	return (EXIT_FAILURE);
 }
 
 static void	add_str(char *str, char *value)
@@ -77,12 +95,13 @@ void	ft_evaluate(void)
 	int		i;
 
 	i = 0;
+	if (!g_sh->envp)//
+		save_envp(g_sh->ev, str, 0);
 	while (g_sh->cmds[i])
 	{
-		save_envp(g_sh->ev, str, 0);
 		op_or_cmds(g_sh->cmds[i]);
-		if (g_sh->envp)
-			ft_freesplit(g_sh->envp);
 		i++;
 	}
+	//if (g_sh->envp)
+	//ft_freesplit(g_sh->envp);
 }

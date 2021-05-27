@@ -6,11 +6,28 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 22:43:29 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 18:48:46 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/25 18:23:34 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
+
+void	sig_child(int sig)
+{
+	static int pid;
+
+    if (pid)
+    {
+        kill(pid, sig);
+        if (sig == SIGQUIT)
+            ft_putstr_fd("Quit (core dumped)\n", 1);
+        else if (sig == SIGINT || sig == SIGQUIT)
+            ft_putstr_fd("\n", 1);
+        pid = 0;
+    }
+    else
+        pid = sig;
+}
 
 void	sigint_shell(int sig)
 {
