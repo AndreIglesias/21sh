@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 07:13:31 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 16:50:54 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/27 20:54:33 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ t_shell	*ft_shell(void)
 	sh->envp = NULL;
 	sh->ops = ops;
 	sh->syntax = 0;
+	sh->pid = NULL;
 	return (sh);
 }

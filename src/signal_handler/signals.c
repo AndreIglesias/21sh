@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 22:43:29 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 14:15:04 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/27 21:12:03 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,12 @@ void	sig_child(int sig)
 		while (tmp)
 		{
 			if (tmp->ac == sig)
+			{
+				if (!tmp->next && !tmp->back)
+					g_sh->pid = NULL;
 				delete_astnode(tmp);
+				return ;
+			}
 			tmp = tmp->next;
 		}
 	}
