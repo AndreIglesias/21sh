@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 16:14:52 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/27 19:24:44 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/27 21:17:28 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	sh_exit(char *value)
 		free(g_sh->events);
 	if (g_sh->ev)
 		ft_freetrie(&g_sh->ev);
+	if (g_sh->envp)
+		ft_freesplit(g_sh->envp);
 	if (g_sh)
 		free(g_sh);
 	if (fd == -1)
