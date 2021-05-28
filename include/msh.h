@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/27 20:01:14 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/28 16:08:04 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,5 +228,7 @@ void		evaluate_redirect(t_ast *op);
 int			op_or_cmds(t_ast *cmds);
 void		evaluate_builtin(t_ast *op);
 void		parent_fork(int sig);
+void		append_create_fd(int fdpip, t_ast *op);
+void		cat_last_file(t_ast *cmds);
 
 #endif

@@ -6,45 +6,11 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:06:39 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/27 18:58:17 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/28 16:09:16 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
-
-void	cat_last_file(t_ast *cmds)
-{
-	t_ast	*tmp;
-
-	if (cmds)
-	{
-		tmp = cmds;
-		while (tmp->left)
-			tmp = tmp->left;
-		op_or_cmds(tmp);
-	}
-}
-
-void	add_pid(int pid)
-{
-	t_ast	*tmp;
-
-	tmp = new_astop(0);
-	tmp->ac = pid;
-	add_ast(&g_sh->pid, tmp);
-}
-
-void	parent_fork(int pid)
-{
-	add_pid(pid);
-	signal(SIGINT, sig_child);
-	signal(SIGQUIT, sig_child);
-	waitpid(pid, &g_sh->last_status, 0);
-	sig_child(pid);
-	signal(SIGINT, sigint_shell);
-	signal(SIGQUIT, sigquit_shell);
-	g_sh->last_status = WEXITSTATUS(g_sh->last_status);
-}
 
 static void	stdin_to_bin(t_ast *op)
 {
@@ -95,8 +61,6 @@ static void	stdout_to_file(t_ast *op)
 static void	stdout_to_eof(t_ast *op)
 {
 	int		fdpip[2];
-	int		fd;
-	char	buf;
 	int		pid;
 
 	tcsetattr(0, 0, &g_sh->old_term);
@@ -106,12 +70,7 @@ static void	stdout_to_eof(t_ast *op)
 	{
 		close(fdpip[1]);
 		parent_fork(pid);
-		fd = open(op->right->bin, O_APPEND | O_WRONLY);
-		if (fd < 1)
-		fd = open(op->right->bin, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		while (read(fdpip[0], &buf, 1))
-			write(fd, &buf, 1);
-		close(fd);
+		append_create_fd(fdpip[0], op);
 	}
 	else
 	{
@@ -128,7 +87,7 @@ static void	stdout_to_eof(t_ast *op)
 
 static void	stdout_to_stdin(t_ast *op)
 {
-	int fd[2];
+	int	fd[2];
 	int	pid;
 
 	tcsetattr(0, 0, &g_sh->old_term);

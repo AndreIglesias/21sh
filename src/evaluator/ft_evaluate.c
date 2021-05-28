@@ -6,16 +6,31 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 12:33:44 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/27 20:33:55 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/28 16:16:06 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-int	op_or_cmds(t_ast *cmds)
+static int	exec_cmd(t_ast *cmds)
 {
 	int	pid;
 
+	tcsetattr(0, 0, &g_sh->old_term);
+	pid = fork();
+	if (pid)
+		parent_fork(pid);
+	else
+	{
+		execve(cmds->bin, cmds->av, g_sh->envp);
+		sh_exit(NULL);
+	}
+	tcsetattr(0, 0, &g_sh->new_term);
+	return (EXIT_SUCCESS);
+}
+
+int	op_or_cmds(t_ast *cmds)
+{
 	if (cmds->op)
 	{
 		evaluate_redirect(cmds);
@@ -29,19 +44,7 @@ int	op_or_cmds(t_ast *cmds)
 			return (EXIT_SUCCESS);
 		}
 		else if (cmds->type == 2)
-		{
-			tcsetattr(0, 0, &g_sh->old_term);
-			pid = fork();
-			if (pid)
-				parent_fork(pid);
-			else
-			{
-				execve(cmds->bin, cmds->av, g_sh->envp);
-				sh_exit(NULL);
-			}
-			tcsetattr(0, 0, &g_sh->new_term);
-			return (EXIT_SUCCESS);
-		}
+			return (exec_cmd(cmds));
 	}
 	return (EXIT_FAILURE);
 }
