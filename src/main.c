@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/27 18:54:12 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:20:02 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	ft_minishell(void)
 			free_ast();
 		}
 		free(g_sh->line);
+		if (g_sh->line_tmp)
+			free(g_sh->line_tmp);
 	}
-	if (g_sh->line)
-		free(g_sh->line);
 }
 
 int	main(int ac, char **av, char **ev)

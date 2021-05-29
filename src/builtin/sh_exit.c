@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 16:14:52 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/27 21:17:28 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/29 00:03:04 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,30 @@ void	sh_exit(char *value)
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd != -1)
 		put_history_fd(g_sh->history, fd);
+	tcsetattr(0, 0, &g_sh->old_term);
+//	tgetent(NULL, g_sh->events->ks);
+//	tgetent(NULL, g_sh->events->sc);
+	tgetent(NULL, "");
+//	tgetent(NULL, g_sh->events->dc);
+//	tgetent(NULL, g_sh->events->ce);
+	if (g_sh->line_tmp)
+		free(g_sh->line_tmp);
+	if (g_sh->line)
+		free(g_sh->line);
 	if (g_sh->history)
 		free_history(g_sh->history);
 	if (g_sh->history_path)
 		free(g_sh->history_path);
-	if (g_sh->history_path)
+	if (g_sh->events)
 		free(g_sh->events);
 	if (g_sh->ev)
 		ft_freetrie(&g_sh->ev);
 	if (g_sh->envp)
 		ft_freesplit(g_sh->envp);
+	if (g_sh->cmd_line)
+		free_cmd_line();
+	if (g_sh->cmds)
+		free_ast();
 	if (g_sh)
 		free(g_sh);
 	if (fd == -1)

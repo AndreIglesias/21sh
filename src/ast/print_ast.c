@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 19:40:33 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 19:40:34 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:03:50 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 t_ast	*first_in_list(t_ast *node, t_uchar opp)
 {
+	if (!node)
+		return (NULL);
 	while (node->back && node->back->op != opp)
 		node = node->back;
 	return (node);

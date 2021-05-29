@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/28 16:08:04 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/28 19:57:17 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,6 @@ typedef struct s_ast
 	t_uchar			op;
 
 }	t_ast;
-
-typedef struct s_envar
-{
-	char			*key;
-	char			*value;
-	t_uchar			set;
-	struct s_envar	*next;
-}	t_envar;
 
 typedef struct s_events
 {

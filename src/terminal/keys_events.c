@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/27 18:55:22 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/29 13:15:49 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	del_ins(void)
 	else
 	{
 		g_sh->line[g_sh->line_cursor - 1] = 0;
-		g_sh->line = ft_strjoin(g_sh->line, &g_sh->line[g_sh->line_cursor]);
+		g_sh->line = ft_fstrjoin(g_sh->line, &g_sh->line[g_sh->line_cursor]);//leak
 		ft_putstr_fd(&g_sh->line[g_sh->line_cursor - 1], 0);
 	}
 }
