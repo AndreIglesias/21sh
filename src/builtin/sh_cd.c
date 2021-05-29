@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:04:58 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 23:49:25 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/27 21:43:11 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,23 @@ static void	update_ev(char *key, char *argv)
 	free(tmp2);
 }
 
+static int	cd_alone(int argc)
+{
+	char	*tmp;
+
+	if (argc == 1)
+	{
+		tmp = get_value(g_sh->ev, "HOME");
+		if (!chdir(tmp))
+		{
+			update_ev("OLDPWD", get_value(g_sh->ev, "PWD"));
+			update_ev("PWD", tmp);
+			return (EXIT_SUCCESS);
+		}
+	}
+	return (EXIT_FAILURE);
+}
+
 int	sh_cd(int argv, char **argc)
 {
 	char	*tmp;
@@ -53,6 +70,7 @@ int	sh_cd(int argv, char **argc)
 			tmp = ft_strdup(argc[1]);
 		if (!chdir(tmp))
 		{
+			update_ev("OLDPWD", get_value(g_sh->ev, "PWD"));
 			update_ev("PWD", tmp);
 			free(tmp);
 			return (EXIT_SUCCESS);
@@ -65,5 +83,5 @@ int	sh_cd(int argv, char **argc)
 		}
 		free(tmp);
 	}
-	return (EXIT_FAILURE);
+	return (cd_alone(argv));
 }

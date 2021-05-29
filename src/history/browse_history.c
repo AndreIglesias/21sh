@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 16:49:04 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 17:52:11 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/29 12:16:40 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ static void	browse_up(void)
 		if (g_sh->line)
 			g_sh->line_tmp = g_sh->line;
 		else
+		{
+			if (g_sh->line_tmp)
+				free(g_sh->line_tmp);
 			g_sh->line_tmp = ft_strdup("");
+		}
 		change_history(ft_strdup(g_sh->history_cursor->cmd));
 		return ;
 	}
@@ -48,6 +52,8 @@ static void	browse_dw(void)
 {
 	if (g_sh->history_cursor == g_sh->history && g_sh->line_tmp)
 	{
+		if (g_sh->line)
+			free(g_sh->line);
 		change_history(g_sh->line_tmp);
 		g_sh->line_tmp = NULL;
 		return ;

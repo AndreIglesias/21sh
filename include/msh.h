@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 20:25:52 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/28 19:57:17 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,6 @@ typedef struct s_ast
 
 }	t_ast;
 
-typedef struct s_envar
-{
-	char			*key;
-	char			*value;
-	t_uchar			set;
-	struct s_envar	*next;
-}	t_envar;
-
 typedef struct s_events
 {
 	char	*ks;
@@ -133,6 +125,7 @@ typedef struct s_shell
 	int				last_status;
 	t_uchar			syntax;
 	char			**envp;
+	t_ast			*pid;
 }	t_shell;
 
 extern t_shell		*g_sh;
@@ -169,7 +162,7 @@ int			browse_history(char *buf);
 **	builtins
 */
 
-void		sh_exit(void);
+void		sh_exit(char *value);
 int			sh_pwd(void);
 int			sh_echo(int argc, char **value);
 void		sh_export(int argc, char **key);
@@ -227,5 +220,7 @@ void		evaluate_redirect(t_ast *op);
 int			op_or_cmds(t_ast *cmds);
 void		evaluate_builtin(t_ast *op);
 void		parent_fork(int sig);
+void		append_create_fd(int fdpip, t_ast *op);
+void		cat_last_file(t_ast *cmds);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 12:54:30 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 12:52:30 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/28 21:59:13 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ void	ft_prompt(void)
 		ft_putstr(ARROW);
 	}
 	if (pwd)
+	{
 		print_pwd(pwd);
+		free(pwd);
+	}
 	ft_putstr(point);
 }

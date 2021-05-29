@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 19:12:15 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 19:26:35 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:07:02 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	free_ast(void)
 	if (g_sh->cmds)
 	{
 		x = 0;
-		while (g_sh->cmds[x])
+		while (x < g_sh->ncmd)
 		{
 			tmp = first_in_list(g_sh->cmds[x], -1);
 			if (tmp)
@@ -55,6 +55,8 @@ void	free_ast(void)
 			g_sh->cmds[x] = NULL;
 			x++;
 		}
+		free(g_sh->cmds);
+		g_sh->cmds = NULL;
 	}
 }
 

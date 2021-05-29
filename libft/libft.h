@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:29:37 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 14:55:28 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/28 17:13:57 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int					ft_atoi(const char *nptr);
 void				*ft_calloc(size_t nmemb, size_t size);
 char				*ft_strdup(const char *s);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
-char				*ft_strins(char const *s1, char const *s2, size_t pos);
+char				*ft_strins(char *s1, char const *s2, size_t pos);
 char				*ft_fstrjoin(char *s1, char *s2);
 char				*ft_fchrjoin(char *s1, char s2);
 char				*ft_strjoin(char const *s1, char const *s2);
@@ -112,5 +112,6 @@ int					ft_strcmp(const char *s1, const char *s2);
 void				ft_freesplit(char **split);
 void				ft_puttrie(t_trie *root, char *str, int lvl);
 void				ft_freetrie(t_trie **root);
+long long			ft_atoll(char *nb);
 
 #endif

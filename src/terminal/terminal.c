@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 07:13:31 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 16:50:54 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/29 01:26:48 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_events	*init_termcap(void)
 	t_events	*event;
 	char		*termtype;
 	int			connect;
+//	char		buf[2048];
 
 	termtype = getenv("TERM");
 	if (!termtype)
@@ -109,5 +110,6 @@ t_shell	*ft_shell(void)
 	sh->envp = NULL;
 	sh->ops = ops;
 	sh->syntax = 0;
+	sh->pid = NULL;
 	return (sh);
 }
