@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 18:02:34 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/29 14:24:10 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:33:39 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	is_builtin(char *name)
 		return (1);
 	if (!ft_strcmp(name, "history"))
 		return (1);
-	//if (!ft_strcmp(name, "syntax"))
-	//return (1);
+	if (!ft_strcmp(name, "syntax"))
+		return (1);
 	return (0);
 }
 

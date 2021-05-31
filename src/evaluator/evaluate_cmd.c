@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:09:10 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/28 16:12:06 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:35:37 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,6 @@ void	evaluate_builtin(t_ast *op)
 		sh_exit(op->av[1]);
 	else if (!ft_strcmp(op->bin, "history"))
 		sh_history();
+	else if (!ft_strcmp(op->bin, "syntax"))
+		sh_syntax(op->ac, op->av);
 }
