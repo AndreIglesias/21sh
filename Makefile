@@ -67,6 +67,12 @@ else
 CFLAGS		=	-Wall -Wextra -Werror
 endif
 
+ifdef SYNTAX
+	ifeq ($(SYNTAX), yes)
+CFLAGS		+=	-DM_SYNTAX
+	endif
+endif
+
 CC			=	/usr/bin/clang
 RM			=	/bin/rm -f
 ECHO		=	/bin/echo -e
