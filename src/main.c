@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/29 15:20:02 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/31 00:25:45 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	ft_minishell(void)
 {
 	ssize_t	ready;
 
-	ready = 0;
-	while (ready != -1)
+	ready = 1;
+	while (ready > 0)
 	{
 		g_sh->history_cursor = g_sh->history;
 		g_sh->line = NULL;
@@ -41,6 +41,7 @@ void	ft_minishell(void)
 		if (g_sh->line_tmp)
 			free(g_sh->line_tmp);
 	}
+	sh_exit("2");
 }
 
 int	main(int ac, char **av, char **ev)

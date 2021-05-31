@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 19:12:15 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/29 15:07:02 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/29 16:13:54 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ void	delete_astnode(t_ast *node)
 	{
 		i = 0;
 		while (i < node->ac)
-			free(node->av[i++]);
+		{
+			if (node->av[i++])
+				free(node->av[i - 1]);
+		}
 		free(node->av);
 	}
 	free(node);

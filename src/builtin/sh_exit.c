@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 16:14:52 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/29 00:03:04 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/29 17:45:49 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static int	ll_to_uchar(char *value)
 void	sh_exit(char *value)
 {
 	int	fd;
+	int	exit_status;
 
 	fd = open(g_sh->history_path, O_WRONLY | O_CREAT | O_TRUNC,
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -42,6 +43,9 @@ void	sh_exit(char *value)
 	tgetent(NULL, "");
 //	tgetent(NULL, g_sh->events->dc);
 //	tgetent(NULL, g_sh->events->ce);
+	exit_status = 0;
+	if (value && value[0] != '0')
+		exit_status = ll_to_uchar(value);
 	if (g_sh->line_tmp)
 		free(g_sh->line_tmp);
 	if (g_sh->line)
@@ -64,7 +68,5 @@ void	sh_exit(char *value)
 		free(g_sh);
 	if (fd == -1)
 		ft_puterror(BOLD"minishell: ~/.minishell_history not generated\n"E0M, 0);
-	if (value && value[0] != '0')
-		exit(ll_to_uchar(value));
-	exit(EXIT_SUCCESS);
+	exit(exit_status);
 }

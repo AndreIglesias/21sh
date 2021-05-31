@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:06:39 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/28 16:09:16 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/30 19:33:23 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static void	stdout_to_stdin(t_ast *op)
 		close(1);
 		dup(fd[1]);
 		op_or_cmds(op->left);
-		if (op->left->op)
+		if (op->left->op && op->left->op != 4)
 			cat_last_file(op->left);
 		sh_exit(NULL);
 	}

@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 00:00:07 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/27 13:50:13 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/30 17:15:25 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,11 @@ int	ft_semantic(int x)
 		return (EXIT_SUCCESS);
 	if (!consistent_trees(g_sh->cmds[x]))
 		return (EXIT_FAILURE);
-	print_tokens(first_in_list(g_sh->cmds[x], -1), 0, -1);
-	print_btree(g_sh->cmds[x], "", 0);
-	ft_putstr("\n");
+	if (g_sh->syntax)
+	{
+		print_tokens(first_in_list(g_sh->cmds[x], -1), 0, -1);
+		print_btree(g_sh->cmds[x], "", 0);
+		ft_putstr("\n");
+	}
 	return (EXIT_SUCCESS);
 }

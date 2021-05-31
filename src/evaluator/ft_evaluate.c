@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 12:33:44 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/28 16:16:06 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:51:47 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	ft_evaluate(void)
 	while (i < g_sh->ncmd)
 	{
 		save_envp(g_sh->ev, str, 0);
-		if (g_sh->cmds[i])
+		if (g_sh->cmds && g_sh->cmds[i] && g_sh->cmds[i]->valid)
 			op_or_cmds(g_sh->cmds[i]);
 		if (g_sh->envp)
 		{
