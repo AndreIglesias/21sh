@@ -1,19 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   sh_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/18 19:34:11 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 14:11:25 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/05/20 12:23:41 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/24 23:27:41 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "msh.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	sh_export(int argc, char **argv)
 {
-	if (s)
-		write(fd, s, ft_strlen(s));
+	char	*check;
+	char	*tmp;
+	char	*tmp2;
+
+	if (argc > 1 && argv[1])
+	{
+		check = get_value(g_sh->ev, argv[1]);
+		if (check)
+			delete_value(&g_sh->ev, argv[1], ft_strlen(argv[1]), 0);
+		tmp = ft_strjoin(argv[1], "=");
+		tmp2 = ft_strjoin(tmp, argv[2]);
+		free(tmp);
+		insert_trie(&g_sh->ev, tmp2, ft_strlen(argv[1]));
+		free(tmp2);
+	}
+	else
+		sh_env();
 }

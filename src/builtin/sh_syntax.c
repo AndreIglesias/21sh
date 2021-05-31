@@ -1,41 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environment.c                                      :+:      :+:    :+:   */
+/*   sh_syntax.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/15 21:07:58 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 17:40:13 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/05/24 08:55:38 by ciglesia          #+#    #+#             */
+/*   Updated: 2021/05/24 09:24:32 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-static int	assignation(char *cmd)
+int	sh_syntax(int ac, char	**av)
 {
-	int	i;
-
-	i = 0;
-	while (cmd[i])
-	{
-		if (cmd[i] == '=')
-			return (i);
-		i++;
-	}
-	return (0);
-}
-
-void	store_envar(char **ev)
-{
-	int	i;
-	int	assign;
-
-	i = 0;
-	while (ev[i])
-	{
-		assign = assignation(ev[i]);
-		insert_trie(&g_sh->ev, ev[i], assign);
-		i++;
-	}
+	if (ac > 2)
+		return (EXIT_FAILURE);
+	if (ft_strcmp(av[1], "on") && ft_strcmp(av[1], "off"))
+		return (EXIT_FAILURE);
+	if (!ft_strcmp(av[1], "on"))
+		g_sh->syntax = 1;
+	else
+		g_sh->syntax = 0;
+	return (EXIT_SUCCESS);
 }

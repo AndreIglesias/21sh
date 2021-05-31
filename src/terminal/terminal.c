@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 07:13:31 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/16 21:02:45 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/31 19:52:01 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,24 @@ static void	keys_transmit(t_events *event)
 	static char	dw[] = {27, 91, 66, 0};
 	static char	rg[] = {27, 91, 67, 0};
 	static char	lf[] = {27, 91, 68, 0};
+	char		*buf = NULL;
 
 	event->up = up;
 	event->dw = dw;
 	event->rg = rg;
 	event->lf = lf;
-	event->sc = tgetstr("sc", NULL);
-	event->rc = tgetstr("rc", NULL);
-	event->dc = tgetstr("dc", NULL);
-	event->ce = tgetstr("ce", NULL);
+	event->sc = tgetstr("sc", &buf);
+	free(buf);
+	buf = NULL;
+	event->rc = tgetstr("rc", &buf);
+	free(buf);
+	buf = NULL;
+	event->dc = tgetstr("dc", &buf);
+	free(buf);
+	buf = NULL;
+	event->ce = tgetstr("ce", &buf);
+	free(buf);
+	buf = NULL;
 }
 
 t_events	*init_termcap(void)
@@ -51,6 +60,7 @@ t_events	*init_termcap(void)
 	t_events	*event;
 	char		*termtype;
 	int			connect;
+	char		*buf = NULL;
 
 	termtype = getenv("TERM");
 	if (!termtype)
@@ -64,7 +74,8 @@ environmental variable TERM.\n"E0M, 0));
 	event = malloc(sizeof(t_events));
 	if (!event)
 		return (NULL);
-	event->ks = tgetstr("ks", NULL);
+	event->ks = tgetstr("ks", &buf);
+	free(buf);
 	if (!event->ks)
 	{
 		free(event);
@@ -86,7 +97,8 @@ static void	init_termios(t_shell *sh)
 
 t_shell	*ft_shell(void)
 {
-	t_shell	*sh;
+	static char	*ops[] = {NULL, "<", ">", ">>", "|"};
+	t_shell		*sh;
 
 	sh = malloc(sizeof(t_shell));
 	if (!sh)
@@ -97,5 +109,17 @@ t_shell	*ft_shell(void)
 		return (NULL);
 	sh->ev = NULL;
 	sh->line = NULL;
+	sh->line_cursor = 0;
+	sh->history = NULL;
+	sh->history_path = NULL;
+	sh->history_cursor = NULL;
+	sh->cmds = NULL;
+	sh->cmd_line = NULL;
+	sh->ncmd = 1;
+	sh->last_status = 0;
+	sh->envp = NULL;
+	sh->ops = ops;
+	sh->syntax = SYNTAX;
+	sh->pid = NULL;
 	return (sh);
 }

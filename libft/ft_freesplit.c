@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_freesplit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/18 19:34:11 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 14:11:25 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/05/19 19:50:17 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/25 00:45:23 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_freesplit(char **split)
 {
-	if (s)
-		write(fd, s, ft_strlen(s));
+	int	i;
+
+	i = 0;
+	if (split && *split)
+	{
+		while (split[i])
+			i++;
+		while (i--)
+			free(split[i]);
+	}
+	free(split);
+	split = NULL;
 }

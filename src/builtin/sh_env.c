@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   sh_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/18 19:34:11 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 14:11:25 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/05/20 18:26:00 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/24 16:37:28 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "msh.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	sh_env(void)
 {
-	if (s)
-		write(fd, s, ft_strlen(s));
+	char	tmp[200];
+
+	ft_puttrie(g_sh->ev, tmp, 0);
 }

@@ -1,41 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environment.c                                      :+:      :+:    :+:   */
+/*   ft_fchrjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/15 21:07:58 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 17:40:13 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/05/21 15:24:39 by ciglesia          #+#    #+#             */
+/*   Updated: 2021/05/21 18:53:38 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "msh.h"
+#include "libft.h"
 
-static int	assignation(char *cmd)
+char	*ft_fchrjoin(char *s1, char s2)
 {
-	int	i;
+	char	*str;
+	int		a;
 
-	i = 0;
-	while (cmd[i])
+	if (s2 == '\0')
+		return (NULL);
+	if (s1 == NULL)
 	{
-		if (cmd[i] == '=')
-			return (i);
-		i++;
+		str = ft_memalloc(sizeof(char) * (2));
+		if (!str)
+			return (NULL);
+		str[0] = s2;
+		return (str);
 	}
-	return (0);
-}
-
-void	store_envar(char **ev)
-{
-	int	i;
-	int	assign;
-
-	i = 0;
-	while (ev[i])
+	str = ft_memalloc(sizeof(char) * (ft_strlen(s1) + 2));
+	if (!str)
+		return (NULL);
+	a = 0;
+	while (s1[a])
 	{
-		assign = assignation(ev[i]);
-		insert_trie(&g_sh->ev, ev[i], assign);
-		i++;
+		str[a] = s1[a];
+		a++;
 	}
+	str[a++] = s2;
+	free(s1);
+	return (str);
 }

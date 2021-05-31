@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   free_history.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/18 19:34:11 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/18 14:11:25 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/05/18 20:38:23 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/05/18 20:39:16 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "msh.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	free_history(t_history *hst)
 {
-	if (s)
-		write(fd, s, ft_strlen(s));
+	while (hst)
+	{
+		if (!hst->next)
+		{
+			free(hst->cmd);
+			free(hst);
+			hst = NULL;
+			break ;
+		}
+		hst = hst->next;
+		free(hst->back->cmd);
+		free(hst->back);
+		hst->back = NULL;
+	}
 }

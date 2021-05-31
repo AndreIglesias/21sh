@@ -5,53 +5,66 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/14 17:46:45 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/17 19:16:43 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/05/17 21:36:00 by ciglesia          #+#    #+#             */
+/*   Updated: 2021/05/31 00:25:45 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-void	ft_minishell(t_shell *sh)
-{
-    ssize_t ready;
-	char	buf[4];
+t_shell	*g_sh;
 
-	ready = 0;
-    while (ready != -1)
+void	ft_minishell(void)
+{
+	ssize_t	ready;
+
+	ready = 1;
+	while (ready > 0)
 	{
+		g_sh->history_cursor = g_sh->history;
+		g_sh->line = NULL;
+		g_sh->line_tmp = NULL;
+		g_sh->line_cursor = 0;
 		ft_putstr(tgetstr("vi", NULL));
-		write(1, "\n$ ", 2);
+		ft_prompt();
 		ft_putstr(tgetstr("ve", NULL));
-		//getcmd(sh);
-		ready = read(STDIN_FILENO, buf, 1);
-		ft_putnbr(buf[0]);
+		ready = get_cmd();
+		ft_putstr(tgetstr("vi", NULL));
+		if (g_sh->line)
+		{
+			if (ft_analyze() != EXIT_SUCCESS)
+				g_sh->last_status = 2;
+			ft_evaluate();
+			free_ast();
+		}
+		free(g_sh->line);
+		if (g_sh->line_tmp)
+			free(g_sh->line_tmp);
 	}
-	if (sh->line)
-		free(sh->line);
+	sh_exit("2");
 }
 
 int	main(int ac, char **av, char **ev)
 {
-	t_shell	*sh;
 	char	*home;
 
 	(void)ac;
 	(void)av;
 	signal(SIGINT, sigint_shell);
 	signal(SIGQUIT, sigquit_shell);
-	sh = ft_shell();
-	if (!sh)
+	signal(SIGTSTP, sigtstp_shell);
+	g_sh = ft_shell();
+	if (!g_sh)
 		exit(EXIT_FAILURE);
-	store_envar(sh, ev);
-	home = get_value(sh->ev, "HOME");
+	store_envar(ev);
+	home = get_value(g_sh->ev, "HOME");
 	if (!home)
 	{
-		ft_puterror(MINERR"HOME environmental variable not set\n"E0M, (void*)1);
-		//free everything
+		ft_puterror(MINERR"HOME environmental variable not set\n"E0M, (void *)1);
+		sh_exit(NULL);
 	}
-	sh->history = ft_strjoin(home, "/.minishell_history");//alias history=cat..
-	//load history
-	ft_minishell(sh);
+	g_sh->history_path = ft_strjoin(home, "/.minishell_history");
+	load_history();
+	ft_minishell();
 	return (EXIT_SUCCESS);
 }
