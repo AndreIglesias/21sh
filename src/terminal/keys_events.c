@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 18:05:09 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/31 01:10:08 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	del_ins(void)
 	else
 	{
 		g_sh->line[g_sh->line_cursor - 1] = 0;
-		g_sh->line = ft_strjoin(g_sh->line, &g_sh->line[g_sh->line_cursor]);
+		g_sh->line = ft_fstrjoin(g_sh->line, &g_sh->line[g_sh->line_cursor]);//leak
 		ft_putstr_fd(&g_sh->line[g_sh->line_cursor - 1], 0);
 	}
 }
@@ -152,9 +152,10 @@ int	keys_event(char *buf)
 	static char	cl[] = {27, 91, 49, 59, 53, 68, 0};
 	static char	home[] = {27, 91, 72, 0};
 	static char	end[] = {27, 91, 70, 0};
+	int			i;
 
 	if (buf[0] == 4)
-		sh_exit();
+		sh_exit(NULL);
 	if (ft_strlen(buf) == 6 && (!ft_strcmp(cl, buf) || !ft_strcmp(cr, buf)))
 		return (move_ctrl(buf, cl, cr));
 	if (ft_strlen(buf) == 3 && (!ft_strcmp(home, buf) || !ft_strcmp(end, buf)))
@@ -165,11 +166,18 @@ int	keys_event(char *buf)
 		return (browse_history(buf));
 	if (!ft_strcmp(g_sh->events->lf, buf) || !ft_strcmp(g_sh->events->rg, buf))
 		return (move_cursor(buf));
-	if (ft_strlen(buf) == 1 && ((31 < buf[0] && buf[0] < 127) || buf[0] == 10))
+	i = 0;
+	while (buf[i] && ((31 < buf[i] && buf[i] < 127) || buf[i] == 10))
 	{
-		if (buf[0] != '\n')
+		if (buf[i] != '\n')
 			g_sh->line_cursor++;
-		return (1);
+		if (buf[i] == '\n')
+		{
+			buf[i] = 0;
+			return (3);
+		}
+		if (buf[++i] == 0)
+			return (1);
 	}
 	return (0);
 }

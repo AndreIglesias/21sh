@@ -6,21 +6,21 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 17:16:09 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/21 17:26:01 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/24 23:51:06 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-void	sh_history(t_history *hst)
+void	sh_history(void)
 {
 	size_t		size;
 	t_history	*tmp;
 	size_t		i;
 
-	tmp = hst;
+	tmp = g_sh->history;
 	size = HRY_SIZE;
-	while (size-- && tmp && tmp->next)
+	while (--size && tmp && tmp->next)
 		tmp = tmp->next;
 	i = 1;
 	while (tmp)

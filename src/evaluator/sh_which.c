@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 18:02:34 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 19:24:02 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:33:39 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	is_builtin(char *name)
 		return (1);
 	if (!ft_strcmp(name, "history"))
 		return (1);
-	//if (!ft_strcmp(name, "syntax"))
-	//return (1);
+	if (!ft_strcmp(name, "syntax"))
+		return (1);
 	return (0);
 }
 
@@ -49,7 +49,8 @@ char	*check_bin_path(char *path, char *name)
 		split[i] = ft_realloc(split[i], 1);
 		split[i] = ft_strcat(split[i], "/");
 		path = ft_strjoin(split[i++], name);
-		if (stat(path, &buf) == 0 && buf.st_mode & S_IXUSR)
+		if (stat(path, &buf) == 0 && buf.st_mode & S_IXUSR
+			&& !S_ISDIR(buf.st_mode))
 		{
 			ft_freesplit(split);
 			return (path);

@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:06:39 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 12:29:33 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/30 19:33:23 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,103 +14,127 @@
 
 static void	stdin_to_bin(t_ast *op)
 {
-	int		fd;
+	int	fd;
+	int	pid;
 
-	if (!fork())
+	tcsetattr(0, 0, &g_sh->old_term);
+	pid = fork();
+	if (pid)
+		parent_fork(pid);
+	else
 	{
 		fd = open(op->right->bin, O_RDONLY);
 		close(0);
 		dup(fd);
 		op_or_cmds(op->left);
-		//execve(cmd->bin, cmd->av, arbol(ev));
+		if (op->left->op)
+			cat_last_file(op->left);
 		close(fd);
+		sh_exit(NULL);
 	}
-	else
-		wait(NULL);
+	tcsetattr(0, 0, &g_sh->new_term);
 }
 
-static void	bin_stdout_to_file(t_ast *op)
+static void	stdout_to_file(t_ast *op)
 {
-	int		fd;
+	int	fd;
+	int	pid;
 
-	if (!fork())
+	tcsetattr(0, 0, &g_sh->old_term);
+	pid = fork();
+	if (pid)
+		parent_fork(pid);
+	else
 	{
 		fd = open(op->right->bin, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		close(1);
 		dup(fd);
 		op_or_cmds(op->left);
-		//execv(name, argv);
+		if (op->left->op)
+			cat_last_file(op->left);
 		close(fd);
+		sh_exit(NULL);
 	}
-	else
-		wait(NULL);
+	tcsetattr(0, 0, &g_sh->new_term);
 }
 
-static void	bin_stdout_to_eof(t_ast *op)
+static void	stdout_to_eof(t_ast *op)
 {
 	int		fdpip[2];
-	int		fd;
-	char	buf;
+	int		pid;
 
+	tcsetattr(0, 0, &g_sh->old_term);
 	pipe(fdpip);
-	if (!fork())
+	pid = fork();
+	if (pid)
+	{
+		close(fdpip[1]);
+		parent_fork(pid);
+		append_create_fd(fdpip[0], op);
+	}
+	else
 	{
 		close(fdpip[0]);
 		close(1);
 		dup(fdpip[1]);
 		op_or_cmds(op->left);
-		//execv(name, argv);
+		if (op->left->op)
+			cat_last_file(op->left);
+		sh_exit(NULL);
 	}
-	else
-	{
-		fd = open(op->right->bin, O_APPEND | O_WRONLY);
-		if (fd < 1)
-			fd = open(op->right->bin, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		close(fdpip[1]);
-		wait(NULL);
-		while (read(fdpip[0], &buf, 1))
-			write(fd, &buf, 1);
-		close(fd);
-	}
+	tcsetattr(0, 0, &g_sh->new_term);
 }
 
 static void	stdout_to_stdin(t_ast *op)
 {
-	int fd[2];
+	int	fd[2];
+	int	pid;
 
+	tcsetattr(0, 0, &g_sh->old_term);
 	pipe(fd);
-	if (!fork())
+	pid = fork();
+	if (pid)
 	{
-		if (!fork())
-		{
-			close(fd[0]);
-			close(1);
-			dup(fd[1]);
-			op_or_cmds(op->left);
-			//execv(op->left->left->bin, op->left->left->av);
-		}
-		else
-		{
-			close(fd[1]);
-			close(0);
-			dup(fd[0]);
-			wait(NULL);
-			op_or_cmds(op->right);
-			//execv(op->left->bin, op->left->av);
-		}
+		parent_fork(pid);
+		close(fd[1]);
+		close(0);
+		dup(fd[0]);
+		op_or_cmds(op->right);
 	}
 	else
-		wait(NULL);
+	{
+		close(fd[0]);
+		close(1);
+		dup(fd[1]);
+		op_or_cmds(op->left);
+		if (op->left->op && op->left->op != 4)
+			cat_last_file(op->left);
+		sh_exit(NULL);
+	}
+	tcsetattr(0, 0, &g_sh->new_term);
 }
 
 void	evaluate_redirect(t_ast *op)
 {
+	int	pid;
+
 	if (op->op == 1)
 		stdin_to_bin(op);
 	else if (op->op == 2)
-		bin_stdout_to_file(op);
+		stdout_to_file(op);
 	else if (op->op == 3)
-		bin_stdout_to_eof(op);
+		stdout_to_eof(op);
 	else
-		stdout_to_stdin(op);
+	{
+		tcsetattr(0, 0, &g_sh->old_term);
+		pid = fork();
+		if (pid)
+			parent_fork(pid);
+		else
+		{
+			stdout_to_stdin(op);
+			sh_exit(NULL);
+		}
+		tcsetattr(0, 0, &g_sh->new_term);
+	}
 }

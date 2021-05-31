@@ -6,33 +6,50 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 12:33:44 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 12:46:01 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:51:47 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-void	op_or_cmds(t_ast *cmds)
+static int	exec_cmd(t_ast *cmds)
 {
-	if (cmds->op)
-		evaluate_redirect(cmds);
+	int	pid;
+
+	tcsetattr(0, 0, &g_sh->old_term);
+	pid = fork();
+	if (pid)
+		parent_fork(pid);
 	else
 	{
-		if (cmds->type == 0)
-		{
-			ft_putstr_fd("minishell: command not found: ", 2);
-			ft_putstr_fd(cmds->bin, 2);
-			ft_putstr_fd("\n",2);
-		}
-		else if (cmds->type == 1)
-			evaluate_builtin(cmds);
-		else if (cmds->type == 2)
-			execve(cmds->bin, cmds->av, g_sh->envp);
-		//evaluate_bin(cmds);
+		execve(cmds->bin, cmds->av, g_sh->envp);
+		sh_exit(NULL);
 	}
+	tcsetattr(0, 0, &g_sh->new_term);
+	return (EXIT_SUCCESS);
 }
 
-void	add_str(char *str, char *value)
+int	op_or_cmds(t_ast *cmds)
+{
+	if (cmds->op)
+	{
+		evaluate_redirect(cmds);
+		return (EXIT_SUCCESS);
+	}
+	else
+	{
+		if (cmds->type == 1)
+		{
+			evaluate_builtin(cmds);
+			return (EXIT_SUCCESS);
+		}
+		else if (cmds->type == 2)
+			return (exec_cmd(cmds));
+	}
+	return (EXIT_FAILURE);
+}
+
+static void	add_str(char *str, char *value)
 {
 	int		i;
 	char	**dup;
@@ -54,7 +71,7 @@ void	add_str(char *str, char *value)
 	g_sh->envp[i] = NULL;
 }
 
-void	save_envp(t_trie *root, char *str, int lvl)
+static void	save_envp(t_trie *root, char *str, int lvl)
 {
 	int		i;
 
@@ -80,16 +97,20 @@ void	save_envp(t_trie *root, char *str, int lvl)
 
 void	ft_evaluate(void)
 {
-	g_sh->envp = NULL;
 	char	str[200];
 	int		i;
 
 	i = 0;
-	while (g_sh->cmds[i])
+	while (i < g_sh->ncmd)
 	{
 		save_envp(g_sh->ev, str, 0);
-		op_or_cmds(g_sh->cmds[i]);
-		ft_freesplit(g_sh->envp);
+		if (g_sh->cmds && g_sh->cmds[i] && g_sh->cmds[i]->valid)
+			op_or_cmds(g_sh->cmds[i]);
+		if (g_sh->envp)
+		{
+			ft_freesplit(g_sh->envp);
+			g_sh->envp = NULL;
+		}
 		i++;
 	}
 }

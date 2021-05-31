@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 22:04:34 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/27 21:02:47 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/28 19:03:05 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ static t_ast	*add_param(t_ast *cmd, int c)
 		c = 1;
 		tmp = cmd->next;
 		while (tmp && tmp->bin)
+		{
+			if (cmd->av[c])
+				free(cmd->av[c]);
 			cmd->av[c++] = extract_param(&tmp);
+		}
 		return (tmp);
 	}
 	cmd->av = ft_memalloc(sizeof(char *) * 2);
@@ -49,7 +53,7 @@ static t_ast	*add_param(t_ast *cmd, int c)
 	return (tmp);
 }
 
-static void	construct_cmds(t_ast **head)
+void	construct_cmds(t_ast **head)
 {
 	t_ast	*tmp;
 	t_ast	*n;
@@ -60,8 +64,12 @@ static void	construct_cmds(t_ast **head)
 		if (tmp->bin)
 		{
 			n = add_param(tmp, 0);
-			if (tmp->av)
+			if (tmp->av && tmp->ac)
+			{
+				if (tmp->av[0])
+					free(tmp->av[0]);
 				tmp->av[0] = ft_strdup(tmp->bin);
+			}
 			tmp = n;
 		}
 		else

@@ -6,12 +6,18 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 20:25:52 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/05/31 20:04:52 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MSH_H
 # define MSH_H
+
+# ifdef M_SYNTAX
+#  define SYNTAX	1
+# else
+#  define SYNTAX	0
+# endif
 
 # include "libft.h"
 
@@ -85,14 +91,6 @@ typedef struct s_ast
 
 }	t_ast;
 
-typedef struct s_envar
-{
-	char			*key;
-	char			*value;
-	t_uchar			set;
-	struct s_envar	*next;
-}	t_envar;
-
 typedef struct s_events
 {
 	char	*ks;
@@ -133,6 +131,7 @@ typedef struct s_shell
 	int				last_status;
 	t_uchar			syntax;
 	char			**envp;
+	t_ast			*pid;
 }	t_shell;
 
 extern t_shell		*g_sh;
@@ -144,6 +143,7 @@ extern t_shell		*g_sh;
 void		sigint_shell(int sig);
 void		sigquit_shell(int sig);
 void		sigtstp_shell(int sig);
+void		sig_child(int sig);
 
 /*
 **	terminal
@@ -168,14 +168,14 @@ int			browse_history(char *buf);
 **	builtins
 */
 
-void		sh_exit(void);
+void		sh_exit(char *value);
 int			sh_pwd(void);
-int			sh_echo(char **value, t_uchar flag);
-void		sh_export(t_trie *ev, char *key, char *value);
-int			sh_cd(t_trie *ev, char *path);
-void		sh_env(t_trie *ev);
-void		sh_history(t_history *hst);
-void		sh_unset(t_trie *ev, char *key);
+int			sh_echo(int argc, char **value);
+void		sh_export(int argc, char **key);
+int			sh_cd(int argv, char **argc);
+void		sh_env(void);
+void		sh_history(void);
+void		sh_unset(int argc, char **key);
 int			sh_syntax(int ac, char	**av);
 
 /*
@@ -223,7 +223,10 @@ char		*sh_which(char *name, t_trie *ev);
 int			is_builtin(char *name);
 void		ft_evaluate(void);
 void		evaluate_redirect(t_ast *op);
-void		op_or_cmds(t_ast *cmds);
+int			op_or_cmds(t_ast *cmds);
 void		evaluate_builtin(t_ast *op);
+void		parent_fork(int sig);
+void		append_create_fd(int fdpip, t_ast *op);
+void		cat_last_file(t_ast *cmds);
 
 #endif
