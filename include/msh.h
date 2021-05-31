@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/31 20:04:52 by user             ###   ########.fr       */
+/*   Updated: 2021/06/01 00:24:31 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 #  define SYNTAX	1
 # else
 #  define SYNTAX	0
+# endif
+
+# ifdef M_LS
+#  define LS	1
+# else
+#  define LS	0
 # endif
 
 # include "libft.h"

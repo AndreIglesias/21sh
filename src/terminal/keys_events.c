@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/31 01:10:08 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/01 00:14:23 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,11 @@ int	keys_event(char *buf)
 		return (browse_history(buf));
 	if (!ft_strcmp(g_sh->events->lf, buf) || !ft_strcmp(g_sh->events->rg, buf))
 		return (move_cursor(buf));
+	if (ft_strlen(buf) == 1 && buf[0] == 12)
+	{
+		printf("cle\n");
+		return (0);
+	}
 	i = 0;
 	while (buf[i] && ((31 < buf[i] && buf[i] < 127) || buf[i] == 10))
 	{

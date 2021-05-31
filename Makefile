@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/05/31 19:50:49 by user             ###   ########.fr        #
+#    Updated: 2021/06/01 00:25:59 by user             ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -68,8 +68,14 @@ CFLAGS		=	-Wall -Wextra -Werror
 endif
 
 ifdef SYNTAX
-	ifeq ($(SYNTAX), yes)
+	ifeq ($(SYNTAX), on)
 CFLAGS		+=	-DM_SYNTAX
+	endif
+endif
+
+ifdef LS
+	ifeq ($(LS), on)
+CFLAGS		+=	-DM_LS
 	endif
 endif
 
