@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 12:33:44 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 00:08:49 by user             ###   ########.fr       */
+/*   Updated: 2021/06/01 01:40:05 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ static int	exec_cmd(t_ast *cmds)
 		parent_fork(pid);
 	else
 	{
-		execve(cmds->bin, cmds->av, g_sh->envp);
+		if (cmds->right)
+			stdin_to_bin(cmds);
+		else
+			sh_execv(cmds->bin, cmds->av);
 		sh_exit(NULL);
 	}
 	tcsetattr(0, 0, &g_sh->new_term);
@@ -71,7 +74,7 @@ static void	add_str(char *str, char *value)
 	g_sh->envp[i] = NULL;
 }
 
-static void	save_envp(t_trie *root, char *str, int lvl)
+void	save_envp(t_trie *root, char *str, int lvl)
 {
 	int		i;
 
@@ -97,20 +100,13 @@ static void	save_envp(t_trie *root, char *str, int lvl)
 
 void	ft_evaluate(void)
 {
-	char	str[200];
 	int		i;
 
 	i = 0;
 	while (i < g_sh->ncmd)
 	{
-		save_envp(g_sh->ev, str, 0);
 		if (g_sh->cmds && g_sh->cmds[i] && g_sh->cmds[i]->valid)
 			op_or_cmds(g_sh->cmds[i]);
-		if (g_sh->envp)
-		{
-			ft_freesplit(g_sh->envp);
-			g_sh->envp = NULL;
-		}
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/06/01 00:25:59 by user             ###   ########.fr        #
+#    Updated: 2021/06/01 01:38:53 by user             ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -44,7 +44,7 @@ HISTORY		=	load_history.c free_history.c browse_history.c
 BUILTIN		=	sh_exit.c sh_pwd.c sh_echo.c sh_export.c sh_cd.c sh_env.c sh_history.c sh_syntax.c sh_unset.c
 AST			=	ast.c construct_ast.c free_ast.c print_ast.c
 ANALIZE		=	analyzer.c lexer.c get_envar.c parser.c semantic.c  boolean.c inception_tree.c
-EVAL		=	sh_which.c ft_evaluate.c evaluate_redirect.c evaluate_cmd.c parent_fork.c
+EVAL		=	sh_which.c ft_evaluate.c evaluate_redirect.c evaluate_cmd.c parent_fork.c sh_execv.c
 
 SRCS		=	$(SRC) $(SIGNAL) $(TERM) $(HISTORY) $(BUILTIN) $(EVAL) $(ANALIZE) $(AST)
 
