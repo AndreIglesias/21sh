@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/28 19:57:17 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/01 01:13:34 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,5 +222,9 @@ void		evaluate_builtin(t_ast *op);
 void		parent_fork(int sig);
 void		append_create_fd(int fdpip, t_ast *op);
 void		cat_last_file(t_ast *cmds);
+void		sh_execv(char *name, char **av);
+char		**str_to_arr(char *name, char *av);
+void		stdin_to_bin(t_ast *cmds);
+void		save_envp(t_trie *root, char *str, int lvl);
 
 #endif
