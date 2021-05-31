@@ -6,30 +6,42 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:06:39 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/30 19:33:23 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/01 01:08:09 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-static void	stdin_to_bin(t_ast *op)
+void	stdin_to_bin(t_ast *cmds)
 {
-	int	fd;
-	int	pid;
+	int		fd[2];
+	t_ast	*tmp;
+	int		pid;
+	char	**argv;
 
 	tcsetattr(0, 0, &g_sh->old_term);
+	pipe(fd);
 	pid = fork();
 	if (pid)
+	{
+		close(fd[1]);
 		parent_fork(pid);
+		close(0);
+		dup(fd[0]);
+		sh_execv(cmds->bin, cmds->av);
+	}
 	else
 	{
-		fd = open(op->right->bin, O_RDONLY);
-		close(0);
-		dup(fd);
-		op_or_cmds(op->left);
-		if (op->left->op)
-			cat_last_file(op->left);
-		close(fd);
+		tmp = cmds->right;
+		close(fd[0]);
+		close(1);
+		dup(fd[1]);
+		while (tmp)
+		{
+			argv = str_to_arr(cmds->bin, tmp->right->bin);
+			sh_execv("cat", argv);
+			tmp = tmp->left;
+		}
 		sh_exit(NULL);
 	}
 	tcsetattr(0, 0, &g_sh->new_term);
