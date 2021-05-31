@@ -6,12 +6,18 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/28 19:57:17 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/05/31 19:51:55 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MSH_H
 # define MSH_H
+
+#ifdef M_SYNTAX
+# define SYNTAX 1
+#else
+# define SYNTAX 0
+#endif
 
 # include "libft.h"
 

@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/05/28 16:08:49 by jiglesia         ###   ########.fr        #
+#    Updated: 2021/05/31 19:50:49 by user             ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -65,6 +65,12 @@ CFLAGS		=	-Wall -Wextra -Werror -ansi -pedantic -g
 	endif
 else
 CFLAGS		=	-Wall -Wextra -Werror
+endif
+
+ifdef SYNTAX
+	ifeq ($(SYNTAX), yes)
+CFLAGS		+=	-DM_SYNTAX
+	endif
 endif
 
 CC			=	/usr/bin/clang
