@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 12:23:41 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 23:27:41 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/01 22:57:04 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,5 @@ void	sh_export(int argc, char **argv)
 	}
 	else
 		sh_env();
+	g_sh->last_status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 23:36:58 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 12:24:12 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/01 22:52:21 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	put_line_space(char *str)
 	ft_putchar(' ');
 }
 
-int	sh_echo(int	argc, char **value)
+void	sh_echo(int	argc, char **value)
 {
 	int	i;
 	int	j;
@@ -40,9 +40,8 @@ int	sh_echo(int	argc, char **value)
 		}
 		while (value[i])
 			put_line_space(value[i++]);
-		if (flag)
-			return (EXIT_SUCCESS);
-		write(1, "\n", 1);
+		if (!flag)
+			write(1, "\n", 1);
 	}
-	return (EXIT_SUCCESS);
+	g_sh->last_status = 0;
 }

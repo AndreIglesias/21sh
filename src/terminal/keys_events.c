@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 01:57:27 by user             ###   ########.fr       */
+/*   Updated: 2021/06/02 00:48:57 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	del_ins(void)
 	}
 }
 
-static int	delete_key()
+static int	delete_key(void)
 {
 	ft_putstr_fd(g_sh->events->lf, 0);
 	ft_putstr_fd(g_sh->events->sc, 0);
@@ -140,40 +140,10 @@ static int	jump_sides(char *buf)
 	return (0);
 }
 
-/*
-**	ascii
-**	4 = EOT
-**	127 = DEL
-*/
-
-int	keys_event(char *buf)
+static int	check_buffer(char *buf)
 {
-	static char	cr[] = {27, 91, 49, 59, 53, 67, 0};
-	static char	cl[] = {27, 91, 49, 59, 53, 68, 0};
-	static char	home[] = {27, 91, 72, 0};
-	static char	end[] = {27, 91, 70, 0};
-	int			i;
+	int	i;
 
-	if (buf[0] == 4)
-		sh_exit(NULL);
-	if (ft_strlen(buf) == 6 && (!ft_strcmp(cl, buf) || !ft_strcmp(cr, buf)))
-		return (move_ctrl(buf, cl, cr));
-	if (ft_strlen(buf) == 3 && (!ft_strcmp(home, buf) || !ft_strcmp(end, buf)))
-		return (jump_sides(buf));
-	if (buf[0] == 127 && g_sh->line && g_sh->line[0] && g_sh->line_cursor > 0)
-		return (delete_key());
-	if (!ft_strcmp(g_sh->events->up, buf) || !ft_strcmp(g_sh->events->dw, buf))
-		return (browse_history(buf));
-	if (!ft_strcmp(g_sh->events->lf, buf) || !ft_strcmp(g_sh->events->rg, buf))
-		return (move_cursor(buf));
-	if (ft_strlen(buf) == 1 && buf[0] == 12)
-	{
-		//char **argv;//{"/usr/bin/clear", NULL};
-		//argv = str_to_arr("/usr/bin/clear", NULL);
-		printf("cle\n");
-		//sh_execv(argv[0], argv);
-		return (0);
-	}
 	i = 0;
 	while (buf[i] && ((31 < buf[i] && buf[i] < 127) || buf[i] == 10))
 	{
@@ -188,4 +158,34 @@ int	keys_event(char *buf)
 			return (1);
 	}
 	return (0);
+}
+
+/*
+**	ascii
+**	4 = EOT
+**	127 = DEL
+*/
+
+int	keys_event(char *buf)
+{
+	static char	cr[] = {27, 91, 49, 59, 53, 67, 0};
+	static char	cl[] = {27, 91, 49, 59, 53, 68, 0};
+	static char	home[] = {27, 91, 72, 0};
+	static char	end[] = {27, 91, 70, 0};
+
+	if (buf[0] == 4)
+		sh_exit(NULL);
+	if (ft_strlen(buf) == 6 && (!ft_strcmp(cl, buf) || !ft_strcmp(cr, buf)))
+		return (move_ctrl(buf, cl, cr));
+	if (ft_strlen(buf) == 3 && (!ft_strcmp(home, buf) || !ft_strcmp(end, buf)))
+		return (jump_sides(buf));
+	if (buf[0] == 127 && g_sh->line && g_sh->line[0] && g_sh->line_cursor > 0)
+		return (delete_key());
+	if (!ft_strcmp(g_sh->events->up, buf) || !ft_strcmp(g_sh->events->dw, buf))
+		return (browse_history(buf));
+	if (!ft_strcmp(g_sh->events->lf, buf) || !ft_strcmp(g_sh->events->rg, buf))
+		return (move_cursor(buf));
+	if (ft_strlen(buf) == 1 && buf[0] == 12)
+		return (ctrl_l());
+	return (check_buffer(buf));
 }

@@ -6,13 +6,13 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 16:16:39 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 00:58:26 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/01 23:02:11 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-int	sh_pwd(void)
+void	sh_pwd(void)
 {
 	char	*tmp;
 
@@ -22,9 +22,12 @@ int	sh_pwd(void)
 		ft_putstr_fd(BOLD"minishell: pwd: ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n"E0M, 2);
-		return (0);
+		g_sh->last_status = 1;
 	}
-	printf("%s\n", tmp);
-	free(tmp);
-	return (1);
+	else
+	{
+		printf("%s\n", tmp);
+		free(tmp);
+		g_sh->last_status = 0;
+	}
 }
