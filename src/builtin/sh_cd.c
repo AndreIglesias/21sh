@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:04:58 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/27 21:43:11 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/01 22:48:39 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	update_ev(char *key, char *argv)
 	free(tmp2);
 }
 
-static int	cd_alone(int argc)
+static void	cd_alone(int argc)
 {
 	char	*tmp;
 
@@ -52,13 +52,13 @@ static int	cd_alone(int argc)
 		{
 			update_ev("OLDPWD", get_value(g_sh->ev, "PWD"));
 			update_ev("PWD", tmp);
-			return (EXIT_SUCCESS);
+			g_sh->last_status = 0;
 		}
 	}
-	return (EXIT_FAILURE);
+	g_sh->last_status = 1;
 }
 
-int	sh_cd(int argv, char **argc)
+void	sh_cd(int argv, char **argc)
 {
 	char	*tmp;
 
@@ -72,16 +72,16 @@ int	sh_cd(int argv, char **argc)
 		{
 			update_ev("OLDPWD", get_value(g_sh->ev, "PWD"));
 			update_ev("PWD", tmp);
-			free(tmp);
-			return (EXIT_SUCCESS);
+			g_sh->last_status = 0;
 		}
 		else
 		{
 			ft_putstr_fd(BOLD"minishell: cd: "BLUE, 2);
 			ft_putstr_fd(argc[1], 2);
 			ft_putstr_fd(E0M""BOLD" :no such file or directory\n"E0M, 2);
+			g_sh->last_status = 1;
 		}
 		free(tmp);
 	}
-	return (cd_alone(argv));
+	cd_alone(argv);
 }

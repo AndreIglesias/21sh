@@ -34,14 +34,13 @@ void	ft_minishell(void)
 		{
 			if (ft_analyze() != EXIT_SUCCESS)
 				g_sh->last_status = 2;
-			//ft_evaluate();
+			ft_evaluate();
 			free_ast();
 		}
 		free(g_sh->line);
 		if (g_sh->line_tmp)
 			free(g_sh->line_tmp);
 	}
-	sh_exit("2");
 }
 
 int	main(int ac, char **av, char **ev)
@@ -66,5 +65,6 @@ int	main(int ac, char **av, char **ev)
 	g_sh->history_path = ft_strjoin(home, "/.minishell_history");
 	load_history();
 	ft_minishell();
+	sh_exit("2");
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 23:46:17 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 23:25:38 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/01 23:04:27 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ void	sh_unset(int argc, char **key)
 			ft_putstr_fd(BOLD"minishell: unset: ", 2);
 			ft_putstr_fd("invalid parameter name"E0M, 2);
 			ft_putchar_fd('\n', 2);
+			g_sh->last_status = 1;
 		}
+		else
+			g_sh->last_status = 0;
 	}
 }

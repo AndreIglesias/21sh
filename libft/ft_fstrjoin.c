@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 20:39:19 by ciglesia          #+#    #+#             */
-/*   Updated: 2019/08/13 20:39:20 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/06/01 12:38:24 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ char	*ft_fstrjoin(char *s1, char *s2)
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
 	len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	if (!(str = ft_memalloc(len)))
+	str = ft_memalloc(len);
+	if (!str)
 		return (NULL);
 	if (str)
 	{
