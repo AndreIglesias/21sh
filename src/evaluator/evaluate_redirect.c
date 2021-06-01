@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:06:39 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 01:08:09 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/02 01:45:17 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	stdin_to_bin(t_ast *cmds)
 	pid = fork();
 	if (pid)
 	{
-		close(fd[1]);
 		parent_fork(pid);
-		close(0);
+		close(fd[1]);
+		close(STDIN_FILENO);
 		dup(fd[0]);
 		sh_execv(cmds->bin, cmds->av);
 	}
@@ -34,13 +34,14 @@ void	stdin_to_bin(t_ast *cmds)
 	{
 		tmp = cmds->right;
 		close(fd[0]);
-		close(1);
+		close(STDOUT_FILENO);
 		dup(fd[1]);
 		while (tmp)
 		{
-			argv = str_to_arr(cmds->bin, tmp->right->bin);
-			sh_execv("cat", argv);
+			argv = str_to_arr("/bin/cat", tmp->right->bin);
+			sh_execv("/bin/cat", argv);
 			tmp = tmp->left;
+			ft_freesplit(argv);
 		}
 		sh_exit(NULL);
 	}
