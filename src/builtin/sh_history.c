@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 17:16:09 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 23:51:06 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/01 22:59:18 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ void	sh_history(void)
 		ft_putchar_fd('\n', 1);
 		tmp = tmp->back;
 	}
+	g_sh->last_status = 0;
 }

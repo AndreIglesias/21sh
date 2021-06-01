@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 01:39:05 by user             ###   ########.fr       */
+/*   Updated: 2021/06/01 23:02:27 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,10 +175,10 @@ int			browse_history(char *buf);
 */
 
 void		sh_exit(char *value);
-int			sh_pwd(void);
-int			sh_echo(int argc, char **value);
+void		sh_pwd(void);
+void		sh_echo(int argc, char **value);
 void		sh_export(int argc, char **key);
-int			sh_cd(int argv, char **argc);
+void		sh_cd(int argv, char **argc);
 void		sh_env(void);
 void		sh_history(void);
 void		sh_unset(int argc, char **key);

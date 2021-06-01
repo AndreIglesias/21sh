@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 18:26:00 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 16:37:28 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/01 22:54:23 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,5 @@ void	sh_env(void)
 	char	tmp[200];
 
 	ft_puttrie(g_sh->ev, tmp, 0);
+	g_sh->last_status = 0;
 }
