@@ -13,6 +13,12 @@
 #ifndef MSH_H
 # define MSH_H
 
+# ifdef M_SYNTAX
+#  define SYNTAX	1
+# else
+#  define SYNTAX	0
+# endif
+
 # include "libft.h"
 
 # include <stdio.h>
