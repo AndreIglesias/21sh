@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:29:37 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/28 17:13:57 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/01 12:55:47 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
-#include <sys/wait.h>
+# include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 
