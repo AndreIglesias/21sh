@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 19:52:40 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/20 20:00:51 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/01 12:52:35 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,13 @@ void	insert_trie(t_trie **root, char *cmd, int eq)
 	temp = *root;
 	while (cmd[i] && i < eq)
 	{
-		x = cmd[i];
+		x = cmd[i++];
 		if (temp->map[(int)x] == NULL)
 		{
 			temp->map[(int)x] = new_node();
 			temp->children++;
 		}
 		temp = temp->map[(int)x];
-		i++;
 	}
 	if (temp->end)
 		return ;

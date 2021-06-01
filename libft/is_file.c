@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 01:02:17 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/24 08:51:17 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/06/01 12:55:26 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 static int	can_openf(char *filename)
 {
 	struct stat	buf;
-    int			exist;
+	int			exist;
 
 	ft_memset(&exist, 0, sizeof(struct stat));
 	exist = lstat(filename, &buf);
-	if(exist == 0)
+	if (exist == 0)
 		return (1);
 	return (0);
 }
