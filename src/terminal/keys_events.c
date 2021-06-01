@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 00:14:23 by user             ###   ########.fr       */
+/*   Updated: 2021/06/01 01:57:27 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	del_ins(void)
 	else
 	{
 		g_sh->line[g_sh->line_cursor - 1] = 0;
-		g_sh->line = ft_fstrjoin(g_sh->line, &g_sh->line[g_sh->line_cursor]);//leak
+		g_sh->line = ft_fstrjoin(g_sh->line, &g_sh->line[g_sh->line_cursor]);
 		ft_putstr_fd(&g_sh->line[g_sh->line_cursor - 1], 0);
 	}
 }
@@ -168,7 +168,10 @@ int	keys_event(char *buf)
 		return (move_cursor(buf));
 	if (ft_strlen(buf) == 1 && buf[0] == 12)
 	{
+		//char **argv;//{"/usr/bin/clear", NULL};
+		//argv = str_to_arr("/usr/bin/clear", NULL);
 		printf("cle\n");
+		//sh_execv(argv[0], argv);
 		return (0);
 	}
 	i = 0;

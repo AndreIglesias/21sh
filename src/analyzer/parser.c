@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 22:04:34 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 01:31:43 by user             ###   ########.fr       */
+/*   Updated: 2021/06/01 13:04:41 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,10 @@ char	**ft_avjoin(char **av, int *ac, char *str)
 		i = 0;
 		while (i < *ac)
 		{
-			printf("new[%d] = %s\n", i, av[i]);
 			new[i] = av[i];
 			i++;
 		}
 		new[(*ac)++] = str;
-		printf("new[%d] = %s\n", i, str);
 		new[*ac] = NULL;
 		free(av);
 		return (new);
@@ -107,6 +105,9 @@ static void	construct_cmds(t_ast **head, t_ast *the_cmd)
 		{
 			if (tmp->op == 4)
 				the_cmd = NULL;
+			else if (tmp->op && the_cmd == NULL && tmp->next
+					&& tmp->next->next && tmp->next->next->bin)
+				tmp = tmp->next;
 			tmp = tmp->next;
 		}
 	}
