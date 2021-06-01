@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 22:50:36 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 12:41:40 by user             ###   ########.fr       */
+/*   Updated: 2021/06/01 23:51:01 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static t_ast	*collect_tree(t_ast *tmp, t_ast **n, int *incon)
 	t_ast	*tree;
 
 	tree = arrange_ast(tmp, NULL, NULL, 4);
-	if (tree && !consistent_redirections(tree))
+	if ((tree && !consistent_redirections(tree)) || tree == NULL)
 		*incon = 1;
 	*n = tmp;
 	if (tree)
