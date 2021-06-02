@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 23:56:02 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/03 00:39:56 by user             ###   ########.fr       */
+/*   Updated: 2021/06/03 01:04:11 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	consistent_cmd(int i)
 		i += ft_cspecial(&g_sh->line[i]);
 		if (g_sh->line[i] && g_sh->line[i] == '\\' && !sq)
 			i += 1 + (g_sh->line[i + 1] != 0);
-		if (g_sh->line[i])
+		else if (g_sh->line[i])
 		{
 			g_sh->ncmd = consistency(&sq, &dq, &content, i);
 			if (!g_sh->ncmd)
