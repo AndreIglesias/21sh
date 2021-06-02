@@ -6,134 +6,136 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 21:19:24 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 20:29:26 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/06/03 00:48:12 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
+static char	*escape_char(char *str, int i)
+{
+	if (!str[i + 1])
+	{
+		free(str);
+		return (NULL);
+	}
+	if (str[i + 1] != '\'')
+	{
+		str[i] = '\'';
+		str = ft_strins(str, "'", i + 2);
+	}
+	else
+	{
+		str[i] = '"';
+		str = ft_strins(str, "\"", i + 2);
+	}
+	return (str);
+}
+
 /*
-** op: | < > >>
-** param: 2 non-op (spc: "" '' $)
+**	1 : env variable
+**	2 : ? last status exit
+**	3 : other variable
+**	4 : number pos param variable
 */
 
-static char	*save_string(char *str, int *i, char quote)
+static char	*replace_envar(char *str, int *i, int type)
 {
-	char	*new;
-	int		k;
+	int		len;
+	char	*var;
+	char	*value;
 
-	new = ft_fchrjoin(NULL, str[(*i)++]);
+	len = 1;
+	if (type == 1 || type == 4)
+		len = envar_len(str, *i, type == 4);
+	if (type == 1)
+	{
+		var = ft_strndup(&str[(*i) + 1], len);
+		value = get_value(g_sh->ev, var);
+	}
+	str[*i] = 0;
+	str = ft_fstrjoin(str, &str[(*i) + len + 1]);
+	if (type == 2)
+	{
+		var = ft_itoa(g_sh->last_status);
+		value = var;
+	}
+	else if (type != 1)
+		return (str);
+	str = ft_strins(str, value, *i);
+	(*i) += ft_strlen(value);
+	free(var);
+	return (str);
+}
+
+/*
+**	only in double quote \ escapes: \, " or $
+*/
+static char	*skip_quote(char *str, int *i, int dq)
+{
+	char	quote;
+	int		envar;
+
+	quote = str[(*i)++];
 	while (str[*i] && str[*i] != quote)
 	{
-		if (is_envar(str, *i, quote))
+		if (dq)
 		{
-			k = (*i);
-			new = string_envar(str, new, &k, quote);
-			(*i) = k;
+			envar = is_envar(str, *i);
+			if (str[*i] == '\\' && ft_countchr("\\$", str[*i + 1]))
+			{
+				str[*i] = 0;
+				str = ft_fstrjoin(str, &str[(*i) + 1]);
+			}
+			else if (envar)
+			{
+				str = replace_envar(str, i, envar);
+				(*i)--;
+			}
 		}
-		else
-			new = ft_fchrjoin(new, str[(*i)++]);
+		(*i)++;
 	}
-	if (str[*i] == quote)
-		new = ft_fchrjoin(new, str[(*i)++]);
-	return (new);
+	(*i)++;
+	return (str);
 }
+/*
+**	replace $envs and \escapes
+*/
 
-static int	extract_token(char *str, int i, char **new)
+static char	*replace_envar_escape(char *str)
 {
-	int	quote;
+	int		i;
+	int		envar;
 
-	*new = NULL;
-	quote = 0;
-	while (end_of_token(str, i, quote))
+	i = 0;
+	while (str[i])
 	{
+		envar = is_envar(str, i);
 		if (str[i] == '\'' || str[i] == '"')
+			str = skip_quote(str, &i, str[i] == '"');
+		else if (str[i] == '\\')
 		{
-			if (!quote)
-				quote = str[i];
-			else if (str[i] == quote)
-				quote = 0;
-			else
-				*new = ft_fchrjoin(*new, str[i++]);
-			i++;
-			continue ;
+			str = escape_char(str, i);
+			if (!str)
+				return (NULL);
+			i += 3;
 		}
-		*new = ft_fchrjoin(*new, str[i++]);
-	}
-	return (i);
-}
-
-static int	save_token(char *str, int i, int x)
-{
-	char	*new;
-	t_uchar	op;
-
-	op = is_op(&str[i]);
-	if (op)
-	{
-		add_ast(&g_sh->cmds[x], new_astop(op));
-		if (op == 3)
-			i += 2;
+		else if (envar)
+			str = replace_envar(str, &i, envar);
 		else
 			i++;
 	}
-	else
-	{
-		i = extract_token(str, i, &new);
-		if (new)
-			add_ast(&g_sh->cmds[x], new_astcmd(new, NULL));
-		else
-			return (-1);
-	}
-	return (i);
-}
-
-static int	token_list(char *str, int i, int x)
-{
-	char	*string;
-	int		error;
-
-	if (str[i] == '\'')
-	{
-		string = save_string(str, &i, '\'');
-		add_ast(&g_sh->cmds[x], new_astcmd(string, NULL));
-	}
-	else if (str[i] == '"')
-	{
-		string = save_string(str, &i, '"');
-		add_ast(&g_sh->cmds[x], new_astcmd(string, NULL));
-	}
-	else if (is_envar(str, i, 0))
-		i = save_envnode(str, i, x);
-	else
-	{
-		error = save_token(str, i, x);
-		if (error < 0)
-			return (-1);
-		i = error;
-	}
-	return (i);
+	return (str);
 }
 
 int	ft_lexer(int x)
 {
-	int		i;
-	int		error;
-	char	*str;
-
-	str = g_sh->cmd_line[x];
-	i = 0;
-	while (str[i])
+	g_sh->cmd_line[x] = replace_envar_escape(g_sh->cmd_line[x]);
+	if (g_sh->cmd_line[x] == NULL)
 	{
-		i += ft_cspecial(&str[i]);
-		if (str[i])
-		{
-			error = token_list(str, i, x);
-			if (error < 0)
-				return ((int)ft_puterror(BOLD"lexical error near \
+		return ((int)ft_puterror(BOLD"lexical error near \
 unexpected token\n", (void *)EXIT_FAILURE));
-			i = error;
-		}
 	}
+	extract_tokens(g_sh->cmd_line[x], x);
 	return (EXIT_SUCCESS);
 }
