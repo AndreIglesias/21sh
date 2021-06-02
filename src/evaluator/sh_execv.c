@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 00:51:32 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 01:11:32 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/02 01:30:52 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**str_to_arr(char *name, char *av)
 		return (NULL);
 	argv[0] = ft_strdup(name);
 	argv[1] = ft_strdup(av);
-	argv[3] = NULL;
+	argv[2] = NULL;
 	return (argv);
 }
 
