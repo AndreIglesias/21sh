@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/02 00:48:57 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/02 12:28:02 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,33 @@ static int	check_buffer(char *buf)
 		}
 		if (buf[++i] == 0)
 			return (1);
+	}
+	return (0);
+}
+
+static int	ctrl_l(void)
+{
+	char	**argv;
+	int		pid;
+	size_t	i;
+
+	pid = fork();
+	if (pid)
+		parent_fork(pid);
+	else
+	{
+		argv = str_to_arr("/usr/bin/clear", NULL);
+		sh_execv(argv[0], argv);
+		ft_freesplit(argv);
+		sh_exit(NULL);
+	}
+	ft_prompt();
+	ft_putstr(g_sh->line);
+	i = ft_strlen(g_sh->line);
+	while (i > g_sh->line_cursor)
+	{
+		ft_putstr_fd(g_sh->events->lf, 0);
+		i--;
 	}
 	return (0);
 }

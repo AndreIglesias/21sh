@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 23:57:02 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/02 01:07:28 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,5 @@ void		sh_execv(char *name, char **av);
 char		**str_to_arr(char *name, char *av);
 void		stdin_to_bin(t_ast *cmds);
 void		save_envp(t_trie *root, char *str, int lvl);
-int			ctrl_l(void);
 
 #endif
