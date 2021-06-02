@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 23:56:02 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/02 21:09:36 by user             ###   ########.fr       */
+/*   Updated: 2021/06/03 00:39:56 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,15 +119,14 @@ int	ft_analyze(void)
 	i = 0;
 	while (g_sh->cmd_line[i])
 	{
-		ft_lexer(i);
-		/*if (ft_lexer(i) == EXIT_FAILURE || ft_parser(i) == EXIT_FAILURE)
+		if (ft_lexer(i) == EXIT_FAILURE || ft_parser(i) == EXIT_FAILURE)
 		{
 			if (g_sh->cmds[i])
 				g_sh->cmds[i]->valid = 0;
 			g_sh->last_status = EXIT_FAILURE;
 		}
 		else
-		ft_semantic(i);*/
+		ft_semantic(i);
 		i++;
 	}
 	free_cmd_line();

@@ -6,53 +6,11 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 21:19:24 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/02 21:47:16 by user             ###   ########.fr       */
+/*   Updated: 2021/06/03 00:48:12 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
-
-/*
-** op: | < > >>
-** param: 2 non-op (spc: "" '' $)
-*/
-
-static int	envar_len(char *s, int i, int dig)
-{
-	int	len;
-
-	i++;
-	len = i;
-	while (s[i] && ((!dig && (ft_isalpha(s[i]) || s[i] == 95))
-										|| ft_isdigit(s[i])))
-		i++;
-	len = i - len;
-	return (len);
-}
-
-/*
-**	1 : env variable
-**	2 : ? last status exit
-**	3 : other variable
-**	4 : number pos param variable
-*/
-
-static int	is_envar(char *s, int i)
-{
-	if (s[i] && s[i] == '$' && s[i + 1])
-	{
-		i++;
-		if (s[i] == '?')
-			return (2);
-		else if (ft_countchr("*@#-$!", s[i]))
-			return (3);
-		else if (ft_isdigit(s[i]))
-			return (4);
-		else if (ft_isalpha(s[i]) || s[i] == 95)
-			return (1);
-	}
-	return (0);
-}
 
 static char	*escape_char(char *str, int i)
 {
@@ -124,13 +82,16 @@ static char	*skip_quote(char *str, int *i, int dq)
 		if (dq)
 		{
 			envar = is_envar(str, *i);
-			if (str[*i] == '\\' && ft_countchr("\"\\$", str[*i + 1]))
+			if (str[*i] == '\\' && ft_countchr("\\$", str[*i + 1]))
 			{
 				str[*i] = 0;
 				str = ft_fstrjoin(str, &str[(*i) + 1]);
 			}
 			else if (envar)
+			{
 				str = replace_envar(str, i, envar);
+				(*i)--;
+			}
 		}
 		(*i)++;
 	}
@@ -145,7 +106,6 @@ static char	*replace_envar_escape(char *str)
 {
 	int		i;
 	int		envar;
-	int		len;
 
 	i = 0;
 	while (str[i])
@@ -170,39 +130,12 @@ static char	*replace_envar_escape(char *str)
 
 int	ft_lexer(int x)
 {
-	int		i;
-	int		error;
-	char	*str;
-
-	str = g_sh->cmd_line[x];
-	str = replace_envar_escape(str);
-	g_sh->cmd_line[x] = str;
-	if (str == NULL)
+	g_sh->cmd_line[x] = replace_envar_escape(g_sh->cmd_line[x]);
+	if (g_sh->cmd_line[x] == NULL)
 	{
 		return ((int)ft_puterror(BOLD"lexical error near \
 unexpected token\n", (void *)EXIT_FAILURE));
 	}
-	printf("STR: %s\n", str);
-	//replace \escapes and $envs outside quotes
-	//replace \escapes and $envs inside double quotes
-	//extract tokens and replace quotes
-
-
-
-/*
-	i = 0;
-	while (str[i])
-	{
-		i += ft_cspecial(&str[i]);
-		if (str[i])
-		{
-			error = token_list(str, i, x);
-			if (error < 0)
-				return ((int)ft_puterror(BOLD"lexical error near \
-unexpected token\n", (void *)EXIT_FAILURE));
-			i = error;
-		}
-	}
-*/
+	extract_tokens(g_sh->cmd_line[x], x);
 	return (EXIT_SUCCESS);
 }
