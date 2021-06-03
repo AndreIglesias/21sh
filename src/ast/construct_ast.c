@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 19:46:54 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/02 00:46:35 by user             ###   ########.fr       */
+/*   Updated: 2021/06/03 18:22:17 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static void	add_to_cmd(t_ast *cmd, t_ast *op)
 /*
 **	tmp is the new op
 **	add last op to the left if exists
+**	if > >> add to pipe subtree < add to cmd subtree
 */
 
 static int	add_op(t_ast **tmp, t_ast **op, t_ast **left, t_ast **left_op)
@@ -65,7 +66,7 @@ static int	add_op(t_ast **tmp, t_ast **op, t_ast **left, t_ast **left_op)
 		if (*op)
 			(*tmp)->left = *op;
 		*op = *tmp;
-		if (*left)//if > >> add to pipe subtree < add to cmd subtree
+		if (*left)
 		{
 			add_children(*op, *left, NULL);
 			*left = *op;
@@ -79,7 +80,11 @@ static int	add_op(t_ast **tmp, t_ast **op, t_ast **left, t_ast **left_op)
 		*tmp = (*tmp)->next;
 	}
 	else if (!(*tmp)->next)
-		return (0);
+	{
+		ft_puterror(SYE"inconsistent redirection `"BLUE, NULL);
+		ft_puterror(g_sh->ops[(*tmp)->op], NULL);
+		return ((int)ft_puterror(COLOR_E0M"'\n"E0M, NULL));
+	}
 	return (1);
 }
 
@@ -112,7 +117,7 @@ t_ast	*arrange_ast(t_ast *head, t_ast *left, t_ast *op, t_uchar opp)
 		else if (!tmp->bin)//op
 		{
 			if (!add_op(&tmp, &op, &left, &left_op))
-				return (ft_puterror("inconsistent redirection >:c\n"E0M, NULL));
+				return (NULL);
 			if (cmd && left_op)
 			{
 				add_to_cmd(cmd, left_op);
@@ -120,8 +125,6 @@ t_ast	*arrange_ast(t_ast *head, t_ast *left, t_ast *op, t_uchar opp)
 				left_op = NULL;
 			}
 		}
-		else
-			return (NULL);
 		if (tmp)
 			tmp = tmp->next;
 	}
