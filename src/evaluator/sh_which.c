@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 18:02:34 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/03 18:26:59 by user             ###   ########.fr       */
+/*   Updated: 2021/06/03 21:39:58 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*sh_which(char *name, t_trie *ev)
 	if (ft_strchr(name, '/'))
 	{
 		if (stat(name, &buf) == 0 && buf.st_mode & S_IXUSR
-									&& !S_ISDIR(buf.st_mode))
+			&& !S_ISDIR(buf.st_mode))
 			return (ft_strdup(name));
 	}
 	else
