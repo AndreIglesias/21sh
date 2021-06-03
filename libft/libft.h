@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:29:37 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 12:55:47 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/02 23:38:26 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_listi
 	struct s_listi	*next;
 }					t_listi;
 
+char				*ft_strpop(char *str, size_t i);
 int					is_file(char *filename);
 int					ft_countchr(const char *s, int c);
 void				*ft_memset(void *b, int c, size_t len);

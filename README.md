@@ -12,5 +12,6 @@ https://www.gnu.org/software/termutils/manual/termcap-1.3/html_chapter/termcap_4
 
 https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
+https://www.gnu.org/software/bash/manual/bash.pdf
 
 ╰─ echo "hola" > hola; cat < hola >> hola < hola | less

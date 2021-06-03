@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 23:56:02 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/26 19:05:38 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/06/03 01:04:11 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,21 @@ token `;'\n"E0M, (void *)0));
 	return (g_sh->ncmd);
 }
 
-static int	consistent_cmd(void)
+static int	consistent_cmd(int i)
 {
 	int	sq;
 	int	dq;
-	int	i;
 	int	content;
 
-	i = 0;
 	sq = 0;
 	dq = 0;
 	content = 0;
 	while (g_sh->line[i])
 	{
 		i += ft_cspecial(&g_sh->line[i]);
-		if (g_sh->line[i])
+		if (g_sh->line[i] && g_sh->line[i] == '\\' && !sq)
+			i += 1 + (g_sh->line[i + 1] != 0);
+		else if (g_sh->line[i])
 		{
 			g_sh->ncmd = consistency(&sq, &dq, &content, i);
 			if (!g_sh->ncmd)
@@ -111,7 +111,7 @@ int	ft_analyze(void)
 	int	i;
 
 	g_sh->ncmd = 1;
-	if (!consistent_cmd())
+	if (!consistent_cmd(0))
 		return (EXIT_FAILURE);
 	g_sh->cmd_line = ft_memalloc(sizeof(char *) * (g_sh->ncmd + 1));
 	save_lines();
@@ -126,7 +126,7 @@ int	ft_analyze(void)
 			g_sh->last_status = EXIT_FAILURE;
 		}
 		else
-			ft_semantic(i);
+		ft_semantic(i);
 		i++;
 	}
 	free_cmd_line();

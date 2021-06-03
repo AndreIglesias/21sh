@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 19:12:15 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/29 16:13:54 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/02 21:08:29 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	free_cmd_line(void)
 		{
 			if (g_sh->cmd_line[i])
 				free(g_sh->cmd_line[i++]);
+			else
+				i++;
 		}
 		free(g_sh->cmd_line);
 		g_sh->cmd_line = NULL;

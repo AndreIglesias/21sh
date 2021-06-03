@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 00:00:07 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/30 17:15:25 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/03 18:41:25 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 static int	right_file(t_ast *node)
 {
+	struct stat	buf;
+
 	if (!node->right || !node->right->bin || !is_file(node->right->bin))
 	{
-		ft_puterror(BOLD"minishell: semantic error:", NULL);
+		ft_puterror(BOLD"minishell: semantic warning:", NULL);
 		if (node->right && node->right->bin)
 		{
 			ft_putstr_fd(" "BLUE, 2);
@@ -25,6 +27,17 @@ static int	right_file(t_ast *node)
 		}
 		ft_puterror(" No such file or directory\n"E0M, NULL);
 		return (0);
+	}
+	if (stat(node->right->bin, &buf) == 0 && S_ISDIR(buf.st_mode))
+	{
+		ft_puterror(BOLD"minishell: semantic warning:", NULL);
+		if (node->right && node->right->bin)
+		{
+			ft_putstr_fd(" "BLUE, 2);
+			ft_putstr_fd(node->right->bin, 2);
+			ft_putstr_fd(E0M""BOLD":", 2);
+		}
+		ft_puterror(" is a directory\n"E0M, NULL);
 	}
 	if (node->right)
 		node->right->type = 3;
@@ -69,6 +82,8 @@ static int	consistent_subtrees(t_ast *node)
 			return (0);
 		else if ((node->op == 2 || node->op == 3) && !left_cmd(node))
 			return (0);
+		if (node->bin)
+			i *= consistent_subtrees(node->right);
 		i *= consistent_subtrees(node->left);
 	}
 	return (i);
