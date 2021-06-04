@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 16:16:39 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 23:02:11 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/04 20:18:35 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	sh_pwd(void)
 	}
 	else
 	{
-		printf("%s\n", tmp);
+		ft_putstr(tmp);
+		ft_putstr("\n");
 		free(tmp);
 		g_sh->last_status = 0;
 	}
