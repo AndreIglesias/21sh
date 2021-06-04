@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 22:04:34 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/03 20:01:03 by user             ###   ########.fr       */
+/*   Updated: 2021/06/04 18:31:57 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,6 @@ static t_ast	*add_param(t_ast *cmd, int c, int ls)
 	cmd->av = ft_memalloc(sizeof(char *) * (2 + ls));
 	cmd->ac = 1 + ls;
 	return (tmp);
-}
-
-char	**ft_avjoin(char **av, int *ac, char *str)
-{
-	char	**new;
-	int		i;
-
-	if (av && *ac && str)
-	{
-		new = malloc(sizeof(char *) * (*ac + 2));
-		i = 0;
-		while (i < *ac)
-		{
-			new[i] = av[i];
-			i++;
-		}
-		new[(*ac)++] = str;
-		new[*ac] = NULL;
-		free(av);
-		return (new);
-	}
-	return (NULL);
 }
 
 static void	collect_args(t_ast **tmp, t_ast **the_cmd)

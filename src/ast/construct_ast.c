@@ -6,37 +6,11 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 19:46:54 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/04 14:11:57 by user             ###   ########.fr       */
+/*   Updated: 2021/06/04 18:38:07 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
-
-void	add_ast(t_ast **head, t_ast *node)
-{
-	int		i;
-	t_ast	*tmp;
-
-	if (*head == NULL)
-		*head = node;
-	else
-	{
-		i = 0;
-		tmp = *head;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = node;
-		node->back = tmp;
-	}
-}
-
-static void	add_children(t_ast *op, t_ast *left, t_ast *right)
-{
-	if (!op->left && left)
-		op->left = left;
-	if (right)
-		op->right = right;
-}
 
 static void	add_to_cmd(t_ast *cmd, t_ast *op)
 {
@@ -102,14 +76,12 @@ static void	add_left_op(t_ast *cmd, t_ast **left_op, t_ast **op, t_ast *left)
 	}
 }
 
-static void	arranges_op_cmd(t_ast **left_op, t_ast *op, t_ast **left, t_ast *cmd)
+static void	arranges_op_cmd(t_ast **left_op, t_ast *op,
+							t_ast **left, t_ast *cmd)
 {
 	*left = cmd;
 	if (*left_op && op && op->op != 1)
-	{
-		printf("redir %s left %s\n", g_sh->ops[op->op], (*left)->bin);
 		op->left = cmd;
-	}
 	else if (*left_op)
 		add_to_cmd(cmd, *left_op);
 	*left_op = NULL;
