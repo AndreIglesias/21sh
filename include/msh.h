@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/03 21:57:55 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/04 18:36:54 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,7 @@ void		print_btree(t_ast *node, char *prefix, t_uchar is_left);
 t_ast		**new_astvec(int size);
 void		delete_astnode(t_ast *node);
 void		add_ast(t_ast **head, t_ast *node);
+void		add_children(t_ast *op, t_ast *left, t_ast *right);
 t_ast		*new_astcmd(char *cmd, char **av);
 t_ast		*new_astop(t_uchar op);
 void		free_cmd_line(void);
