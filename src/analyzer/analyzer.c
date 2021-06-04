@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 23:56:02 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/03 01:04:11 by user             ###   ########.fr       */
+/*   Updated: 2021/06/03 19:51:35 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	ft_analyze(void)
 			g_sh->last_status = EXIT_FAILURE;
 		}
 		else
-		ft_semantic(i);
+			ft_semantic(i);
 		i++;
 	}
 	free_cmd_line();

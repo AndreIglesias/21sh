@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 19:30:05 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 00:29:29 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/03 19:15:49 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,17 @@ static void	fill_history(int fd, t_history **hst)
 	line = NULL;
 	while (get_next_line(fd, &line) > 0 && i--)
 	{
-		save_cmdline(hst, line);
+		if (ft_isprintable(line))
+			save_cmdline(hst, line);
+		else
+		{
+			ft_puterror(BOLD"minishell: "BLUE"minishell_history", NULL);
+			ft_puterror(COLOR_E0M": line number `"BLUE, NULL);
+			ft_putnbr(HRY_SIZE - i);
+			ft_puterror(COLOR_E0M"' not loaded ", NULL);
+			ft_puterror("for invalid characters\n"E0M, NULL);
+			free(line);
+		}
 		line = NULL;
 	}
 	get_next_line(-1, &line);

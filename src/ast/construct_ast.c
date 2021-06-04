@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 19:46:54 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/03 18:22:17 by user             ###   ########.fr       */
+/*   Updated: 2021/06/04 14:11:57 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ static int	add_op(t_ast **tmp, t_ast **op, t_ast **left, t_ast **left_op)
 		if (*op)
 			(*tmp)->left = *op;
 		*op = *tmp;
-		if (*left)
-		{
-			add_children(*op, *left, NULL);
-			*left = *op;
-		}
+	}
+	if (*op && *left)
+	{
+		add_children(*op, *left, NULL);
+		*left = *op;
 	}
 	if (!*left || (*tmp)->op == 1)
 		*left_op = *tmp;
@@ -89,41 +89,55 @@ static int	add_op(t_ast **tmp, t_ast **op, t_ast **left, t_ast **left_op)
 }
 
 /*
-**	arrange list of cmds to form a subtree of redirections
-**	left && tmp->bin is THE command
+**	appends the < redirection to the command and continues
 */
 
-t_ast	*arrange_ast(t_ast *head, t_ast *left, t_ast *op, t_uchar opp)
+static void	add_left_op(t_ast *cmd, t_ast **left_op, t_ast **op, t_ast *left)
 {
-	t_ast	*tmp;
-	t_ast	*left_op;
-	t_ast	*cmd;
-
-	tmp = head;
-	left_op = NULL;
-	cmd = NULL;
-	while (tmp && tmp->op != opp)
+	if (cmd && *left_op)
 	{
-		if (!left && tmp->bin)//cmd
+		add_to_cmd(cmd, *left_op);
+		*op = left;
+		*left_op = NULL;
+	}
+}
+
+static void	arranges_op_cmd(t_ast **left_op, t_ast *op, t_ast **left, t_ast *cmd)
+{
+	*left = cmd;
+	if (*left_op && op && op->op != 1)
+	{
+		printf("redir %s left %s\n", g_sh->ops[op->op], (*left)->bin);
+		op->left = cmd;
+	}
+	else if (*left_op)
+		add_to_cmd(cmd, *left_op);
+	*left_op = NULL;
+}
+
+/*
+**	arrange list of cmds to form a subtree of redirections
+**	left && tmp->bin is THE command
+**	while op != 4 (pipe)
+*/
+
+t_ast	*arrange_ast(t_ast *tmp, t_ast *left, t_ast *op, t_ast *cmd)
+{
+	t_ast	*left_op;
+
+	left_op = NULL;
+	while (tmp && tmp->op != 4)
+	{
+		if (!left && tmp->bin)
 		{
 			cmd = tmp;
-			left = tmp;
-			if (left_op && op && op->op != 1)
-				op->left = left;
-			else if (left_op)
-				add_to_cmd(cmd, left_op);
-			left_op = NULL;
+			arranges_op_cmd(&left_op, op, &left, cmd);
 		}
-		else if (!tmp->bin)//op
+		else if (!tmp->bin)
 		{
 			if (!add_op(&tmp, &op, &left, &left_op))
 				return (NULL);
-			if (cmd && left_op)
-			{
-				add_to_cmd(cmd, left_op);
-				op = left;
-				left_op = NULL;
-			}
+			add_left_op(cmd, &left_op, &op, left);
 		}
 		if (tmp)
 			tmp = tmp->next;

@@ -44,6 +44,7 @@ typedef struct s_listi
 	struct s_listi	*next;
 }					t_listi;
 
+int					ft_isprintable(char *str);
 char				*ft_strpop(char *str, size_t i);
 int					is_file(char *filename);
 int					ft_countchr(const char *s, int c);

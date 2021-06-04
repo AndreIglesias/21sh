@@ -20,9 +20,9 @@
 # endif
 
 # ifdef M_LS
-#  define LS	1
-# else
 #  define LS	0
+# else
+#  define LS	1
 # endif
 
 # ifdef M_EVAL
@@ -166,6 +166,10 @@ void		store_envar(char **ev);
 ssize_t		get_cmd(void);
 int			keys_event(char *buf);
 void		ft_prompt(void);
+int			ctrl_l(void);
+int			jump_sides(char *buf);
+int			move_ctrl(char *buf, char *cl, char *cr);
+
 /*
 **	history
 */
@@ -207,7 +211,7 @@ int			envar_len(char *s, int i, int dig);
 void		extract_tokens(char *str, int x);
 
 int			ft_parser(int x);
-t_ast		*arrange_ast(t_ast *head, t_ast *left, t_ast *op, t_uchar opp);
+t_ast		*arrange_ast(t_ast *tmp, t_ast *left, t_ast *op, t_ast *cmd);
 t_ast		*construct_tree(t_ast **head, t_ast *pipe, t_ast *n, int incon);
 
 int			ft_semantic(int x);
