@@ -6,7 +6,7 @@
 /*   By: user <ciglesia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 00:36:03 by user              #+#    #+#             */
-/*   Updated: 2021/06/03 00:47:55 by user             ###   ########.fr       */
+/*   Updated: 2021/06/03 19:49:36 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	envar_len(char *s, int i, int dig)
 	i++;
 	len = i;
 	while (s[i] && ((!dig && (ft_isalpha(s[i]) || s[i] == 95))
-										|| ft_isdigit(s[i])))
+			|| ft_isdigit(s[i])))
 		i++;
 	len = i - len;
 	return (len);

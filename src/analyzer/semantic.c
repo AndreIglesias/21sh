@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 00:00:07 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/03 18:41:25 by user             ###   ########.fr       */
+/*   Updated: 2021/06/03 19:51:20 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,9 @@ static int	right_file(t_ast *node)
 	if (stat(node->right->bin, &buf) == 0 && S_ISDIR(buf.st_mode))
 	{
 		ft_puterror(BOLD"minishell: semantic warning:", NULL);
-		if (node->right && node->right->bin)
-		{
-			ft_putstr_fd(" "BLUE, 2);
-			ft_putstr_fd(node->right->bin, 2);
-			ft_putstr_fd(E0M""BOLD":", 2);
-		}
+		ft_putstr_fd(" "BLUE, 2);
+		ft_putstr_fd(node->right->bin, 2);
+		ft_putstr_fd(E0M""BOLD":", 2);
 		ft_puterror(" is a directory\n"E0M, NULL);
 	}
 	if (node->right)

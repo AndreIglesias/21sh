@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 22:04:34 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 13:04:41 by user             ###   ########.fr       */
+/*   Updated: 2021/06/03 20:01:03 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,38 +75,42 @@ char	**ft_avjoin(char **av, int *ac, char *str)
 	return (NULL);
 }
 
+static void	collect_args(t_ast **tmp, t_ast **the_cmd)
+{
+	t_ast	*n;
+	t_uchar	ls;
+
+	ls = 0;
+	if (!ft_strcmp((*tmp)->bin, "ls") && LS)
+		ls = 1;
+	n = add_param((*tmp), 0, ls);
+	if ((*tmp)->av[0])
+		free((*tmp)->av[0]);
+	(*tmp)->av[0] = ft_strdup((*tmp)->bin);
+	if (ls)
+		(*tmp)->av[1] = ft_strdup("--color=auto");
+	*the_cmd = (*tmp);
+	(*tmp) = n;
+}
+
 static void	construct_cmds(t_ast **head, t_ast *the_cmd)
 {
 	t_ast	*tmp;
-	t_ast	*n;
-	t_uchar	ls;
 
 	tmp = *head;
 	while (tmp)
 	{
 		if (tmp->bin && !the_cmd)
-		{
-			ls = 0;
-			if (!ft_strcmp(tmp->bin, "ls") && LS)
-				ls = 1;
-			n = add_param(tmp, 0, ls);
-			if (tmp->av[0])
-				free(tmp->av[0]);
-			tmp->av[0] = ft_strdup(tmp->bin);
-			if (ls)
-				tmp->av[1] = ft_strdup("--color=auto");
-			the_cmd = tmp;
-			tmp = n;
-		}
+			collect_args(&tmp, &the_cmd);
 		else if (tmp->bin && the_cmd && tmp->back->bin)
 			the_cmd->av = ft_avjoin(the_cmd->av, &the_cmd->ac,
-										extract_param(&tmp));
+					extract_param(&tmp));
 		else
 		{
 			if (tmp->op == 4)
 				the_cmd = NULL;
 			else if (tmp->op && the_cmd == NULL && tmp->next
-					&& tmp->next->next && tmp->next->next->bin)
+				&& tmp->next->next && tmp->next->next->bin)
 				tmp = tmp->next;
 			tmp = tmp->next;
 		}
