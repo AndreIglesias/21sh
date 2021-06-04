@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 18:02:34 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/03 19:27:31 by user             ###   ########.fr       */
+/*   Updated: 2021/06/04 19:30:49 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*check_bin_path(char *path, char *name)
 	int			i;
 	struct stat	buf;
 
+	if (!path)
+		return (NULL);
 	split = ft_split(path, ':');
 	path = NULL;
 	i = 0;

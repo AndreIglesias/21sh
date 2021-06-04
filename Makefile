@@ -44,7 +44,7 @@ HISTORY		=	load_history.c free_history.c browse_history.c
 BUILTIN		=	sh_exit.c sh_pwd.c sh_echo.c sh_export.c sh_cd.c sh_env.c sh_history.c sh_syntax.c sh_unset.c
 AST			=	ast.c construct_ast.c free_ast.c print_ast.c add_ast.c
 ANALIZE		=	analyzer.c lexer.c parser.c semantic.c  boolean.c inception_tree.c extract_tokens.c
-EVAL		=	sh_which.c ft_evaluate.c evaluate_redirect.c evaluate_cmd.c parent_fork.c sh_execv.c
+EVAL		=	sh_which.c ft_evaluate.c evaluate_redirect.c evaluate_builtin.c parent_fork.c sh_execv.c
 
 SRCS		=	$(SRC) $(SIGNAL) $(TERM) $(HISTORY) $(BUILTIN) $(EVAL) $(ANALIZE) $(AST)
 
