@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/05/31 19:50:49 by user             ###   ########.fr        #
+#    Updated: 2021/06/03 19:15:21 by jiglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -39,12 +39,12 @@ DIRAST		=	$(DIRSRC)/ast/
 
 SRC			=	main.c
 SIGNAL		=	signals.c
-TERM		=	terminal.c environment.c getcmd.c keys_events.c prompt.c
+TERM		=	terminal.c environment.c getcmd.c keys_events.c events.c prompt.c
 HISTORY		=	load_history.c free_history.c browse_history.c
 BUILTIN		=	sh_exit.c sh_pwd.c sh_echo.c sh_export.c sh_cd.c sh_env.c sh_history.c sh_syntax.c sh_unset.c
 AST			=	ast.c construct_ast.c free_ast.c print_ast.c
-ANALIZE		=	analyzer.c lexer.c get_envar.c parser.c semantic.c  boolean.c inception_tree.c
-EVAL		=	sh_which.c ft_evaluate.c evaluate_redirect.c evaluate_cmd.c parent_fork.c
+ANALIZE		=	analyzer.c lexer.c parser.c semantic.c  boolean.c inception_tree.c extract_tokens.c
+EVAL		=	sh_which.c ft_evaluate.c evaluate_redirect.c evaluate_builtin.c parent_fork.c sh_execv.c
 
 SRCS		=	$(SRC) $(SIGNAL) $(TERM) $(HISTORY) $(BUILTIN) $(EVAL) $(ANALIZE) $(AST)
 
@@ -68,8 +68,20 @@ CFLAGS		=	-Wall -Wextra -Werror
 endif
 
 ifdef SYNTAX
-	ifeq ($(SYNTAX), yes)
+	ifeq ($(SYNTAX), on)
 CFLAGS		+=	-DM_SYNTAX
+	endif
+endif
+
+ifdef LS
+	ifeq ($(LS), off)
+CFLAGS		+=	-DM_LS
+	endif
+endif
+
+ifdef NEVAL
+	ifeq ($(NEVAL), on)
+CFLAGS		+=	-DM_EVAL
 	endif
 endif
 
@@ -170,7 +182,7 @@ ftlib	:
 				@(cd $(SUB_MAKE) && $(MAKE))
 
 fonts	:
-				sudo apt install $(FONTS)
+				sudo apt install -y $(FONTS)
 				fc-cache -fv
 
 .PHONY	:		all clean re

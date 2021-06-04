@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 22:50:36 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/25 18:55:29 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/06/03 21:55:54 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,19 @@ static int	consistent_redirections(t_ast *node)
 	return (i);
 }
 
+/*
+**	creates the redirection subtree for the actual pipe
+**	incon (bool) for consistency of the redirections
+**	tree is the head of the subtree
+**	returns the node in the list of cmds next to the end of the subtree
+*/
+
 static t_ast	*collect_tree(t_ast *tmp, t_ast **n, int *incon)
 {
 	t_ast	*tree;
 
-	tree = arrange_ast(tmp, NULL, NULL, 4);
-	if (tree && !consistent_redirections(tree))
+	tree = arrange_ast(tmp, NULL, NULL, NULL);
+	if ((tree && !consistent_redirections(tree)) || tree == NULL)
 		*incon = 1;
 	*n = tmp;
 	if (tree)
@@ -46,6 +53,10 @@ static t_ast	*collect_tree(t_ast *tmp, t_ast **n, int *incon)
 		tmp = tmp->next;
 	return (tmp);
 }
+
+/*
+**	keeps track of last pipe node to append  the head of the subtree
+*/
 
 static t_ast	*append_tree(t_ast **tmp, t_ast **pipe, t_ast *n)
 {
@@ -70,6 +81,11 @@ static t_ast	*append_tree(t_ast **tmp, t_ast **pipe, t_ast *n)
 	}
 	return (n);
 }
+
+/*
+**	constructs pipe tree and appends subtree of redirections
+**	returns head of pipe tree
+*/
 
 t_ast	*construct_tree(t_ast **head, t_ast *pipe, t_ast *n, int incon)
 {

@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_counttil.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/13 20:43:04 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 12:53:43 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/06/04 01:02:08 by jiglesia          #+#    #+#             */
+/*   Updated: 2021/06/04 01:04:51 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strcmp(const char *s1, const char *s2)
+#include "libft.h"
+
+int	ft_counttil(const char *s, char c)
 {
-	unsigned int	i;
+	int	i;
 
 	i = 0;
-	while (s1[i] && s2[i] && (unsigned char)s1[i] == (unsigned char)s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	while (s[i])
+		if (s[i++] == c)
+			break ;
+	if (i)
+		return (i - 1);
+	else
+		return (0);
 }

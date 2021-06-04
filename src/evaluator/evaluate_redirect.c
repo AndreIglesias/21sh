@@ -6,31 +6,33 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:06:39 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/30 19:33:23 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/03 21:57:19 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-static void	stdin_to_bin(t_ast *op)
+void	stdin_to_bin(t_ast *cmds)
 {
-	int	fd;
-	int	pid;
+	int		fdpip[2];
+	int		pid;
 
 	tcsetattr(0, 0, &g_sh->old_term);
+	pipe(fdpip);
 	pid = fork();
 	if (pid)
+	{
 		parent_fork(pid);
+		close(fdpip[1]);
+		close(STDIN_FILENO);
+		dup(fdpip[0]);
+		sh_execv(cmds->bin, cmds->av);
+	}
 	else
 	{
-		fd = open(op->right->bin, O_RDONLY);
-		close(0);
-		dup(fd);
-		op_or_cmds(op->left);
-		if (op->left->op)
-			cat_last_file(op->left);
-		close(fd);
-		sh_exit(NULL);
+		close(fdpip[0]);
+		extract_file(cmds->right, fdpip[1]);
+		close(fdpip[1]);
 	}
 	tcsetattr(0, 0, &g_sh->new_term);
 }
@@ -118,13 +120,11 @@ void	evaluate_redirect(t_ast *op)
 {
 	int	pid;
 
-	if (op->op == 1)
-		stdin_to_bin(op);
-	else if (op->op == 2)
+	if (op->op == 2)
 		stdout_to_file(op);
 	else if (op->op == 3)
 		stdout_to_eof(op);
-	else
+	else if (op->op == 4)
 	{
 		tcsetattr(0, 0, &g_sh->old_term);
 		pid = fork();

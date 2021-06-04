@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 22:04:34 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/28 19:03:05 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/03 20:01:03 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*extract_param(t_ast **tmp)
 	return (str);
 }
 
-static t_ast	*add_param(t_ast *cmd, int c)
+static t_ast	*add_param(t_ast *cmd, int c, int ls)
 {
 	t_ast	*tmp;
 
@@ -36,9 +36,9 @@ static t_ast	*add_param(t_ast *cmd, int c)
 	}
 	if (c)
 	{
-		cmd->av = ft_memalloc(sizeof(char *) * (c + 2));
-		cmd->ac = c + 1;
-		c = 1;
+		cmd->av = ft_memalloc(sizeof(char *) * (c + 2 + ls));
+		cmd->ac = c + 1 + ls;
+		c = 1 + ls;
 		tmp = cmd->next;
 		while (tmp && tmp->bin)
 		{
@@ -48,32 +48,72 @@ static t_ast	*add_param(t_ast *cmd, int c)
 		}
 		return (tmp);
 	}
-	cmd->av = ft_memalloc(sizeof(char *) * 2);
-	cmd->ac = 1;
+	cmd->av = ft_memalloc(sizeof(char *) * (2 + ls));
+	cmd->ac = 1 + ls;
 	return (tmp);
 }
 
-void	construct_cmds(t_ast **head)
+char	**ft_avjoin(char **av, int *ac, char *str)
+{
+	char	**new;
+	int		i;
+
+	if (av && *ac && str)
+	{
+		new = malloc(sizeof(char *) * (*ac + 2));
+		i = 0;
+		while (i < *ac)
+		{
+			new[i] = av[i];
+			i++;
+		}
+		new[(*ac)++] = str;
+		new[*ac] = NULL;
+		free(av);
+		return (new);
+	}
+	return (NULL);
+}
+
+static void	collect_args(t_ast **tmp, t_ast **the_cmd)
+{
+	t_ast	*n;
+	t_uchar	ls;
+
+	ls = 0;
+	if (!ft_strcmp((*tmp)->bin, "ls") && LS)
+		ls = 1;
+	n = add_param((*tmp), 0, ls);
+	if ((*tmp)->av[0])
+		free((*tmp)->av[0]);
+	(*tmp)->av[0] = ft_strdup((*tmp)->bin);
+	if (ls)
+		(*tmp)->av[1] = ft_strdup("--color=auto");
+	*the_cmd = (*tmp);
+	(*tmp) = n;
+}
+
+static void	construct_cmds(t_ast **head, t_ast *the_cmd)
 {
 	t_ast	*tmp;
-	t_ast	*n;
 
 	tmp = *head;
 	while (tmp)
 	{
-		if (tmp->bin)
-		{
-			n = add_param(tmp, 0);
-			if (tmp->av && tmp->ac)
-			{
-				if (tmp->av[0])
-					free(tmp->av[0]);
-				tmp->av[0] = ft_strdup(tmp->bin);
-			}
-			tmp = n;
-		}
+		if (tmp->bin && !the_cmd)
+			collect_args(&tmp, &the_cmd);
+		else if (tmp->bin && the_cmd && tmp->back->bin)
+			the_cmd->av = ft_avjoin(the_cmd->av, &the_cmd->ac,
+					extract_param(&tmp));
 		else
+		{
+			if (tmp->op == 4)
+				the_cmd = NULL;
+			else if (tmp->op && the_cmd == NULL && tmp->next
+				&& tmp->next->next && tmp->next->next->bin)
+				tmp = tmp->next;
 			tmp = tmp->next;
+		}
 	}
 }
 
@@ -83,7 +123,7 @@ int	ft_parser(int x)
 
 	if (!g_sh->cmds[x])
 		return (EXIT_SUCCESS);
-	construct_cmds(&g_sh->cmds[x]);
+	construct_cmds(&g_sh->cmds[x], NULL);
 	tree = construct_tree(&g_sh->cmds[x], NULL, NULL, 0);
 	if (!tree)
 		return (EXIT_FAILURE);

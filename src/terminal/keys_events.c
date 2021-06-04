@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/31 01:10:08 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/03 19:43:23 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ static void	del_ins(void)
 	else
 	{
 		g_sh->line[g_sh->line_cursor - 1] = 0;
-		g_sh->line = ft_fstrjoin(g_sh->line, &g_sh->line[g_sh->line_cursor]);//leak
+		g_sh->line = ft_fstrjoin(g_sh->line, &g_sh->line[g_sh->line_cursor]);
 		ft_putstr_fd(&g_sh->line[g_sh->line_cursor - 1], 0);
 	}
 }
 
-static int	delete_key()
+static int	delete_key(void)
 {
 	ft_putstr_fd(g_sh->events->lf, 0);
 	ft_putstr_fd(g_sh->events->sc, 0);
@@ -51,91 +51,22 @@ static int	delete_key()
 	return (2);
 }
 
-static int	next_space(char *str, int i)
+static int	check_buffer(char *buf)
 {
-	int	my_space;
+	int	i;
 
-	if (str && str[i - 1])
+	i = 0;
+	while (buf[i] && ((31 < buf[i] && buf[i] < 127) || buf[i] == 10))
 	{
-		my_space = 0;
-		i--;
-		if (str[i] == ' ')
-			my_space = 1;
-		while (i && (str[i] != ' ' || my_space))
-		{
-			if (str[i] != ' ')
-				my_space = 0;
-			i--;
-		}
-		if (!my_space && str[i] == ' ')
-			i++;
-	}
-	return (i);
-}
-
-static int	next_char(char *str, int i)
-{
-	int	my_char;
-
-	if (str && str[i])
-	{
-		my_char = 0;
-		i++;
-		if (str[i] != ' ')
-			my_char = 1;
-		while (str[i] && (str[i] == ' ' || my_char))
-		{
-			if (str[i] == ' ')
-				my_char = 0;
-			i++;
-		}
-	}
-	return (i);
-}
-
-static int	move_ctrl(char *buf, char *cl, char *cr)
-{
-	size_t	x;
-
-	if (!ft_strcmp(cl, buf) && g_sh->line_cursor)
-	{
-		x = next_space(g_sh->line, g_sh->line_cursor);
-		while (x < g_sh->line_cursor)
-		{
-			ft_putstr_fd(g_sh->events->lf, 0);
-			g_sh->line_cursor--;
-		}
-	}
-	else if (!ft_strcmp(cr, buf) && g_sh->line_cursor
-		< ft_strlen(g_sh->line))
-	{
-		x = next_char(g_sh->line, g_sh->line_cursor);
-		while (g_sh->line_cursor < x)
-		{
-			ft_putstr_fd(g_sh->events->rg, 0);
+		if (buf[i] != '\n')
 			g_sh->line_cursor++;
-		}
-	}
-	return (0);
-}
-
-static int	jump_sides(char *buf)
-{
-	if (buf[2] == 70 && g_sh->line_cursor < ft_strlen(g_sh->line))
-	{
-		while (g_sh->line_cursor < ft_strlen(g_sh->line))
+		if (buf[i] == '\n')
 		{
-			ft_putstr_fd(g_sh->events->rg, 0);
-			g_sh->line_cursor++;
+			buf[i] = 0;
+			return (3);
 		}
-	}
-	if (buf[2] == 72 && g_sh->line_cursor)
-	{
-		while (g_sh->line_cursor)
-		{
-			ft_putstr_fd(g_sh->events->lf, 0);
-			g_sh->line_cursor--;
-		}
+		if (buf[++i] == 0)
+			return (1);
 	}
 	return (0);
 }
@@ -152,7 +83,6 @@ int	keys_event(char *buf)
 	static char	cl[] = {27, 91, 49, 59, 53, 68, 0};
 	static char	home[] = {27, 91, 72, 0};
 	static char	end[] = {27, 91, 70, 0};
-	int			i;
 
 	if (buf[0] == 4)
 		sh_exit(NULL);
@@ -166,18 +96,7 @@ int	keys_event(char *buf)
 		return (browse_history(buf));
 	if (!ft_strcmp(g_sh->events->lf, buf) || !ft_strcmp(g_sh->events->rg, buf))
 		return (move_cursor(buf));
-	i = 0;
-	while (buf[i] && ((31 < buf[i] && buf[i] < 127) || buf[i] == 10))
-	{
-		if (buf[i] != '\n')
-			g_sh->line_cursor++;
-		if (buf[i] == '\n')
-		{
-			buf[i] = 0;
-			return (3);
-		}
-		if (buf[++i] == 0)
-			return (1);
-	}
-	return (0);
+	if (ft_strlen(buf) == 1 && buf[0] == 12)
+		return (ctrl_l());
+	return (check_buffer(buf));
 }

@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_isprintable.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <ciglesia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/13 20:43:04 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 12:53:43 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/06/03 19:03:28 by user              #+#    #+#             */
+/*   Updated: 2021/06/03 19:05:02 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strcmp(const char *s1, const char *s2)
+#include "libft.h"
+
+int	ft_isprintable(char *str)
 {
-	unsigned int	i;
+	int	i;
 
 	i = 0;
-	while (s1[i] && s2[i] && (unsigned char)s1[i] == (unsigned char)s2[i])
+	while (str[i] && 32 <= str[i] && str[i] < 127)
 		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	if (str[i])
+		return (0);
+	return (1);
 }

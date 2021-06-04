@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 21:08:33 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/31 16:43:24 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/03 19:32:50 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,12 @@
 **	HOME 27 91 72
 */
 
-static int	input_handler(void)
+static int	input_handler(int e)
 {
-	int		e;
 	char	buf[7];
 	ssize_t	len;
 
 	len = 1;
-	e = 0;
 	while (!ft_strchr(buf, '\n') && len && e != 3)
 	{
 		buf[0] = 0;
@@ -58,7 +56,7 @@ ssize_t	get_cmd(void)
 	int	s;
 	int	len;
 
-	len = input_handler();
+	len = input_handler(0);
 	ft_putchar('\n');
 	if (g_sh->line)
 	{

@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:29:37 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/28 17:13:57 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/04 01:06:01 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
-#include <sys/wait.h>
+# include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 
@@ -44,6 +44,8 @@ typedef struct s_listi
 	struct s_listi	*next;
 }					t_listi;
 
+int					ft_isprintable(char *str);
+char				*ft_strpop(char *str, size_t i);
 int					is_file(char *filename);
 int					ft_countchr(const char *s, int c);
 void				*ft_memset(void *b, int c, size_t len);
@@ -113,5 +115,6 @@ void				ft_freesplit(char **split);
 void				ft_puttrie(t_trie *root, char *str, int lvl);
 void				ft_freetrie(t_trie **root);
 long long			ft_atoll(char *nb);
+int					ft_counttil(const char *s, char c);
 
 #endif

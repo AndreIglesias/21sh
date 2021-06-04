@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/31 00:25:45 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/03 19:25:39 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 t_shell	*g_sh;
 
-void	ft_minishell(void)
+void	ft_minishell(ssize_t ready)
 {
-	ssize_t	ready;
-
-	ready = 1;
 	while (ready > 0)
 	{
 		g_sh->history_cursor = g_sh->history;
@@ -34,14 +31,14 @@ void	ft_minishell(void)
 		{
 			if (ft_analyze() != EXIT_SUCCESS)
 				g_sh->last_status = 2;
-			ft_evaluate();
+			if (EVAL)
+				ft_evaluate();
 			free_ast();
 		}
 		free(g_sh->line);
 		if (g_sh->line_tmp)
 			free(g_sh->line_tmp);
 	}
-	sh_exit("2");
 }
 
 int	main(int ac, char **av, char **ev)
@@ -65,6 +62,7 @@ int	main(int ac, char **av, char **ev)
 	}
 	g_sh->history_path = ft_strjoin(home, "/.minishell_history");
 	load_history();
-	ft_minishell();
+	ft_minishell(1);
+	sh_exit("2");
 	return (EXIT_SUCCESS);
 }

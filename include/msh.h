@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/31 20:04:52 by user             ###   ########.fr       */
+/*   Updated: 2021/06/03 21:57:55 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,18 @@
 #  define SYNTAX	1
 # else
 #  define SYNTAX	0
+# endif
+
+# ifdef M_LS
+#  define LS	0
+# else
+#  define LS	1
+# endif
+
+# ifdef M_EVAL
+#  define EVAL	0
+# else
+#  define EVAL	1
 # endif
 
 # include "libft.h"
@@ -154,6 +166,10 @@ void		store_envar(char **ev);
 ssize_t		get_cmd(void);
 int			keys_event(char *buf);
 void		ft_prompt(void);
+int			ctrl_l(void);
+int			jump_sides(char *buf);
+int			move_ctrl(char *buf, char *cl, char *cr);
+
 /*
 **	history
 */
@@ -169,10 +185,10 @@ int			browse_history(char *buf);
 */
 
 void		sh_exit(char *value);
-int			sh_pwd(void);
-int			sh_echo(int argc, char **value);
+void		sh_pwd(void);
+void		sh_echo(int argc, char **value);
 void		sh_export(int argc, char **key);
-int			sh_cd(int argv, char **argc);
+void		sh_cd(int argv, char **argc);
 void		sh_env(void);
 void		sh_history(void);
 void		sh_unset(int argc, char **key);
@@ -190,12 +206,12 @@ int			ft_analyze(void);
 int			end_of_token(char *str, int i, char quote);
 
 int			ft_lexer(int x);
-int			is_envar(char *str, int i, char q);
-char		*string_envar(char *str, char *new, int *i, char quote);
-int			save_envnode(char *str, int i, int x);
+int			is_envar(char *s, int i);
+int			envar_len(char *s, int i, int dig);
+void		extract_tokens(char *str, int x);
 
 int			ft_parser(int x);
-t_ast		*arrange_ast(t_ast *head, t_ast *left, t_ast *op, t_uchar opp);
+t_ast		*arrange_ast(t_ast *tmp, t_ast *left, t_ast *op, t_ast *cmd);
 t_ast		*construct_tree(t_ast **head, t_ast *pipe, t_ast *n, int incon);
 
 int			ft_semantic(int x);
@@ -228,5 +244,10 @@ void		evaluate_builtin(t_ast *op);
 void		parent_fork(int sig);
 void		append_create_fd(int fdpip, t_ast *op);
 void		cat_last_file(t_ast *cmds);
+void		sh_execv(char *name, char **av);
+char		**str_to_arr(char *name, char *av);
+void		stdin_to_bin(t_ast *cmds);
+void		save_envp(t_trie *root, char *str, int lvl);
+void		extract_file(t_ast *tmp, int fdpip);
 
 #endif

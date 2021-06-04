@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_strpop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <ciglesia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/13 20:43:04 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 12:53:43 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/06/02 23:28:52 by user              #+#    #+#             */
+/*   Updated: 2021/06/02 23:38:10 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	unsigned int	i;
+#include "libft.h"
 
-	i = 0;
-	while (s1[i] && s2[i] && (unsigned char)s1[i] == (unsigned char)s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+char	*ft_strpop(char *str, size_t i)
+{
+	if (str && i <= ft_strlen(str))
+	{
+		str[i] = 0;
+		if (str[i + 1])
+			str = ft_fstrjoin(str, &str[i + 1]);
+	}
+	return (str);
 }
