@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 12:33:44 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 01:40:05 by user             ###   ########.fr       */
+/*   Updated: 2021/06/03 20:04:40 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	exec_cmd(t_ast *cmds)
 		parent_fork(pid);
 	else
 	{
-		if (cmds->right)
+		if (cmds->right && cmds->right->op == 1)
 			stdin_to_bin(cmds);
 		else
 			sh_execv(cmds->bin, cmds->av);

@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:29:37 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/03 19:05:40 by user             ###   ########.fr       */
+/*   Updated: 2021/06/04 01:06:01 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,6 @@ void				ft_freesplit(char **split);
 void				ft_puttrie(t_trie *root, char *str, int lvl);
 void				ft_freetrie(t_trie **root);
 long long			ft_atoll(char *nb);
+int					ft_counttil(const char *s, char c);
 
 #endif
