@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 12:54:30 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/05/28 21:59:13 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/03 19:31:41 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static void	prompt_status(char *user)
 {
 	static char	success[] = {0xe2, 0x9c, 0x94, 0x00};
 	static char	fail[] = {0xe2, 0x9c, 0x98, 0x00};
-	//static char test = "";
 
 	ft_putstr(BG_LIGHT_GRAY" ");
 	if (g_sh->last_status == EXIT_SUCCESS)
