@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 16:14:52 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 12:07:14 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/04 23:22:51 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	sh_exit(char *value)
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd != -1)
 		put_history_fd(g_sh->history, fd);
-	tcsetattr(0, 0, &g_sh->old_term);
+	tcsetattr(0, 0, &g_sh->new_term);
 	tgetent(NULL, "");
 	exit_status = 0;
 	if (value && value[0] != '0')
@@ -69,5 +69,6 @@ void	sh_exit(char *value)
 	if (fd == -1)
 		ft_puterror(BOLD"minishell: ~/.minishell_history not generated\n"E0M, 0);
 	free_g_sh();
+	ft_putstr(tgetstr("ve", NULL));
 	exit(exit_status);
 }
