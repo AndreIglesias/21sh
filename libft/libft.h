@@ -116,5 +116,6 @@ void				ft_freesplit(char **split);
 void				ft_puttrie(t_trie *root, char *str, int lvl);
 void				ft_freetrie(t_trie **root);
 long long			ft_atoll(char *nb);
+int					ft_counttil(const char *s, char c);
 
 #endif

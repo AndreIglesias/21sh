@@ -249,5 +249,6 @@ void		sh_execv(char *name, char **av);
 char		**str_to_arr(char *name, char *av);
 void		stdin_to_bin(t_ast *cmds);
 void		save_envp(t_trie *root, char *str, int lvl);
+void		extract_file(t_ast *tmp, int fdpip);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 18:05:01 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 12:50:45 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/06/03 21:07:05 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static long long	check_last(long long b, char *nb, int i, int a)
 		else
 			return (0);
 	}
-	if (nb[i] && !nb[i + 1])
+	if (nb[i] && !nb[i + 1] && b < 922337203685477580 && b > -922337203685477580)
 		return (((b * 10) + (a * (nb[i++] - '0'))));
 	return (0);
 }

@@ -6,11 +6,28 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:09:10 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/02 01:06:29 by user             ###   ########.fr       */
+/*   Updated: 2021/06/03 21:57:25 by jiglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
+
+void	extract_file(t_ast *tmp, int fdpip)
+{
+	int		fd;
+	char	buf;
+
+	while (tmp)
+	{
+		fd = open(tmp->right->bin, O_RDONLY);
+		if (fd > 0)
+			while (read(fd, &buf, 1))
+				write(fdpip, &buf, 1);
+		close(fd);
+		tmp = tmp->left;
+	}
+	sh_exit(NULL);
+}
 
 void	evaluate_builtin(t_ast *op)
 {
