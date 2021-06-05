@@ -6,7 +6,7 @@
 /*   By: user <ciglesia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 00:36:03 by user              #+#    #+#             */
-/*   Updated: 2021/06/03 19:49:36 by user             ###   ########.fr       */
+/*   Updated: 2021/06/05 16:04:13 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,9 @@ static char	*extract_string(char *token, int *j, int *poped)
 		token = ft_strpop(token, *j);
 		while (token[*j] && token[*j] != '"')
 		{
-			if (token[*j] == '\\')
+			if (token[*j] == '\\' && token[*j + 1] == '"')
 			{
 				token = ft_strpop(token, *j);
-				(*j)++;
 				(*poped)++;
 			}
 			if (token[*j])
