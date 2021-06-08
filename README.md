@@ -14,4 +14,6 @@ https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
 https://www.gnu.org/software/bash/manual/bash.pdf
 
-╰─ echo "hola" > hola; cat < hola >> hola < hola | less
+
+![](docs/minishell.gif?raw=true "minishell")
+
