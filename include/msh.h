@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/04 18:36:54 by user             ###   ########.fr       */
+/*   Updated: 2021/07/16 21:21:30 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ void		ft_prompt(void);
 int			ctrl_l(void);
 int			jump_sides(char *buf);
 int			move_ctrl(char *buf, char *cl, char *cr);
+int			auto_complete(void);
 
 /*
 **	history
