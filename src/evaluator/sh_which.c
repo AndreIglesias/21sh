@@ -20,9 +20,9 @@ int	is_builtin(char *name)
 		return (1);
 	if (!ft_strcmp(name, "pwd"))
 		return (1);
-	if (!ft_strcmp(name, "export"))
+	if (!ft_strcmp(name, "export") || !ft_strcmp(name, "setenv"))
 		return (1);
-	if (!ft_strcmp(name, "unset"))
+	if (!ft_strcmp(name, "unset") || !ft_strcmp(name, "unsetenv"))
 		return (1);
 	if (!ft_strcmp(name, "env"))
 		return (1);

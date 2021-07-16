@@ -37,9 +37,9 @@ void	evaluate_builtin(t_ast *op)
 		sh_cd(op->ac, op->av);
 	else if (!ft_strcmp(op->bin, "pwd"))
 		sh_pwd();
-	else if (!ft_strcmp(op->bin, "export"))
+	else if (!ft_strcmp(op->bin, "export") || !ft_strcmp(op->bin, "setenv"))
 		sh_export(op->ac, op->av);
-	else if (!ft_strcmp(op->bin, "unset"))
+	else if (!ft_strcmp(op->bin, "unset") || !ft_strcmp(op->bin, "unsetenv"))
 		sh_unset(op->ac, op->av);
 	else if (!ft_strcmp(op->bin, "env"))
 		sh_env();
