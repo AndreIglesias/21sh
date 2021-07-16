@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/03 19:25:39 by user             ###   ########.fr       */
+/*   Updated: 2021/06/04 23:22:13 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	ft_minishell(ssize_t ready)
 		ft_prompt();
 		ft_putstr(tgetstr("ve", NULL));
 		ready = get_cmd();
-		ft_putstr(tgetstr("vi", NULL));
 		if (g_sh->line)
 		{
 			if (ft_analyze() != EXIT_SUCCESS)
