@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 18:02:34 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/04 19:30:49 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/07/16 20:29:37 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ char	*check_bin_path(char *path, char *name)
 		split[i] = ft_realloc(split[i], 1);
 		split[i] = ft_strcat(split[i], "/");
 		path = ft_strjoin(split[i++], name);
-		if (stat(path, &buf) == 0 && buf.st_mode & S_IXUSR
-			&& !S_ISDIR(buf.st_mode))
+		if (stat(path, &buf) == 0 && !S_ISDIR(buf.st_mode))
 		{
 			ft_freesplit(split);
 			return (path);
@@ -74,8 +73,7 @@ char	*sh_which(char *name, t_trie *ev)
 	path = NULL;
 	if (ft_strchr(name, '/'))
 	{
-		if (stat(name, &buf) == 0 && buf.st_mode & S_IXUSR
-			&& !S_ISDIR(buf.st_mode))
+		if (stat(name, &buf) == 0 && !S_ISDIR(buf.st_mode))
 			return (ft_strdup(name));
 	}
 	else

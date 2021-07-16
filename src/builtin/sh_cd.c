@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:04:58 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/04 20:10:48 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/07/16 20:46:14 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,26 +62,25 @@ void	sh_cd(int argv, char **argc)
 
 	if (argv == 1)
 		cd_alone();
-	if (argv == 2)
+	else if (argv != 2)
+		return ;
+	if (argc[1] && argc[1][0] == '~')
+		tmp = get_home_dir(g_sh->ev, argc[1]);
+	else if (argc[1] && argc[1][0] == '-')
+		tmp = ft_strdup(get_value(g_sh->ev, "OLDPWD"));
+	else
+		tmp = ft_strdup(argc[1]);
+	if (!chdir(tmp))
 	{
-		if (argc[1] && argc[1][0] == '~')
-			tmp = get_home_dir(g_sh->ev, argc[1]);
-		else if (argc[1] && argc[1][0] == '-')
-		  tmp = ft_strdup(get_value(g_sh->ev, "OLDPWD"));
-		else
-			tmp = ft_strdup(argc[1]);
-		if (!chdir(tmp))
-		{
-			update_ev("OLDPWD", get_value(g_sh->ev, "PWD"));
-			update_ev("PWD", tmp);
-			g_sh->last_status = 0;
-		}
-		else
-		{
-			ft_putstr_fd(BOLD"minishell: cd: "BLUE, 2);
-			ft_putstr_fd(argc[1], 2);
-			ft_putstr_fd(E0M""BOLD" :no such file or directory\n"E0M, 2);
-		}
-		free(tmp);
+		update_ev("OLDPWD", get_value(g_sh->ev, "PWD"));
+		update_ev("PWD", tmp);
+		g_sh->last_status = 0;
 	}
+	else
+	{
+		ft_putstr_fd(BOLD"minishell: cd: "BLUE, 2);
+		ft_putstr_fd(argc[1], 2);
+		ft_putstr_fd(E0M""BOLD" :no such file or directory\n"E0M, 2);
+	}
+	free(tmp);
 }

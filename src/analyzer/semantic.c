@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 00:00:07 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/03 19:51:20 by user             ###   ########.fr       */
+/*   Updated: 2021/07/16 20:42:14 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,20 @@ static int	right_file(t_ast *node)
 
 static int	left_cmd(t_ast *node)
 {
+	int	isbin;
+
 	if (node->left == NULL)
 		return (1);
-	if (node->left->bin && !is_bin(node->left))
+	isbin = is_bin(node->left);
+	if (node->left->bin && isbin <= 0)
 	{
 		ft_puterror(BOLD"minishell: ", NULL);
 		ft_putstr_fd(BLUE, 2);
 		ft_putstr_fd(node->left->bin, 2);
-		ft_puterror(E0M""BOLD": command not found\n"E0M, NULL);
+		if (isbin < 0)
+			ft_puterror(E0M""BOLD": permission denied\n"E0M, NULL);
+		else
+			ft_puterror(E0M""BOLD": command not found\n"E0M, NULL);
 		return (0);
 	}
 	if (node->right)
@@ -62,18 +68,20 @@ static int	left_cmd(t_ast *node)
 
 static int	consistent_subtrees(t_ast *node)
 {
-	int		i;
+	int	i;
+	int	isbin;
 
 	i = 1;
 	if (node)
 	{
-		if (node->bin && !is_bin(node))
+		isbin = is_bin(node);
+		if (node->bin && isbin <= 0)
 		{
-			ft_puterror(BOLD"minishell: ", NULL);
-			ft_putstr_fd(BLUE, 2);
+			ft_puterror(BOLD"minishell: "BLUE, NULL);
 			ft_putstr_fd(node->bin, 2);
-			ft_puterror(E0M""BOLD": command not found\n"E0M, NULL);
-			return (0);
+			if (isbin < 0)
+				return ((int)ft_puterror(E0M BOLD": permission denied\n"E0M, 0));
+			return ((int)ft_puterror(E0M BOLD": command not found\n"E0M, 0));
 		}
 		else if (node->op == 1 && !right_file(node))
 			return (0);
