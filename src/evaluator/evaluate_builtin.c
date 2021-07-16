@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   evaluate_cmd.c                                     :+:      :+:    :+:   */
+/*   evaluate_builtin.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/23 20:09:10 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/03 21:57:25 by jiglesia         ###   ########.fr       */
+/*   Created: 2021/07/16 18:08:34 by ciglesia          #+#    #+#             */
+/*   Updated: 2021/07/16 18:08:34 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	evaluate_builtin(t_ast *op)
 		sh_cd(op->ac, op->av);
 	else if (!ft_strcmp(op->bin, "pwd"))
 		sh_pwd();
-	else if (!ft_strcmp(op->bin, "export"))
+	else if (!ft_strcmp(op->bin, "export") || !ft_strcmp(op->bin, "setenv"))
 		sh_export(op->ac, op->av);
-	else if (!ft_strcmp(op->bin, "unset"))
+	else if (!ft_strcmp(op->bin, "unset") || !ft_strcmp(op->bin, "unsetenv"))
 		sh_unset(op->ac, op->av);
 	else if (!ft_strcmp(op->bin, "env"))
 		sh_env();
