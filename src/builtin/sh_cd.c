@@ -66,6 +66,8 @@ void	sh_cd(int argv, char **argc)
 	{
 		if (argc[1] && argc[1][0] == '~')
 			tmp = get_home_dir(g_sh->ev, argc[1]);
+		else if (argc[1] && argc[1][0] == '-')
+		  tmp = ft_strdup(get_value(g_sh->ev, "OLDPWD"));
 		else
 			tmp = ft_strdup(argc[1]);
 		if (!chdir(tmp))
