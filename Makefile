@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/06/04 18:37:12 by user             ###   ########.fr        #
+#    Updated: 2021/07/16 15:29:20 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -83,6 +83,10 @@ ifdef NEVAL
 	ifeq ($(NEVAL), on)
 CFLAGS		+=	-DM_EVAL
 	endif
+endif
+
+ifndef VERBOSE
+.SILENT:
 endif
 
 CC			=	/usr/bin/clang
