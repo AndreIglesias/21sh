@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/07/17 19:13:18 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/07/17 19:15:32 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -189,6 +189,6 @@ fonts	:
 				sudo apt install -y $(FONTS)
 				fc-cache -fv
 
-.PHONY	:		all clean re
+.PHONY	:		all clean re ftlib fonts
 
 -include $(DEPS)
