@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/04 23:22:13 by user             ###   ########.fr       */
+/*   Updated: 2021/07/17 17:55:41 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,19 @@ void	ft_minishell(ssize_t ready)
 	}
 }
 
-int	main(int ac, char **av, char **ev)
+int	main(int ac __attribute__((unused)), char **av __attribute__((unused)),
+	char **ev)
 {
-	char	*home;
+	char		*home;
+	static char	*builtins[] = {"echo", "cd", "pwd", "export", "setenv",
+							"unset", "unsetenv",	"env", "exit",
+							"history", "syntax", NULL};
 
-	(void)ac;
-	(void)av;
 	signal(SIGINT, sigint_shell);
 	signal(SIGQUIT, sigquit_shell);
 	signal(SIGTSTP, sigtstp_shell);
 	g_sh = ft_shell();
+	g_sh->builtins = builtins;
 	if (!g_sh)
 		exit(EXIT_FAILURE);
 	store_envar(ev);

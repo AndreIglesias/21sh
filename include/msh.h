@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/16 21:21:30 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/17 19:13:42 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ typedef struct s_shell
 	t_uchar			syntax;
 	char			**envp;
 	t_ast			*pid;
+	char			**builtins;
 }	t_shell;
 
 extern t_shell		*g_sh;
@@ -167,9 +168,16 @@ ssize_t		get_cmd(void);
 int			keys_event(char *buf);
 void		ft_prompt(void);
 int			ctrl_l(void);
-int			jump_sides(char *buf);
 int			move_ctrl(char *buf, char *cl, char *cr);
+int			jump_sides(char *buf);
+
+/*
+**		autocomplete
+*/
+
 int			auto_complete(void);
+void		path_completion(char *path, char *name);
+int			complete_in_dir(char *folder, char *name, DIR *dir, size_t size);
 
 /*
 **	history

@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 18:02:34 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/07/16 20:29:37 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/17 17:56:37 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,14 @@
 
 int	is_builtin(char *name)
 {
-	if (!ft_strcmp(name, "echo"))
-		return (1);
-	if (!ft_strcmp(name, "cd"))
-		return (1);
-	if (!ft_strcmp(name, "pwd"))
-		return (1);
-	if (!ft_strcmp(name, "export") || !ft_strcmp(name, "setenv"))
-		return (1);
-	if (!ft_strcmp(name, "unset") || !ft_strcmp(name, "unsetenv"))
-		return (1);
-	if (!ft_strcmp(name, "env"))
-		return (1);
-	if (!ft_strcmp(name, "exit"))
-		return (1);
-	if (!ft_strcmp(name, "history"))
-		return (1);
-	if (!ft_strcmp(name, "syntax"))
-		return (1);
+	int	i;
+
+	i = 0;
+	while (g_sh->builtins[i])
+	{
+		if (!ft_strcmp(name, g_sh->builtins[i++]))
+			return (1);
+	}
 	return (0);
 }
 
