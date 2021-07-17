@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 21:02:45 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/17 19:11:32 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/17 21:27:51 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	auto_complete(void)
 			i++;
 		str = ft_strndup(&g_sh->line[i], g_sh->line_cursor - i);
 		complete_search(str);
+		free(str);
 	}
 	return (0);
 }
