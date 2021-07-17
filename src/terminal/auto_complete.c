@@ -6,29 +6,13 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 21:02:45 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/17 14:30:43 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/17 15:21:00 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-static int	last_slash(char *str)
-{
-	int	i;
-	int	slash;
-
-	i = 0;
-	slash = 0;
-	while (str[i])
-	{
-		if (str[i] == '/')
-			slash = i;
-		i++;
-	}
-	return (slash);
-}
-
-int	exec_perm(char *folder, char *name)
+static int	exec_perm(char *folder, char *name)
 {
 	char		*path;
 	struct stat	buf;
@@ -46,16 +30,12 @@ int	exec_perm(char *folder, char *name)
 	return (0);
 }
 
-int	complete_in_dir(char *folder, char *name)
+static int	complete_in_dir(char *folder, char *name, DIR *dir)
 {
-	DIR				*dir;
 	struct dirent	*dp;
 	char			str[256];
 	size_t			size;
 
-	dir = opendir(folder);
-	if (!dir)
-		return (0);
 	size = ft_strlen(name);
 	dp = readdir(dir);
 	while (dp)
@@ -67,7 +47,8 @@ int	complete_in_dir(char *folder, char *name)
 			g_sh->line = ft_strins(g_sh->line, &str[size], g_sh->line_cursor);
 			ft_putstr_fd(&str[size], 0);
 			ft_putstr_fd(g_sh->events->sc, 0);
-			ft_putstr_fd(&g_sh->line[ft_strlen(&str[size]) + g_sh->line_cursor], 0);
+			ft_putstr_fd(&g_sh->line[ft_strlen(&str[size]) + g_sh->line_cursor],
+				0);
 			ft_putstr_fd(g_sh->events->rc, 0);
 			g_sh->line_cursor += (ft_strlen(str) - size);
 			return (1);
@@ -78,10 +59,11 @@ int	complete_in_dir(char *folder, char *name)
 	return (0);
 }
 
-void	path_completion(char *path, char *name)
+static void	path_completion(char *path, char *name)
 {
-	char		**split;
-	int			i;
+	char	**split;
+	int		i;
+	DIR		*dir;
 
 	if (!path)
 		return ;
@@ -89,7 +71,8 @@ void	path_completion(char *path, char *name)
 	i = 0;
 	while (split[i])
 	{
-		if (complete_in_dir(split[i], name))
+		dir = opendir(split[i]);
+		if (dir && complete_in_dir(split[i], name, dir))
 		{
 			ft_freesplit(split);
 			return ;
@@ -99,10 +82,11 @@ void	path_completion(char *path, char *name)
 	ft_freesplit(split);
 }
 
-void	complete_search(char *name)
+static void	complete_search(char *name)
 {
 	char	*path;
 	int		lslash;
+	DIR		*dir;
 
 	if (!name || !name[0])
 		return ;
@@ -112,7 +96,9 @@ void	complete_search(char *name)
 		if (!lslash)
 			return ;
 		path = ft_strndup(name, lslash);
-		complete_in_dir(path, &name[lslash + 1]);
+		dir = opendir(path);
+		if (dir)
+			complete_in_dir(path, &name[lslash + 1], dir);
 		free(path);
 	}
 	else
