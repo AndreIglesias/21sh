@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   ft_lastslash.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/13 20:43:19 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/14 15:41:12 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/07/17 15:19:45 by ciglesia          #+#    #+#             */
+/*   Updated: 2021/07/17 15:19:53 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strcat(char *restrict s1, const char *restrict s2)
+int	last_slash(char *str)
 {
-	unsigned int	i;
-	unsigned int	j;
+	int	i;
+	int	slash;
 
 	i = 0;
-	while (s1[i])
+	slash = 0;
+	while (str[i])
+	{
+		if (str[i] == '/')
+			slash = i;
 		i++;
-	j = 0;
-	while (s2[j])
-		s1[i++] = s2[j++];
-	s1[i] = '\0';
-	return (s1);
+	}
+	return (slash);
 }

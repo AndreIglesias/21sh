@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:29:37 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/04 18:32:15 by user             ###   ########.fr       */
+/*   Updated: 2021/07/17 15:20:12 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char				**ft_avjoin(char **av, int *ac, char *str);
 int					ft_isprintable(char *str);
 char				*ft_strpop(char *str, size_t i);
 int					is_file(char *filename);
+int					last_slash(char *str);
 int					ft_countchr(const char *s, int c);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
