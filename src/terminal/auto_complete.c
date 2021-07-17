@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 21:02:45 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/17 01:54:56 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/17 12:43:36 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,11 @@ int	complete_in_dir(char *folder, char *name)
 		if (!ft_strncmp(str, name, size) && exec_perm(folder, str))
 		{
 			g_sh->line = ft_strins(g_sh->line, &str[size], g_sh->line_cursor);
-			ft_putstr_fd(&g_sh->line[g_sh->line_cursor], 0);
+			ft_putstr_fd(&str[size], 0);
+			ft_putstr_fd(g_sh->events->sc, 0);
+			ft_putstr_fd(&g_sh->line[ft_strlen(&str[size]) + g_sh->line_cursor], 0);
+			ft_putstr_fd(g_sh->events->rc, 0);
 			g_sh->line_cursor += (ft_strlen(str) - size);
-			//ft_putchar('\n');ft_putstr(name);
 			return (1);
 		}
 		dp = readdir(dir);
