@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 18:02:34 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/07/17 17:56:37 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/18 18:04:18 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	is_builtin(char *name)
 {
 	int	i;
 
+	if (!name)
+		return (0);
 	i = 0;
 	while (g_sh->builtins[i])
 	{
