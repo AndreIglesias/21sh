@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:04:58 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/07/16 20:46:14 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/18 23:03:58 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	sh_cd(int argv, char **argc)
 	char	*tmp;
 
 	if (argv == 1)
-		cd_alone();
-	else if (argv != 2)
+		return (cd_alone());
+	if (argv != 2)
 		return ;
 	if (argc[1] && argc[1][0] == '~')
 		tmp = get_home_dir(g_sh->ev, argc[1]);
@@ -75,12 +75,12 @@ void	sh_cd(int argv, char **argc)
 		update_ev("OLDPWD", get_value(g_sh->ev, "PWD"));
 		update_ev("PWD", tmp);
 		g_sh->last_status = 0;
+		free(tmp);
+		return ;
 	}
-	else
-	{
-		ft_putstr_fd(BOLD"minishell: cd: "BLUE, 2);
-		ft_putstr_fd(argc[1], 2);
-		ft_putstr_fd(E0M""BOLD" :no such file or directory\n"E0M, 2);
-	}
+	ft_putstr_fd(BOLD"minishell: cd: "BLUE, 2);
+	ft_putstr_fd(argc[1], 2);
+	ft_putstr_fd(E0M""BOLD" :no such file or directory\n"E0M, 2);
+	g_sh->last_status = 1;
 	free(tmp);
 }
