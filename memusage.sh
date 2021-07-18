@@ -54,3 +54,4 @@ do
    # Needs to get actual elapsed time instead of doing this
    ELAPSED_TIME=`expr $ELAPSED_TIME + $PERIOD`
 done
+#https://www.linuxquestions.org/questions/programming-9/how-to-programmatically-monitor-a-process-memory-usage-383517/
