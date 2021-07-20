@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/20 21:13:44 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/20 21:30:24 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	keys_event(char *buf)
 	static char	cl[] = {27, 91, 49, 59, 53, 68, 0};
 	static char	home[] = {27, 91, 72, 0};
 	static char	end[] = {27, 91, 70, 0};
-	static char right[] = {27, 91, 67, 0};
+	static char	right[] = {27, 91, 67, 0};
 
 	if (buf[0] == 4)
 		sh_exit(NULL);
