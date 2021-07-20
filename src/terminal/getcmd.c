@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:23 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/20 21:28:54 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/21 00:20:36 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	input_handler(int e)
 		e = keys_event(buf);
 		if (e)
 			ft_putstr_fd(buf, 0);
-		if ((e == 1 || e == 3) && buf[0] != '\n')
+		if ((e == 1 || e == 3) && !ft_strchr(buf, '\n'))
 		{
 			g_sh->line = ft_strins(g_sh->line, buf, g_sh->line_cursor - 1);
 			if (g_sh->line && g_sh->line_cursor < ft_strlen(g_sh->line))

@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/20 20:56:29 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/21 00:10:29 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,19 @@ typedef struct s_ast
 
 }	t_ast;
 
+/*
+**	termcaps
+**		am = auto wrap
+**		co = column term size
+**		li = lines term size
+**		ks = keypad keys transmit
+*/
+
 typedef struct s_events
 {
+	int		am;
+	int		co;
+	int		li;
 	char	*ks;
 	char	*up;
 	char	*dw;

@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:16:58 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/17 19:16:59 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/21 00:10:54 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,19 @@
 ** `ce' Clears from the cursor to the end of the current line
 */
 
-static void	keys_transmit(t_events *event)
+static int	keys_transmit(t_events *event)
 {
 	static char	up[] = {27, 91, 65, 0};
 	static char	dw[] = {27, 91, 66, 0};
 	static char	rg[] = {27, 91, 67, 0};
 	static char	lf[] = {27, 91, 68, 0};
 
+	event->ks = tgetstr("ks", NULL);
+	if (!event->ks)
+	{
+		free(event);
+		return ((int)ft_puterror(MINERR"Could not turn keypad on.\n"E0M, 0));
+	}
 	event->up = up;
 	event->dw = dw;
 	event->rg = rg;
@@ -44,6 +50,7 @@ static void	keys_transmit(t_events *event)
 	event->rc = tgetstr("rc", NULL);
 	event->dc = tgetstr("dc", NULL);
 	event->ce = tgetstr("ce", NULL);
+	return (1);
 }
 
 t_events	*init_termcap(void)
@@ -62,15 +69,11 @@ environmental variable TERM.\n"E0M, 0));
 	else if (connect == 0)
 		return (ft_puterror(MINERR"Terminal type is not defined.\n"E0M, 0));
 	event = malloc(sizeof(t_events));
-	if (!event)
+	if (!event || !keys_transmit(event))
 		return (NULL);
-	event->ks = tgetstr("ks", NULL);
-	if (!event->ks)
-	{
-		free(event);
-		return (ft_puterror(MINERR"Could not turn keypad on.\n"E0M, 0));
-	}
-	keys_transmit(event);
+	event->am = tgetflag("am");
+	event->co = tgetnum("co");
+	event->li = tgetnum("li");
 	return (event);
 }
 

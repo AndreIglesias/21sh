@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 18:24:29 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/20 21:21:27 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/21 00:21:46 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	history_shadow(void)
 
 	size = ft_strlen(g_sh->line);
 	h = g_sh->history;
-	while (h)
+	while (size && h)
 	{
 		if (g_sh->line && h->cmd && !ft_strncmp(g_sh->line, h->cmd, size))
 		{
