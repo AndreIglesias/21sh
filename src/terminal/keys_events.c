@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/20 20:20:11 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/20 21:13:44 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	move_cursor(char *buf)
 {
+	reset_shadow();
 	if (!ft_strcmp(g_sh->events->lf, buf) && g_sh->line_cursor)
 	{
 		g_sh->line_cursor--;
@@ -42,12 +43,15 @@ static void	del_ins(void)
 
 static int	delete_key(void)
 {
+	reset_shadow();
 	ft_putstr_fd(g_sh->events->lf, 0);
 	ft_putstr_fd(g_sh->events->sc, 0);
 	ft_putstr_fd(g_sh->events->ce, 0);
 	del_ins();
 	ft_putstr_fd(g_sh->events->rc, 0);
 	g_sh->line_cursor--;
+	if (g_sh->line_cursor)
+		history_shadow();
 	return (2);
 }
 
@@ -55,6 +59,7 @@ static int	check_buffer(char *buf)
 {
 	int	i;
 
+	reset_shadow();
 	i = 0;
 	while (buf[i] && ((31 < buf[i] && buf[i] < 127) || buf[i] == 10))
 	{

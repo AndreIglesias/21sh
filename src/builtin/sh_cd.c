@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:04:58 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/07/20 17:55:15 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/20 20:29:31 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ static void	cd_alone(void)
 
 static void	cd_more(void)
 {
-	ft_putstr_fd(BOLD"minishell: cd: "BLUE"too many"E0M" arguments\n", 2);
+	ft_putstr_fd(BOLD"minishell: cd: "BLUE"too many"COLOR_E0M"\
+ arguments\n"E0M, 2);
 	g_sh->last_status = 1;
 }
 
@@ -86,7 +87,7 @@ void	sh_cd(int ac, char **av)
 	}
 	ft_putstr_fd(BOLD"minishell: cd: "BLUE, 2);
 	ft_putstr_fd(av[1], 2);
-	ft_putstr_fd(E0M""BOLD" :no such file or directory\n"E0M, 2);
+	ft_putstr_fd(E0M""BOLD": no such file or directory\n"E0M, 2);
 	g_sh->last_status = 1;
 	free(tmp);
 }

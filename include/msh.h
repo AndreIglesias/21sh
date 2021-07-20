@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/20 20:14:39 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/20 20:56:29 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,8 @@ int			path_completion(char *path, char *name);
 int			complete_in_dir(char *folder, char *name, DIR *dir, size_t size);
 void		history_shadow(void);
 int			insert_shadow(void);
+void		reset_shadow(void);
+
 /*
 **	history
 */
