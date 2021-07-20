@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:23 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/17 19:17:23 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/20 18:43:50 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@
 **	HOME 27 91 72
 */
 
+static void	put_in_prompt(char *buf)
+{
+	ft_putstr_fd(buf, 0);
+	history_shadow(buf);
+}
+
 static int	input_handler(int e)
 {
 	char	buf[7];
@@ -36,7 +42,7 @@ static int	input_handler(int e)
 		buf[len] = 0;
 		e = keys_event(buf);
 		if (e)
-			ft_putstr(buf);
+			put_in_prompt(buf);
 		if ((e == 1 || e == 3) && buf[0] != '\n')
 		{
 			g_sh->line = ft_strins(g_sh->line, buf, g_sh->line_cursor - 1);
