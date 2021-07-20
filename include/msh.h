@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/20 18:44:07 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/20 19:58:17 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ int			jump_sides(char *buf);
 int			auto_complete(void);
 int			path_completion(char *path, char *name);
 int			complete_in_dir(char *folder, char *name, DIR *dir, size_t size);
-void		history_shadow(char *buf);
+void		history_shadow(void);
 /*
 **	history
 */
