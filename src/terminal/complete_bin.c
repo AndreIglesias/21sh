@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:10:49 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/17 19:14:29 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/20 17:38:20 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	exec_perm(char *folder, char *name)
 	ft_strcat(path, folder);
 	ft_strcat(path, "/");
 	ft_strcat(path, name);
-	if (stat(path, &buf) == 0 && buf.st_mode & S_IXUSR && !S_ISDIR(buf.st_mode))
+	if (stat(path, &buf) == 0)
 	{
 		free(path);
 		return (1);
@@ -58,14 +58,14 @@ int	complete_in_dir(char *folder, char *name, DIR *dir, size_t size)
 	return (0);
 }
 
-void	path_completion(char *path, char *name)
+int	path_completion(char *path, char *name)
 {
 	char	**split;
 	int		i;
 	DIR		*dir;
 
 	if (!path)
-		return ;
+		return (0);
 	split = ft_split(path, ':');
 	i = 0;
 	while (split[i])
@@ -74,9 +74,10 @@ void	path_completion(char *path, char *name)
 		if (dir && complete_in_dir(split[i], name, dir, ft_strlen(name)))
 		{
 			ft_freesplit(split);
-			return ;
+			return (1);
 		}
 		i++;
 	}
 	ft_freesplit(split);
+	return (0);
 }

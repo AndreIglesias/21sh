@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 21:02:45 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/17 21:27:51 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/20 17:36:45 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,15 @@ static int	complete_builtin(char *name, size_t size)
 	return (0);
 }
 
+static void	active_completion(char *name)
+{
+	DIR		*dir;
+
+	dir = opendir(".");
+	if (dir)
+		complete_in_dir(".", name, dir, ft_strlen(name));
+}
+
 static void	complete_search(char *name)
 {
 	char	*path;
@@ -48,9 +57,9 @@ static void	complete_search(char *name)
 	if (ft_strchr(name, '/'))
 	{
 		lslash = last_slash(name);
-		if (!lslash)
+		if (!lslash && *name != '/')
 			return ;
-		path = ft_strndup(name, lslash);
+		path = ft_strndup(name, lslash + (*name == '/' && !lslash));
 		dir = opendir(path);
 		if (dir)
 			complete_in_dir(path, &name[lslash + 1], dir,
@@ -58,7 +67,10 @@ static void	complete_search(char *name)
 		free(path);
 	}
 	else if (!complete_builtin(name, ft_strlen(name)))
-		path_completion(get_value(g_sh->ev, "PATH"), name);
+	{
+		if (!path_completion(get_value(g_sh->ev, "PATH"), name))
+			active_completion(name);
+	}
 }
 
 int	auto_complete(void)
