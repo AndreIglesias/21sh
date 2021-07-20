@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 22:43:29 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/01 12:28:19 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/07/20 20:05:22 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	sigint_shell(int sig)
 	ft_putstr("^C\n");
 	free(g_sh->line);
 	g_sh->line = NULL;
+	g_sh->shadow = NULL;
 	g_sh->history_cursor = g_sh->history;
 	if (g_sh->line_tmp)
 		free(g_sh->line_tmp);

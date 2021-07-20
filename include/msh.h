@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/20 19:58:17 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/20 20:14:39 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct s_shell
 	char			*history_path;
 	t_history		*history;
 	t_history		*history_cursor;
+	t_history		*shadow;
 	char			*line;
 	char			**cmd_line;
 	int				ncmd;
@@ -179,6 +180,7 @@ int			auto_complete(void);
 int			path_completion(char *path, char *name);
 int			complete_in_dir(char *folder, char *name, DIR *dir, size_t size);
 void		history_shadow(void);
+int			insert_shadow(void);
 /*
 **	history
 */
