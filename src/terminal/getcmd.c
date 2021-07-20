@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:23 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/21 00:20:36 by user             ###   ########.fr       */
+/*   Updated: 2021/07/21 00:37:21 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ ssize_t	get_cmd(void)
 	int	s;
 	int	len;
 
+	ioctl(STDIN_FILENO, TIOCGWINSZ, &g_sh->events->ws);
 	len = input_handler(0);
 	ft_putchar('\n');
 	if (g_sh->line)

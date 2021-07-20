@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:16:58 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/21 00:10:54 by user             ###   ########.fr       */
+/*   Updated: 2021/07/21 00:31:22 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ environmental variable TERM.\n"E0M, 0));
 	event = malloc(sizeof(t_events));
 	if (!event || !keys_transmit(event))
 		return (NULL);
-	event->am = tgetflag("am");
-	event->co = tgetnum("co");
-	event->li = tgetnum("li");
+	ioctl(STDIN_FILENO, TIOCGWINSZ, &event->ws);
 	return (event);
 }
 
