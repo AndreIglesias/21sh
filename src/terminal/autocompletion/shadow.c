@@ -6,23 +6,64 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 18:24:29 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/21 16:53:09 by user             ###   ########.fr       */
+/*   Updated: 2021/07/22 00:12:55 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
+static void	cursor_to_end(int crow, int ccol, int lrow, int lcol)
+{
+	crow = (ccol != 0);
+	lrow = (lcol != 0);
+	while (ccol != lcol)
+	{
+		if (ccol < lcol)
+		{
+			ft_putstr_fd(g_sh->events->rg, 0);
+			ccol++;
+		}
+		else
+		{
+			ft_putstr_fd(g_sh->events->lf, 0);
+			ccol--;
+		}
+	}
+	while (crow < lrow)
+	{
+		ft_putstr_fd(g_sh->events->dw, 0);
+		ccol++;
+	}
+}
+
 void	reset_shadow(void)
 {
-	int		i;
+	int		col;
+	size_t	sshadow;
+	int		trail;
 
-	ft_putstr_fd(g_sh->events->sc, 0);
-	i = g_sh->line_cursor;
-	while (i-- > 0)
-		ft_putstr_fd(g_sh->events->lf, 0);
-	ft_putstr_fd(g_sh->events->ce, 0);
-	ft_putstr_fd(g_sh->line, 0);
-	ft_putstr_fd(g_sh->events->rc, 0);
+	if (g_sh->shadow && g_sh->shadow->cmd)
+	{
+		col = g_sh->events->ws.ws_col;
+
+
+		sshadow = ft_strlen(g_sh->shadow->cmd);//		shadow lenght (lines = lenght / ws_li)
+
+		ft_putstr_fd(g_sh->events->sc, 0);//			save cursor
+		cursor_to_end(g_sh->line_cursor / col, g_sh->line_cursor % col,
+					  g_sh->line_size / col, g_sh->line_size % col);
+
+		ft_putstr_fd(g_sh->events->ce, 0);
+		trail = (int)(sshadow / col + sshadow % col) - (int)(g_sh->line_size / col);
+		while (col-- > 0)
+			ft_putstr_fd(g_sh->events->lf, 0);
+		while (trail-- > 0)
+		{
+			ft_putstr_fd(g_sh->events->dw, 0);
+			ft_putstr_fd(g_sh->events->ce, 0);
+		}
+		ft_putstr_fd(g_sh->events->rc, 0);//			reset horizontal cursor
+	}
 	g_sh->shadow = NULL;
 }
 
@@ -68,6 +109,7 @@ void	history_shadow(void)
 			ft_putstr_fd(E0M, 0);
 			ft_putstr_fd(g_sh->events->rc, 0);
 			g_sh->shadow = h;
+			ioctl(STDIN_FILENO, TIOCGWINSZ, &g_sh->events->ws);
 			return ;
 		}
 		h = h->next;

@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:23 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/21 14:50:58 by user             ###   ########.fr       */
+/*   Updated: 2021/07/22 00:11:51 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static int	resize_minishell(void)
 		|| g_sh->events->pws.ws_col != g_sh->events->ws.ws_col)
 	{
 		g_sh->events->ws = g_sh->events->pws;
-		ft_putstr("resize");
 		return (1);
 	}
 	return (0);
