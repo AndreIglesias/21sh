@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:16:58 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/21 00:31:22 by user             ###   ########.fr       */
+/*   Updated: 2021/07/21 14:43:12 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ t_shell	*ft_shell(void)
 	if (!sh->events)
 		return (NULL);
 	sh->ev = NULL;
-	sh->line = NULL;
-	sh->line_cursor = 0;
 	sh->history = NULL;
 	sh->history_path = NULL;
 	sh->history_cursor = NULL;

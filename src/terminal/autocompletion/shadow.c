@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 18:24:29 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/21 00:21:46 by user             ###   ########.fr       */
+/*   Updated: 2021/07/21 16:53:09 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	reset_shadow(void)
 {
-	int	i;
+	int		i;
 
 	ft_putstr_fd(g_sh->events->sc, 0);
 	i = g_sh->line_cursor;
@@ -51,6 +51,7 @@ void	history_shadow(void)
 	size_t		size;
 	size_t		i;
 
+	//reset_shadow();
 	size = ft_strlen(g_sh->line);
 	h = g_sh->history;
 	while (size && h)

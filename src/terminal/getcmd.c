@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:23 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/21 00:37:21 by user             ###   ########.fr       */
+/*   Updated: 2021/07/21 14:50:58 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,32 @@
 **	RIGHT 27 91 67
 */
 
+static void	write_input(char *buf)
+{
+	g_sh->line = ft_strins(g_sh->line, buf, g_sh->line_cursor - 1);
+	if (g_sh->line && g_sh->line_cursor < ft_strlen(g_sh->line))
+	{
+		ft_putstr_fd(g_sh->events->sc, 0);
+		ft_putstr_fd(&g_sh->line[g_sh->line_cursor], 0);
+		ft_putstr_fd(g_sh->events->rc, 0);
+	}
+	g_sh->line_size++;
+	history_shadow();
+}
+
+static int	resize_minishell(void)
+{
+	ioctl(STDIN_FILENO, TIOCGWINSZ, &g_sh->events->pws);
+	if (g_sh->events->pws.ws_row != g_sh->events->ws.ws_row
+		|| g_sh->events->pws.ws_col != g_sh->events->ws.ws_col)
+	{
+		g_sh->events->ws = g_sh->events->pws;
+		ft_putstr("resize");
+		return (1);
+	}
+	return (0);
+}
+
 static int	input_handler(int e)
 {
 	char	buf[7];
@@ -33,22 +59,15 @@ static int	input_handler(int e)
 	while (!ft_strchr(buf, '\n') && len && e != 3)
 	{
 		buf[0] = 0;
+		if (resize_minishell())
+			continue ;
 		len = read(STDIN_FILENO, buf, 6);
 		buf[len] = 0;
 		e = keys_event(buf);
 		if (e)
 			ft_putstr_fd(buf, 0);
 		if ((e == 1 || e == 3) && !ft_strchr(buf, '\n'))
-		{
-			g_sh->line = ft_strins(g_sh->line, buf, g_sh->line_cursor - 1);
-			if (g_sh->line && g_sh->line_cursor < ft_strlen(g_sh->line))
-			{
-				ft_putstr_fd(g_sh->events->sc, 0);
-				ft_putstr(&g_sh->line[g_sh->line_cursor]);
-				ft_putstr_fd(g_sh->events->rc, 0);
-			}
-			history_shadow();
-		}
+			write_input(buf);
 	}
 	return (len);
 }
@@ -58,7 +77,6 @@ ssize_t	get_cmd(void)
 	int	s;
 	int	len;
 
-	ioctl(STDIN_FILENO, TIOCGWINSZ, &g_sh->events->ws);
 	len = input_handler(0);
 	ft_putchar('\n');
 	if (g_sh->line)

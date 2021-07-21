@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/21 00:09:18 by user             ###   ########.fr       */
+/*   Updated: 2021/07/21 14:49:09 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void	del_ins(void)
 		g_sh->line = ft_fstrjoin(g_sh->line, &g_sh->line[g_sh->line_cursor]);
 		ft_putstr_fd(&g_sh->line[g_sh->line_cursor - 1], 0);
 	}
+	g_sh->line_size--;
 }
 
 static int	delete_key(void)
@@ -59,7 +60,6 @@ static int	check_buffer(char *buf)
 {
 	int	i;
 
-	reset_shadow();
 	i = 0;
 	while (buf[i] && ((31 < buf[i] && buf[i] < 127) || buf[i] == 10))
 	{

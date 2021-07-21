@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:09 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/17 19:17:09 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/21 14:35:52 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	print_pwd(char *pwd)
 
 	home = get_value(g_sh->ev, "HOME");
 	ft_putstr(BOLD""GRAY);
-	ft_putstr(BG_CYAN);
+	ft_putstr(BG_RED);
 	if (home && !ft_strncmp(home, pwd, ft_strlen(home)))
 	{
 		ft_putstr(" ~");
@@ -27,7 +27,7 @@ static void	print_pwd(char *pwd)
 	else
 		ft_putstr(pwd);
 	ft_putstr(" ");
-	ft_putstr(BG_E0M""CYAN);
+	ft_putstr(BG_E0M""YELLOW);//CYAN
 	ft_putstr(ARROW);
 	ft_putstr(E0M);
 }
@@ -48,7 +48,7 @@ static void	prompt_status(char *user)
 	if (user)
 		ft_putstr(" "BG_GRAY""LIGHT_GRAY);
 	else
-		ft_putstr(" "BG_CYAN""LIGHT_GRAY);
+		ft_putstr(" "BG_RED""LIGHT_GRAY);
 	ft_putstr(ARROW);
 }
 
@@ -69,7 +69,7 @@ void	ft_prompt(void)
 	}
 	if (user && pwd)
 	{
-		ft_putstr(BG_CYAN""GRAY);
+		ft_putstr(BG_RED""YELLOW);//GRAY
 		ft_putstr(ARROW);
 	}
 	if (pwd)

@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/21 00:32:42 by user             ###   ########.fr       */
+/*   Updated: 2021/07/21 14:47:27 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@
 
 # define BG_LIGHT_GRAY "\e[100m"
 # define BG_CYAN "\e[48;5;31m"
+# define BG_RED "\e[48;5;202m"
 # define BG_GRAY "\e[48;5;236m"
 # define BG_E0M "\e[49m"
 # define COLOR_E0M "\e[39m"
@@ -112,6 +113,7 @@ typedef struct s_ast
 typedef struct s_events
 {
 	struct winsize	ws;
+	struct winsize	pws;
 	char			*ks;
 	char			*up;
 	char			*dw;
@@ -140,6 +142,7 @@ typedef struct s_shell
 	t_history		*history_cursor;
 	t_history		*shadow;
 	char			*line;
+	size_t			line_size;
 	char			**cmd_line;
 	int				ncmd;
 	char			*line_tmp;
@@ -156,6 +159,8 @@ typedef struct s_shell
 }	t_shell;
 
 extern t_shell		*g_sh;
+
+void		init_line(void);
 
 /*
 **  signal_handler
