@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:23 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/23 15:05:12 by user             ###   ########.fr       */
+/*   Updated: 2021/07/23 18:24:45 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,6 @@ static void	write_input(char *buf)
 	history_shadow();
 }
 
-/*
-static int	resize_minishell(void)
-{
-	ioctl(STDIN_FILENO, TIOCGWINSZ, &g_sh->events->pws);
-	if (g_sh->events->pws.ws_row != g_sh->events->ws.ws_row
-		|| g_sh->events->pws.ws_col != g_sh->events->ws.ws_col)
-	{
-		g_sh->events->ws = g_sh->events->pws;
-		return (1);
-	}
-	return (0);
-}
-*/
-
 static int	input_handler(int e)
 {
 	char	buf[7];
@@ -60,8 +46,6 @@ static int	input_handler(int e)
 	while (!ft_strchr(buf, '\n') && len && e != 3)
 	{
 		buf[0] = 0;
-//		if (resize_minishell())
-//			continue ;
 		len = read(STDIN_FILENO, buf, 6);
 		buf[len] = 0;
 		e = keys_event(buf);
