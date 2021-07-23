@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 18:24:29 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/23 15:39:09 by user             ###   ########.fr       */
+/*   Updated: 2021/07/23 18:17:15 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	put_shadow(size_t size, size_t cursor, t_history *h)
 	long	cllines;
 
 	ioctl(STDIN_FILENO, TIOCGWINSZ, &g_sh->events->ws);
-	col = g_sh->events->ws.ws_col - 3;
+	col = g_sh->events->ws.ws_col - 4;
 	llines = (size / col) + (size % col != 0);
 	cllines = (cursor / col) + (cursor % col != 0);
 	if (llines == cllines)
