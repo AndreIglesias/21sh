@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/23 19:47:51 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/23 20:24:33 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@
 # define E0M "\e[0m"
 # define LOCK "\uE0A2"
 # define ARROW "\uE0B0"
+# define WORRA "\uE0B2"
 
 # define MINERR "\e[38;2;255;0;0m\e[5mminishell: "
 # define HRY_SIZE 100
