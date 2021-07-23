@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:09 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/23 18:45:47 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/23 20:10:48 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,20 @@
 static void	print_pwd(char *pwd)
 {
 	char	*home;
+	int		len;
 
 	home = get_value(g_sh->ev, "HOME");
+	len = 0;
+	if (home)
+		len = ft_strlen(home);
 	ft_putstr(BOLD""GRAY);
 	ft_putstr(BG_CYAN);
-	if (home && !ft_strncmp(home, pwd, ft_strlen(home)))
+	if (home && !ft_strncmp(home, pwd, len))
 	{
 		ft_putstr(" ~");
-		ft_putstr(&pwd[ft_strlen(home)]);
+		if (len && home[len - 1] == '/')
+			ft_putchar('/');
+		ft_putstr(&pwd[len]);
 	}
 	else
 		ft_putstr(pwd);
@@ -57,7 +63,7 @@ void	ft_prompt(void)
 	char		*user;
 	char		*pwd;
 
-	ft_putstr("╭─");
+	ft_putstr((char []){0xe2, 0x95, 0xad, 0xe2, 0x94, 0x80, 0x00});
 	user = get_value(g_sh->ev, "USER");
 	pwd = getcwd(NULL, 0);
 	prompt_status(user);
@@ -73,10 +79,9 @@ void	ft_prompt(void)
 		ft_putstr(ARROW);
 	}
 	if (pwd)
-	{
 		print_pwd(pwd);
-		free(pwd);
-	}
-	ft_putstr(" ❱\n");
-	ft_putstr("╰◠◡ ");
+	free(pwd);
+	ft_putstr((char []){0xe2, 0x9d, 0xb1, 0x0a, 0x00});
+	ft_putstr((char []){0xe2, 0x95, 0xb0, 0xe2, 0x97, 0xa0,
+		0xe2, 0x97, 0xa1, 0x20, 0x00});
 }
