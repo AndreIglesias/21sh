@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 18:24:29 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/23 18:25:31 by user             ###   ########.fr       */
+/*   Updated: 2021/07/23 19:53:58 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	history_shadow(void)
 	size_t		size;
 
 	reset_shadow();
+	g_sh->line_size = ft_strlen(g_sh->line);
 	size = g_sh->line_size;
 	h = g_sh->history;
 	while (size && h)
