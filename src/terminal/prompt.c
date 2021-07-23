@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:09 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/23 15:37:03 by user             ###   ########.fr       */
+/*   Updated: 2021/07/23 18:16:10 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	ft_prompt(void)
 {
 	char		*user;
 	char		*pwd;
-	static char	point[] = {32, 0xe2, 0x9d, 0xb1, 32, 0x00};
 
+	ft_putstr("╭─");
 	user = get_value(g_sh->ev, "USER");
 	pwd = getcwd(NULL, 0);
 	prompt_status(user);
@@ -77,6 +77,6 @@ void	ft_prompt(void)
 		print_pwd(pwd);
 		free(pwd);
 	}
-	ft_putchar('\n');
-	ft_putstr(point);
+	ft_putstr(" ❱\n");
+	ft_putstr("╰◠◡ ");
 }
