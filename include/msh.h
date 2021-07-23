@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/21 14:47:27 by user             ###   ########.fr       */
+/*   Updated: 2021/07/23 19:47:51 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,8 @@ int			ft_lexer(int x);
 int			is_envar(char *s, int i);
 int			envar_len(char *s, int i, int dig);
 void		extract_tokens(char *str, int x);
+char		*replace_envar(char *str, int *i, int type);
+char		*replace_home(char *str, int *i);
 
 int			ft_parser(int x);
 t_ast		*arrange_ast(t_ast *tmp, t_ast *left, t_ast *op, t_ast *cmd);

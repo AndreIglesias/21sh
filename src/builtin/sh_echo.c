@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 23:36:58 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/08 19:03:35 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/23 19:32:57 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	sh_echo(int	argc, char **value)
 	{
 		flag = 0;
 		i = 1;
-		while (argc > 1 && value[i][0] == '-')
+		while (argc > 1 && i < argc && value[i][0] == '-')
 		{
 			j = 1;
 			while (value[i][j] == 'n')

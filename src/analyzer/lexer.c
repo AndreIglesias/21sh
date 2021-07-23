@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:18:10 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/17 19:18:11 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/23 19:47:09 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,42 +29,6 @@ static char	*escape_char(char *str, int i)
 		str[i] = '"';
 		str = ft_strins(str, "\"", i + 2);
 	}
-	return (str);
-}
-
-/*
-**	1 : env variable
-**	2 : ? last status exit
-**	3 : other variable
-**	4 : number pos param variable
-*/
-
-static char	*replace_envar(char *str, int *i, int type)
-{
-	int		len;
-	char	*var;
-	char	*value;
-
-	len = 1;
-	if (type == 1 || type == 4)
-		len = envar_len(str, *i, type == 4);
-	if (type == 1)
-	{
-		var = ft_strndup(&str[(*i) + 1], len);
-		value = get_value(g_sh->ev, var);
-	}
-	str[*i] = 0;
-	str = ft_fstrjoin(str, &str[(*i) + len + 1]);
-	if (type == 2)
-	{
-		var = ft_itoa(g_sh->last_status);
-		value = var;
-	}
-	else if (type != 1)
-		return (str);
-	str = ft_strins(str, value, *i);
-	(*i) += ft_strlen(value);
-	free(var);
 	return (str);
 }
 
@@ -98,8 +62,9 @@ static char	*skip_quote(char *str, int *i, int dq)
 	(*i)++;
 	return (str);
 }
+
 /*
-**	replace $envs and \escapes
+**	replace \escapes, $envs and ~
 */
 
 static char	*replace_envar_escape(char *str)
@@ -122,6 +87,8 @@ static char	*replace_envar_escape(char *str)
 		}
 		else if (envar)
 			str = replace_envar(str, &i, envar);
+		else if (str[i] == '~')
+			str = replace_home(str, &i);
 		else
 			i++;
 	}
