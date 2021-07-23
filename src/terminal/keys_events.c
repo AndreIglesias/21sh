@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/21 14:49:09 by user             ###   ########.fr       */
+/*   Updated: 2021/07/23 18:29:57 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	del_ins(void)
 		g_sh->line = ft_fstrjoin(g_sh->line, &g_sh->line[g_sh->line_cursor]);
 		ft_putstr_fd(&g_sh->line[g_sh->line_cursor - 1], 0);
 	}
-	g_sh->line_size--;
+	g_sh->line_size = ft_strlen(g_sh->line);
 }
 
 static int	delete_key(void)

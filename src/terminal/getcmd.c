@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:23 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/23 18:24:45 by user             ###   ########.fr       */
+/*   Updated: 2021/07/23 18:29:11 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	write_input(char *buf)
 		ft_putstr_fd(&g_sh->line[g_sh->line_cursor], 0);
 		ft_putstr_fd(g_sh->events->rc, 0);
 	}
-	g_sh->line_size++;
+	g_sh->line_size = ft_strlen(g_sh->line);
 	history_shadow();
 }
 
@@ -54,6 +54,7 @@ static int	input_handler(int e)
 		if ((e == 1 || e == 3) && !ft_strchr(buf, '\n'))
 			write_input(buf);
 	}
+	reset_shadow();
 	return (len);
 }
 
