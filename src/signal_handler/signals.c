@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 22:43:29 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/21 14:45:32 by user             ###   ########.fr       */
+/*   Updated: 2021/07/23 20:22:23 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	sig_child(int sig)
 void	sigint_shell(int sig)
 {
 	(void)sig;
-	ioctl(STDIN_FILENO, TIOCGWINSZ, &g_sh->events->ws);
 	ft_putstr("^C\n");
 	free(g_sh->line);
 	g_sh->history_cursor = g_sh->history;
