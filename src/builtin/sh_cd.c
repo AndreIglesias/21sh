@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/20 13:04:58 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/07/20 20:29:31 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/07/24 13:15:41 by ciglesia          #+#    #+#             */
+/*   Updated: 2021/07/24 13:52:09 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*get_home_dir(t_trie *ev, char *path)
 	return (NULL);
 }
 
-static void	update_ev(char *key, char *argv)
+static void	update_ev(char *key, char *argv, int f)
 {
 	char	*check;
 	char	*tmp;
@@ -37,6 +37,8 @@ static void	update_ev(char *key, char *argv)
 	tmp = ft_strjoin(key, "=");
 	tmp2 = ft_strjoin(tmp, argv);
 	insert_trie(&g_sh->ev, tmp2, ft_strlen(key));
+	if (f)
+		free(argv);
 	free(tmp);
 	free(tmp2);
 }
@@ -48,8 +50,8 @@ static void	cd_alone(void)
 	tmp = get_value(g_sh->ev, "HOME");
 	if (!chdir(tmp))
 	{
-		update_ev("OLDPWD", get_value(g_sh->ev, "PWD"));
-		update_ev("PWD", tmp);
+		update_ev("OLDPWD", get_value(g_sh->ev, "PWD"), 0);
+		update_ev("PWD", tmp, 0);
 		g_sh->last_status = 0;
 		return ;
 	}
@@ -79,8 +81,8 @@ void	sh_cd(int ac, char **av)
 		tmp = ft_strdup(av[1]);
 	if (!chdir(tmp))
 	{
-		update_ev("OLDPWD", get_value(g_sh->ev, "PWD"));
-		update_ev("PWD", tmp);
+		update_ev("OLDPWD", get_value(g_sh->ev, "PWD"), 0);
+		update_ev("PWD", getcwd(NULL, 0), 1);
 		g_sh->last_status = 0;
 		free(tmp);
 		return ;
