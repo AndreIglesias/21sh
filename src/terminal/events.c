@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:16 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/17 19:17:17 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/24 19:36:11 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,20 +103,9 @@ int	jump_sides(char *buf)
 
 int	ctrl_l(void)
 {
-	char	**argv;
-	int		pid;
 	size_t	i;
 
-	pid = fork();
-	if (pid)
-		parent_fork(pid);
-	else
-	{
-		argv = str_to_arr("/usr/bin/clear", NULL);
-		sh_execv(argv[0], argv);
-		ft_freesplit(argv);
-		sh_exit(NULL);
-	}
+	xcmd((char *[]){"/usr/bin/clear", NULL});
 	ft_prompt();
 	ft_putstr(g_sh->line);
 	i = ft_strlen(g_sh->line);

@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:09 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/23 20:26:56 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/24 19:59:17 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,18 @@ static void	prompt_status(char *user)
 	ft_putstr(ARROW);
 }
 
+static void	prompt_status2(void)
+{
+	char		*branch;
+	static char	*cmd[] = {"/usr/bin/git","rev-parse","--abbrev-ref","HEAD", NULL};
+
+	ft_putstr((char []){0xe2, 0x9d, 0xb1, 0x00});
+	branch = xbuff(cmd, 0);
+	ft_putstr(branch);
+	ft_putchar('\n');
+	free(branch);
+}
+
 void	ft_prompt(void)
 {
 	char		*user;
@@ -81,7 +93,7 @@ void	ft_prompt(void)
 	if (pwd)
 		print_pwd(pwd);
 	free(pwd);
-	ft_putstr((char []){0xe2, 0x9d, 0xb1, 0x0a, 0x00});
+	prompt_status2();
 	ft_putstr((char []){0xe2, 0x95, 0xb0, 0xe2, 0x97, 0xa0,
 		0xe2, 0x97, 0xa1, 0x20, 0x00});
 }
