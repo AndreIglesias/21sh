@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/24 19:57:57 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/24 21:49:17 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@
 # define LOCK "\uE0A2"
 # define ARROW "\uE0B0"
 # define WORRA "\uE0B2"
+# define TRIANG "\uE0B3"
 
 # define MINERR "\e[38;2;255;0;0m\e[5mminishell: "
 # define HRY_SIZE 100
@@ -181,6 +182,7 @@ void		store_envar(char **ev);
 ssize_t		get_cmd(void);
 int			keys_event(char *buf);
 void		ft_prompt(void);
+void		porcelain_prompt(char *branch);
 int			ctrl_l(void);
 int			move_ctrl(char *buf, char *cl, char *cr);
 int			jump_sides(char *buf);
@@ -278,6 +280,7 @@ void		sh_execv(char *name, char **av);
 void		xcmd(char *cmd[]);
 void		xcmd2(char *cmd[]);
 char		*xbuff(char *cmd[], int nl);
+int			xcmdfd(char *cmd[]);
 
 void		stdin_to_bin(t_ast *cmds);
 void		save_envp(t_trie *root, char *str, int lvl);
