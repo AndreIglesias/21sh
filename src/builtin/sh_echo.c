@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 23:36:58 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/07/23 19:32:57 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/28 18:12:10 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	sh_echo(int	argc, char **value)
 				break ;
 			i++;
 		}
-		while (value[i])
+		while (i < argc)
 			put_line_space(value[i++]);
 		if (!flag)
 			write(1, "\n", 1);
