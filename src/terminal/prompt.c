@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:09 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/24 21:43:14 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/29 00:22:07 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,16 @@ static void	prompt_status(char *user)
 static void	second_status(void)
 {
 	char		*branch;
-	static char	*cmd[] = {"/usr/bin/git","rev-parse","--abbrev-ref","HEAD", NULL};
+	static char	*cmd[] = {"/usr/bin/git",
+						"rev-parse",
+						"--abbrev-ref",
+						"HEAD",
+						NULL};
 
 	ft_putstr((char []){0xe2, 0x9d, 0xb1, 0x00});
 	branch = xbuff(cmd, 0);
 	porcelain_prompt(branch);
 	free(branch);
-
 }
 
 void	ft_prompt(void)

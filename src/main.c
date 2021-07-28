@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/21 14:42:29 by user             ###   ########.fr       */
+/*   Updated: 2021/07/29 00:54:56 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	init_line(void)
 	g_sh->line_tmp = NULL;
 	g_sh->shadow = NULL;
 	g_sh->line_cursor = 0;
+	g_sh->prompt_x = PROMPT_LEN;
+	g_sh->prompt_y = 0;
 }
 
 void	ft_minishell(ssize_t ready)
@@ -29,9 +31,9 @@ void	ft_minishell(ssize_t ready)
 	{
 		g_sh->history_cursor = g_sh->history;
 		init_line();
-		ft_putstr(tgetstr("vi", NULL));
+		ft_putstr_fd(tgetstr("vi", NULL), 0);
 		ft_prompt();
-		ft_putstr(tgetstr("ve", NULL));
+		ft_putstr_fd(tgetstr("ve", NULL), 0);
 		ready = get_cmd();
 		if (g_sh->line)
 		{

@@ -6,79 +6,11 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:16 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/24 19:36:11 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/29 00:48:27 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
-
-static int	next_space(char *str, int i)
-{
-	int	my_space;
-
-	if (str && str[i - 1])
-	{
-		my_space = 0;
-		i--;
-		if (str[i] == ' ')
-			my_space = 1;
-		while (i && (str[i] != ' ' || my_space))
-		{
-			if (str[i] != ' ')
-				my_space = 0;
-			i--;
-		}
-		if (!my_space && str[i] == ' ')
-			i++;
-	}
-	return (i);
-}
-
-static int	next_char(char *str, int i)
-{
-	int	my_char;
-
-	if (str && str[i])
-	{
-		my_char = 0;
-		i++;
-		if (str[i] != ' ')
-			my_char = 1;
-		while (str[i] && (str[i] == ' ' || my_char))
-		{
-			if (str[i] == ' ')
-				my_char = 0;
-			i++;
-		}
-	}
-	return (i);
-}
-
-int	move_ctrl(char *buf, char *cl, char *cr)
-{
-	size_t	x;
-
-	if (!ft_strcmp(cl, buf) && g_sh->line_cursor)
-	{
-		x = next_space(g_sh->line, g_sh->line_cursor);
-		while (x < g_sh->line_cursor)
-		{
-			ft_putstr_fd(g_sh->events->lf, 0);
-			g_sh->line_cursor--;
-		}
-	}
-	else if (!ft_strcmp(cr, buf) && g_sh->line_cursor
-		< ft_strlen(g_sh->line))
-	{
-		x = next_char(g_sh->line, g_sh->line_cursor);
-		while (g_sh->line_cursor < x)
-		{
-			ft_putstr_fd(g_sh->events->rg, 0);
-			g_sh->line_cursor++;
-		}
-	}
-	return (0);
-}
 
 int	jump_sides(char *buf)
 {
@@ -107,7 +39,7 @@ int	ctrl_l(void)
 
 	xcmd((char *[]){"/usr/bin/clear", NULL});
 	ft_prompt();
-	ft_putstr(g_sh->line);
+	ft_putstr_fd(g_sh->line, 0);
 	i = ft_strlen(g_sh->line);
 	while (i > g_sh->line_cursor)
 	{

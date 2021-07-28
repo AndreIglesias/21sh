@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/23 19:55:20 by user             ###   ########.fr       */
+/*   Updated: 2021/07/29 00:39:13 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,21 +81,25 @@ static int	check_buffer(char *buf)
 **	127 = DEL
 */
 
+static char	g_cu[] = {27, 91, 49, 59, 53, 65, 0};
+static char	g_cd[] = {27, 91, 49, 59, 53, 66, 0};
+static char	g_cr[] = {27, 91, 49, 59, 53, 67, 0};
+static char	g_cl[] = {27, 91, 49, 59, 53, 68, 0};
+static char	g_home[] = {27, 91, 72, 0};
+static char	g_end[] = {27, 91, 70, 0};
+static char	g_right[] = {27, 91, 67, 0};
+
 int	keys_event(char *buf)
 {
-	static char	cr[] = {27, 91, 49, 59, 53, 67, 0};
-	static char	cl[] = {27, 91, 49, 59, 53, 68, 0};
-	static char	home[] = {27, 91, 72, 0};
-	static char	end[] = {27, 91, 70, 0};
-	static char	right[] = {27, 91, 67, 0};
-
 	if (buf[0] == 4)
 		sh_exit(NULL);
-	if (ft_strlen(buf) == 6 && (!ft_strcmp(cl, buf) || !ft_strcmp(cr, buf)))
-		return (move_ctrl(buf, cl, cr));
-	if (ft_strlen(buf) == 3 && (!ft_strcmp(home, buf) || !ft_strcmp(end, buf)))
+	if (ft_strlen(buf) == 6 && (!ft_strcmp(g_cu, buf) || !ft_strcmp(g_cd, buf)
+			||!ft_strcmp(g_cl, buf) || !ft_strcmp(g_cr, buf)))
+		return (move_ctrl(buf));
+	if (ft_strlen(buf) == 3
+		&& (!ft_strcmp(g_home, buf) || !ft_strcmp(g_end, buf)))
 		return (jump_sides(buf));
-	if (ft_strlen(buf) == 3 && !ft_strcmp(right, buf) && g_sh->shadow)
+	if (ft_strlen(buf) == 3 && !ft_strcmp(g_right, buf) && g_sh->shadow)
 		return (insert_shadow());
 	if (buf[0] == 127 && g_sh->line && g_sh->line[0] && g_sh->line_cursor > 0)
 		return (delete_key());

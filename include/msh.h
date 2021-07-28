@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/24 21:49:17 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/29 00:53:52 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@
 # define MINERR "\e[38;2;255;0;0m\e[5mminishell: "
 # define HRY_SIZE 100
 # define BUF_LINE 10
+# define PROMPT_LEN 4
 # define SYE "\e[1mminishell: syntax error "
 
 /*
@@ -143,6 +144,8 @@ typedef struct s_shell
 	t_history		*history;
 	t_history		*history_cursor;
 	t_history		*shadow;
+	size_t			prompt_x;
+	size_t			prompt_y;
 	char			*line;
 	size_t			line_size;
 	char			**cmd_line;
@@ -184,7 +187,7 @@ int			keys_event(char *buf);
 void		ft_prompt(void);
 void		porcelain_prompt(char *branch);
 int			ctrl_l(void);
-int			move_ctrl(char *buf, char *cl, char *cr);
+int			move_ctrl(char *buf);
 int			jump_sides(char *buf);
 
 /*
