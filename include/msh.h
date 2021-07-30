@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/29 00:53:52 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/30 19:10:07 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,15 @@
 # define PROMPT_LEN 4
 # define SYE "\e[1mminishell: syntax error "
 
+typedef struct s_coords
+{
+	long	len;
+	long	ll;
+	long	lc;
+	long	cl;
+	long	cc;
+}	t_coords;
+
 /*
 ** type (1, cmd) (2, op)
 ** op (1, <) (2, >) (3, >>) (4, |)
@@ -147,11 +156,11 @@ typedef struct s_shell
 	size_t			prompt_x;
 	size_t			prompt_y;
 	char			*line;
-	size_t			line_size;
+	long			line_size;
 	char			**cmd_line;
 	int				ncmd;
 	char			*line_tmp;
-	size_t			line_cursor;
+	long			line_cursor;
 	t_trie			*ev;
 	t_events		*events;
 	t_ast			**cmds;
@@ -186,10 +195,16 @@ ssize_t		get_cmd(void);
 int			keys_event(char *buf);
 void		ft_prompt(void);
 void		porcelain_prompt(char *branch);
+
+t_coords	cursor_position();
+
 int			ctrl_l(void);
 int			move_ctrl(char *buf);
 int			jump_sides(char *buf);
+int			move_cursor(char *buf);
 
+int			delete_key(void);
+int			revdel_key(void);
 /*
 **		autocomplete
 */

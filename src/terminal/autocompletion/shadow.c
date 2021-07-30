@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 18:24:29 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/29 00:52:27 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/30 19:10:29 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	reset_shadow(void)
 {
-	size_t	cursor;
+	long	cursor;
 
 	if (g_sh->shadow && g_sh->shadow->cmd)
 	{

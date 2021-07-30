@@ -6,54 +6,11 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/29 00:39:13 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/30 18:03:21 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
-
-static int	move_cursor(char *buf)
-{
-	reset_shadow();
-	if (!ft_strcmp(g_sh->events->lf, buf) && g_sh->line_cursor)
-	{
-		g_sh->line_cursor--;
-		return (2);
-	}
-	if (!ft_strcmp(g_sh->events->rg, buf) && g_sh->line_cursor
-		< ft_strlen(g_sh->line))
-	{
-		g_sh->line_cursor++;
-		return (2);
-	}
-	return (0);
-}
-
-static void	del_ins(void)
-{
-	if (g_sh->line_cursor == ft_strlen(g_sh->line))
-		g_sh->line[ft_strlen(g_sh->line) - 1] = 0;
-	else
-	{
-		g_sh->line[g_sh->line_cursor - 1] = 0;
-		g_sh->line = ft_fstrjoin(g_sh->line, &g_sh->line[g_sh->line_cursor]);
-		ft_putstr_fd(&g_sh->line[g_sh->line_cursor - 1], 0);
-	}
-}
-
-static int	delete_key(void)
-{
-	reset_shadow();
-	ft_putstr_fd(g_sh->events->lf, 0);
-	ft_putstr_fd(g_sh->events->sc, 0);
-	ft_putstr_fd(g_sh->events->ce, 0);
-	del_ins();
-	ft_putstr_fd(g_sh->events->rc, 0);
-	g_sh->line_cursor--;
-	if (g_sh->line_cursor)
-		history_shadow();
-	return (2);
-}
 
 static int	check_buffer(char *buf)
 {
@@ -81,32 +38,17 @@ static int	check_buffer(char *buf)
 **	127 = DEL
 */
 
-static char	g_cu[] = {27, 91, 49, 59, 53, 65, 0};
-static char	g_cd[] = {27, 91, 49, 59, 53, 66, 0};
-static char	g_cr[] = {27, 91, 49, 59, 53, 67, 0};
-static char	g_cl[] = {27, 91, 49, 59, 53, 68, 0};
-static char	g_home[] = {27, 91, 72, 0};
-static char	g_end[] = {27, 91, 70, 0};
-static char	g_right[] = {27, 91, 67, 0};
-
 int	keys_event(char *buf)
 {
+	int	mcursor;
+
 	if (buf[0] == 4)
 		sh_exit(NULL);
-	if (ft_strlen(buf) == 6 && (!ft_strcmp(g_cu, buf) || !ft_strcmp(g_cd, buf)
-			||!ft_strcmp(g_cl, buf) || !ft_strcmp(g_cr, buf)))
-		return (move_ctrl(buf));
-	if (ft_strlen(buf) == 3
-		&& (!ft_strcmp(g_home, buf) || !ft_strcmp(g_end, buf)))
-		return (jump_sides(buf));
-	if (ft_strlen(buf) == 3 && !ft_strcmp(g_right, buf) && g_sh->shadow)
-		return (insert_shadow());
-	if (buf[0] == 127 && g_sh->line && g_sh->line[0] && g_sh->line_cursor > 0)
-		return (delete_key());
+	mcursor = move_cursor(buf);
+	if (mcursor != 42)
+		return (mcursor);
 	if (!ft_strcmp(g_sh->events->up, buf) || !ft_strcmp(g_sh->events->dw, buf))
 		return (browse_history(buf));
-	if (!ft_strcmp(g_sh->events->lf, buf) || !ft_strcmp(g_sh->events->rg, buf))
-		return (move_cursor(buf));
 	if (ft_strlen(buf) == 1 && buf[0] == 12)
 		return (ctrl_l());
 	if (ft_strlen(buf) == 1 && buf[0] == 9)

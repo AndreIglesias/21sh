@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:16 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/29 00:48:27 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/30 19:08:39 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	jump_sides(char *buf)
 
 int	ctrl_l(void)
 {
-	size_t	i;
+	long	i;
 
 	xcmd((char *[]){"/usr/bin/clear", NULL});
 	ft_prompt();

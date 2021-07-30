@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/07/29 00:47:08 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/07/30 17:56:50 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -40,7 +40,7 @@ DIRAUT		=	$(DIRTRM)/autocompletion/
 
 SRC			=	main.c
 SIGNAL		=	signals.c
-TERM		=	terminal.c environment.c getcmd.c keys_events.c events.c prompt.c git_prompt.c multiline.c
+TERM		=	terminal.c environment.c getcmd.c keys_events.c events.c prompt.c git_prompt.c multiline.c move_cursor.c modify_line.c
 HISTORY		=	load_history.c free_history.c browse_history.c
 BUILTIN		=	sh_exit.c sh_pwd.c sh_echo.c sh_export.c sh_cd.c sh_env.c sh_history.c sh_syntax.c sh_unset.c
 AST			=	ast.c construct_ast.c free_ast.c print_ast.c add_ast.c

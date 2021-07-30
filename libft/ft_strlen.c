@@ -6,15 +6,15 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 21:20:59 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/08 22:38:42 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/07/30 19:08:01 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+long	ft_strlen(const char *s)
 {
-	size_t	i;
+	long	i;
 
 	if (!s || !*s || !s[0])
 		return (0);
