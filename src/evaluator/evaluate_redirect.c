@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:06:39 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/06/03 21:57:19 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/07/31 18:44:57 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	stdin_to_bin(t_ast *cmds)
 	pid = fork();
 	if (pid)
 	{
-		parent_fork(pid);
 		close(fdpip[1]);
 		close(STDIN_FILENO);
 		dup(fdpip[0]);
 		sh_execv(cmds->bin, cmds->av);
+		parent_fork(pid);
 	}
 	else
 	{
@@ -71,8 +71,8 @@ static void	stdout_to_eof(t_ast *op)
 	if (pid)
 	{
 		close(fdpip[1]);
-		parent_fork(pid);
 		append_create_fd(fdpip[0], op);
+		parent_fork(pid);
 	}
 	else
 	{
@@ -97,11 +97,11 @@ static void	stdout_to_stdin(t_ast *op)
 	pid = fork();
 	if (pid)
 	{
-		parent_fork(pid);
 		close(fd[1]);
 		close(0);
 		dup(fd[0]);
 		op_or_cmds(op->right);
+		parent_fork(pid);
 	}
 	else
 	{
