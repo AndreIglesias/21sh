@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/30 16:23:15 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/30 17:56:08 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/31 18:58:22 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ int	move_cursor(char *buf)
 	{
 		if (!ft_strcmp(g_home, buf) || !ft_strcmp(g_end, buf))
 			return (jump_sides(buf));
+		if (!ft_strcmp(g_sh->events->rg, buf) && g_sh->shadow)
+			return (insert_shadow());
 		if (!ft_strcmp(g_sh->events->lf, buf)
 			|| !ft_strcmp(g_sh->events->rg, buf))
 			return (move_arrows(buf));
-		if (!ft_strcmp(g_sh->events->rg, buf) && g_sh->shadow)
-			return (insert_shadow());
 	}
 	else if (g_sh->line && g_sh->line[0])
 	{
