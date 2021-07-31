@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 20:06:39 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/07/31 18:44:57 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/31 21:17:56 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,7 @@ static void	stdout_to_stdin(t_ast *op)
 	tcsetattr(0, 0, &g_sh->old_term);
 	pipe(fd);
 	pid = fork();
-	if (pid)
-	{
-		close(fd[1]);
-		close(0);
-		dup(fd[0]);
-		op_or_cmds(op->right);
-		parent_fork(pid);
-	}
-	else
+	if (!pid)
 	{
 		close(fd[0]);
 		close(1);
@@ -113,6 +105,14 @@ static void	stdout_to_stdin(t_ast *op)
 			cat_last_file(op->left);
 		sh_exit(NULL);
 	}
+	close(fd[1]);
+	close(0);
+	dup(fd[0]);
+	op_or_cmds(op->right);
+	signal(SIGINT, sig_child);
+	signal(SIGQUIT, sig_child);
+	signal(SIGINT, sigint_shell);
+	signal(SIGQUIT, sigquit_shell);
 	tcsetattr(0, 0, &g_sh->new_term);
 }
 
