@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/24 21:22:50 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/01 01:59:50 by user             ###   ########.fr       */
+/*   Updated: 2021/08/02 01:03:27 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	print_porcelain(char *branch, int types[])
 {
 	ioctl(STDIN_FILENO, TIOCGWINSZ, &g_sh->events->ws);
-	ft_putstr(BOLD""CYAN"      "WORRA" ");
+	ft_putstr(BOLD""CYAN" "WORRA" ");
 	if (types[0])
 	{
 		ft_putchar('+');

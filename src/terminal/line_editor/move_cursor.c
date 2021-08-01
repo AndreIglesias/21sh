@@ -6,13 +6,11 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/30 16:23:15 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/02 00:53:20 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/02 01:21:19 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
-
-//int	reset_cursor(){}
 
 int	move_arrows(char *buf)
 {
@@ -65,12 +63,12 @@ void	move_vertically(char *buf)
 	c = cursor_position();
 	up = g_sh->line_cursor - (c.cc + (c.len - c.cc));
 	dw = g_sh->line_cursor + (c.cc + (c.len - c.cc));
-	if (!ft_strcmp(g_cu, buf) && c.cl > 0 && up > 0)
+	if (!ft_strcmp(g_cu, buf) && c.cl > 0 && up >= 0)
 	{
 		g_sh->line_cursor = up;
 		ft_putstr_fd(g_sh->events->up, 0);
 	}
-	else if (!ft_strcmp(g_cd, buf) && c.cl < c.ll && dw < g_sh->line_size)
+	else if (!ft_strcmp(g_cd, buf) && c.cl < c.ll && dw <= g_sh->line_size)
 	{
 		g_sh->line_cursor = dw;
 		ft_putstr_fd(g_sh->events->dw, 0);
@@ -86,8 +84,8 @@ int	move_ctrl(char *buf)
 		x = next_space(g_sh->line, g_sh->line_cursor);
 		while (x < g_sh->line_cursor)
 		{
-			ft_putstr_fd(g_sh->events->lf, 0);
-			g_sh->line_cursor--;
+			if (move_arrows(g_sh->events->lf) == 2)
+				ft_putstr_fd(g_sh->events->lf, 0);
 		}
 	}
 	else if (!ft_strcmp(g_cr, buf) && g_sh->line_cursor < g_sh->line_size)
@@ -95,8 +93,8 @@ int	move_ctrl(char *buf)
 		x = next_char(g_sh->line, g_sh->line_cursor);
 		while (g_sh->line_cursor < x)
 		{
-			ft_putstr_fd(g_sh->events->rg, 0);
-			g_sh->line_cursor++;
+			if (move_arrows(g_sh->events->rg) == 2)
+				ft_putstr_fd(g_sh->events->rg, 0);
 		}
 	}
 	else
