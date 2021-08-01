@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/30 19:10:07 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/31 22:28:03 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,16 @@ int			keys_event(char *buf);
 void		ft_prompt(void);
 void		porcelain_prompt(char *branch);
 
-t_coords	cursor_position();
+/*
+**		line_editor
+*/
+
+int			next_space(char *str, int i);
+int			next_char(char *str, int i);
+
+
+int			move_arrows(char *buf);
+t_coords	cursor_position(void);
 
 int			ctrl_l(void);
 int			move_ctrl(char *buf);

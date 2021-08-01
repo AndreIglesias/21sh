@@ -6,11 +6,27 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/30 18:03:21 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/31 22:35:45 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
+
+int	ctrl_l(void)
+{
+	long	i;
+
+	xcmd((char *[]){"/usr/bin/clear", NULL});
+	ft_prompt();
+	ft_putstr_fd(g_sh->line, 0);
+	i = ft_strlen(g_sh->line);
+	while (i > g_sh->line_cursor)
+	{
+		ft_putstr_fd(g_sh->events->lf, 0);
+		i--;
+	}
+	return (0);
+}
 
 static int	check_buffer(char *buf)
 {

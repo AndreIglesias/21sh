@@ -1,35 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_cursor.c                                      :+:      :+:    :+:   */
+/*   cursor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/30 16:23:15 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/31 18:58:22 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/07/31 21:37:39 by ciglesia          #+#    #+#             */
+/*   Updated: 2021/08/01 01:55:15 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
-
-//int	reset_cursor(){}
-
-static int	move_arrows(char *buf)
-{
-	reset_shadow();
-	if (!ft_strcmp(g_sh->events->lf, buf) && g_sh->line_cursor)
-	{
-		g_sh->line_cursor--;
-		return (2);
-	}
-	if (!ft_strcmp(g_sh->events->rg, buf) && g_sh->line_cursor
-		< ft_strlen(g_sh->line))
-	{
-		g_sh->line_cursor++;
-		return (2);
-	}
-	return (0);
-}
 
 static char	g_del[] = {27, 91, 51, 126, 0};
 static char	g_cu[] = {27, 91, 49, 59, 53, 65, 0};
@@ -41,6 +22,7 @@ static char	g_end[] = {27, 91, 70, 0};
 
 int	move_cursor(char *buf)
 {
+	g_sh->line_size = ft_strlen(g_sh->line);
 	if (ft_strlen(buf) == 6)
 	{
 		if (!ft_strcmp(g_cu, buf) || !ft_strcmp(g_cd, buf)
@@ -51,9 +33,9 @@ int	move_cursor(char *buf)
 	{
 		if (!ft_strcmp(g_home, buf) || !ft_strcmp(g_end, buf))
 			return (jump_sides(buf));
-		if (!ft_strcmp(g_sh->events->rg, buf) && g_sh->shadow)
+		else if (!ft_strcmp(g_sh->events->rg, buf) && g_sh->shadow)
 			return (insert_shadow());
-		if (!ft_strcmp(g_sh->events->lf, buf)
+		else if (!ft_strcmp(g_sh->events->lf, buf)
 			|| !ft_strcmp(g_sh->events->rg, buf))
 			return (move_arrows(buf));
 	}
@@ -61,7 +43,7 @@ int	move_cursor(char *buf)
 	{
 		if (g_sh->line_cursor > 0 && buf[0] == 127)
 			return (delete_key());
-		if (g_sh->line_cursor < g_sh->line_size && !ft_strcmp(g_del, buf))
+		else if (g_sh->line_cursor < g_sh->line_size && !ft_strcmp(g_del, buf))
 			return (revdel_key());
 	}
 	return (42);

@@ -6,23 +6,11 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/30 17:55:54 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/30 18:36:37 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/01 01:56:46 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
-
-static void	del_ins(void)
-{
-	if (g_sh->line_cursor == ft_strlen(g_sh->line))
-		g_sh->line[ft_strlen(g_sh->line) - 1] = 0;
-	else
-	{
-		g_sh->line[g_sh->line_cursor - 1] = 0;
-		g_sh->line = ft_fstrjoin(g_sh->line, &g_sh->line[g_sh->line_cursor]);
-		ft_putstr_fd(&g_sh->line[g_sh->line_cursor - 1], 0);
-	}
-}
 
 int	delete_key(void)
 {
@@ -30,7 +18,14 @@ int	delete_key(void)
 	ft_putstr_fd(g_sh->events->lf, 0);
 	ft_putstr_fd(g_sh->events->sc, 0);
 	ft_putstr_fd(g_sh->events->ce, 0);
-	del_ins();
+	if (g_sh->line_cursor == g_sh->line_size)
+		g_sh->line[g_sh->line_size - 1] = 0;
+	else
+	{
+		g_sh->line[g_sh->line_cursor - 1] = 0;
+		g_sh->line = ft_fstrjoin(g_sh->line, &g_sh->line[g_sh->line_cursor]);
+		ft_putstr_fd(&g_sh->line[g_sh->line_cursor - 1], 0);
+	}
 	ft_putstr_fd(g_sh->events->rc, 0);
 	g_sh->line_cursor--;
 	if (g_sh->line_cursor)
@@ -43,10 +38,11 @@ int	revdel_key(void)
 	reset_shadow();
 	ft_putstr_fd(g_sh->events->sc, 0);
 	ft_putstr_fd(g_sh->events->ce, 0);
-	if (g_sh->line_cursor < ft_strlen(g_sh->line))
+	if (g_sh->line_cursor < g_sh->line_size)
 	{
 		g_sh->line[g_sh->line_cursor] = 0;
-		g_sh->line = ft_fstrjoin(g_sh->line, &g_sh->line[g_sh->line_cursor + 1]);
+		g_sh->line = ft_fstrjoin(g_sh->line,
+				&g_sh->line[g_sh->line_cursor + 1]);
 		ft_putstr_fd(&g_sh->line[g_sh->line_cursor], 0);
 	}
 	ft_putstr_fd(g_sh->events->rc, 0);

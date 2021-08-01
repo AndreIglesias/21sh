@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/24 21:22:50 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/24 21:52:57 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/01 01:59:50 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	print_porcelain(char *branch, int types[])
 {
 	ioctl(STDIN_FILENO, TIOCGWINSZ, &g_sh->events->ws);
-
 	ft_putstr(BOLD""CYAN"      "WORRA" ");
 	if (types[0])
 	{
@@ -39,7 +38,6 @@ static void	print_porcelain(char *branch, int types[])
 }
 
 /*
-
   # ⇣42 if behind the remote.
   (( VCS_STATUS_COMMITS_BEHIND )) && p+=" ${clean}⇣${VCS_STATUS_COMMITS_BEHIND}"
   # ⇡42 if ahead of the remote; no leading space if also behind the remote: ⇣42⇡42.
@@ -62,8 +60,6 @@ static void	print_porcelain(char *branch, int types[])
   (( VCS_STATUS_NUM_UNSTAGED   )) && p+=" ${modified}!${VCS_STATUS_NUM_UNSTAGED}"
   # ?42 if have untracked files. It's really a question mark, your font isn't broken.
   (( VCS_STATUS_NUM_UNTRACKED  )) && p+=" ${untracked}?${VCS_STATUS_NUM_UNTRACKED}"
-
-
 */
 
 /*
@@ -85,9 +81,9 @@ void	porcelain_prompt(char *branch)
 	line = NULL;
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (line[0] == 'M' || line[0] == 'A')
+		if (line[0] == 'M' || line[0] == 'A' || line[0] == 'R' || line[0] == 'D')
 			types[0]++;
-		if (line[0] && line[1] == 'M')
+		if (line[0] && (line[1] == 'M' || line[1] == 'D'))
 			types[1]++;
 		if (line[0] == '?')
 			types[2]++;
