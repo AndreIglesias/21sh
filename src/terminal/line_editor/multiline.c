@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 00:42:57 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/02 00:39:57 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/02 14:45:52 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ static void	calc_pos(t_coords *c, long cursor, long size)
 	if (!c->cl)
 		c->cc = cursor % (c->len - PROMPT_LEN);
 	c->cl += (cursor / c->len) + (c->cc != 0);
-	c->ll--;
-	c->cl--;
+	if (c->ll)
+		c->ll--;
+	if (c->cl)
+		c->cl--;
 }
 
 t_coords	cursor_position(void)

@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/30 16:23:15 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/02 01:21:19 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/02 15:56:05 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	move_arrows(char *buf)
 	if (!ft_strcmp(g_sh->events->lf, buf) && g_sh->line_cursor)
 	{
 		g_sh->line_cursor--;
-		if (c0.cl && c0.cc == 0)
+		if ((c0.cl && c0.cc == 0) || (!c0.cl && !c0.cc))
 		{
 			ft_putstr_fd(tgetstr("up", NULL), 0);
 			ft_putstr_fd(tgoto(tgetstr("RI", NULL), 0, c0.len), 0);
@@ -104,29 +104,38 @@ int	move_ctrl(char *buf)
 
 int	jump_sides(char *buf)
 {
-	t_coords	c;
+	//t_coords	c;
 
-	c = cursor_position();
 	if (buf[2] == 72 && g_sh->line_cursor)
 	{
-		if (c.cl)
-			ft_putstr_fd(tgoto(tgetstr("UP", NULL), 0, c.cl), 0);
-		if (c.ll)
-			ft_putstr_fd(tgoto(tgetstr("LE", NULL), 0, c.cc - PROMPT_LEN), 0);
-		else
-			ft_putstr_fd(tgoto(tgetstr("LE", NULL), 0, c.cc), 0);
-		g_sh->line_cursor = 0;
+		while (0 < g_sh->line_cursor)
+		{
+			if (move_arrows(g_sh->events->lf) == 2)
+				ft_putstr_fd(g_sh->events->lf, 0);
+		}
 	}
 	if (buf[2] == 70 && g_sh->line_cursor < g_sh->line_size)
 	{
+		while (g_sh->line_cursor < g_sh->line_size)
+		{
+			if (move_arrows(g_sh->events->rg) == 2)
+				ft_putstr_fd(g_sh->events->rg, 0);
+		}
+/*		c = cursor_position();
 		if (c.cl != c.ll)
 			ft_putstr_fd(tgoto(tgetstr("DO", NULL), 0, c.ll - c.cl), 0);
-		if (!c.ll)
-			ft_putstr_fd(tgoto(tgetstr("RI", NULL), 0, c.lc - c.cc), 0);
+		if (c.ll)
+		{
+			if (!c.cl)
+				c.cc += PROMPT_LEN;
+			if (c.lc < c.cc)
+				ft_putstr_fd(tgoto(tgetstr("LE", NULL), 0, c.cc - c.lc), 0);
+			else if (c.cc < c.lc)
+				ft_putstr_fd(tgoto(tgetstr("RI", NULL), 0, c.lc - c.cc), 0);
+		}
 		else
-			ft_putstr_fd(tgoto(tgetstr("RI", NULL), 0,
-				c.lc - c.cc - PROMPT_LEN), 0);
-		g_sh->line_cursor = g_sh->line_size;
+			ft_putstr_fd(tgoto(tgetstr("RI", NULL), 0, c.lc - c.cc), 0);
+			g_sh->line_cursor = g_sh->line_size;*/
 	}
 	return (0);
 }
