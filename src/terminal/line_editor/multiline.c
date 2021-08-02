@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 00:42:57 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/02 16:08:48 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/02 19:06:53 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,21 @@ t_coords	cursor_position(void)
 	}
 	calc_pos(&c, cursor, size);
 	return (c);
+}
+
+void	clear_line(void)
+{
+	t_coords	c;
+
+	jump_sides((char []){27, 91, 72, 0});
+	ft_putstr_fd(g_sh->events->sc, 0);
+	ft_putstr_fd(g_sh->events->ce, 0);
+	c = cursor_position();
+	while (c.cl < c.ll)
+	{
+		ft_putstr_fd(tgetstr("do", NULL), 0);
+		ft_putstr_fd(g_sh->events->ce, 0);
+		c.cl++;
+	}
+	ft_putstr_fd(g_sh->events->rc, 0);
 }
