@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/07/31 22:37:44 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/08/02 19:24:00 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -42,7 +42,7 @@ DIREDT		=	$(DIRTRM)/line_editor/
 SRC			=	main.c
 SIGNAL		=	signals.c
 TERM		=	terminal.c environment.c getcmd.c keys_events.c prompt.c git_prompt.c
-EDITOR		=	cursor.c multiline.c move_cursor.c calculations.c modify_line.c
+EDITOR		=	multiline.c move_cursor.c calculations.c delete.c
 HISTORY		=	load_history.c free_history.c browse_history.c
 BUILTIN		=	sh_exit.c sh_pwd.c sh_echo.c sh_export.c sh_cd.c sh_env.c sh_history.c sh_syntax.c sh_unset.c
 AST			=	ast.c construct_ast.c free_ast.c print_ast.c add_ast.c
