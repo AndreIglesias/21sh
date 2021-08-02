@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/30 16:23:15 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/02 15:56:05 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/02 15:56:59 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,6 @@ int	move_ctrl(char *buf)
 
 int	jump_sides(char *buf)
 {
-	//t_coords	c;
-
 	if (buf[2] == 72 && g_sh->line_cursor)
 	{
 		while (0 < g_sh->line_cursor)
@@ -121,21 +119,6 @@ int	jump_sides(char *buf)
 			if (move_arrows(g_sh->events->rg) == 2)
 				ft_putstr_fd(g_sh->events->rg, 0);
 		}
-/*		c = cursor_position();
-		if (c.cl != c.ll)
-			ft_putstr_fd(tgoto(tgetstr("DO", NULL), 0, c.ll - c.cl), 0);
-		if (c.ll)
-		{
-			if (!c.cl)
-				c.cc += PROMPT_LEN;
-			if (c.lc < c.cc)
-				ft_putstr_fd(tgoto(tgetstr("LE", NULL), 0, c.cc - c.lc), 0);
-			else if (c.cc < c.lc)
-				ft_putstr_fd(tgoto(tgetstr("RI", NULL), 0, c.lc - c.cc), 0);
-		}
-		else
-			ft_putstr_fd(tgoto(tgetstr("RI", NULL), 0, c.lc - c.cc), 0);
-			g_sh->line_cursor = g_sh->line_size;*/
 	}
 	return (0);
 }

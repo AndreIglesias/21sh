@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/31 22:35:45 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/02 16:12:19 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int	check_buffer(char *buf)
 		if (buf[i] == '\n')
 		{
 			buf[i] = 0;
+			jump_sides((char []){27, 91, 70, 0});
 			return (3);
 		}
 		if (buf[++i] == 0)
