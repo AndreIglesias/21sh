@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_repet_fd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/17 21:20:59 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/07/30 19:08:01 by ciglesia         ###   ########.fr       */
+/*   Created: 2020/08/25 17:12:42 by ciglesia          #+#    #+#             */
+/*   Updated: 2020/08/25 17:13:31 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long	ft_strlen(const char *s)
+int		ft_repet_fd(char c, int i, const int fd)
 {
-	long	i;
+	int nb;
 
-	if (!s || !*s || !s[0])
-		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	nb = 0;
+	while (nb < i)
+		nb += write(fd, &c, 1);
+	return (nb);
 }

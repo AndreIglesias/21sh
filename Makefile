@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/07/24 19:41:19 by user             ###   ########.fr        #
+#    Updated: 2021/07/31 22:37:44 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -37,10 +37,12 @@ DIRHIS		=	$(DIRSRC)/history/
 DIRBIN		=	$(DIRSRC)/builtin/
 DIRAST		=	$(DIRSRC)/ast/
 DIRAUT		=	$(DIRTRM)/autocompletion/
+DIREDT		=	$(DIRTRM)/line_editor/
 
 SRC			=	main.c
 SIGNAL		=	signals.c
-TERM		=	terminal.c environment.c getcmd.c keys_events.c events.c prompt.c
+TERM		=	terminal.c environment.c getcmd.c keys_events.c prompt.c git_prompt.c
+EDITOR		=	cursor.c multiline.c move_cursor.c calculations.c modify_line.c
 HISTORY		=	load_history.c free_history.c browse_history.c
 BUILTIN		=	sh_exit.c sh_pwd.c sh_echo.c sh_export.c sh_cd.c sh_env.c sh_history.c sh_syntax.c sh_unset.c
 AST			=	ast.c construct_ast.c free_ast.c print_ast.c add_ast.c
@@ -48,7 +50,7 @@ ANALIZE		=	analyzer.c lexer.c parser.c semantic.c  boolean.c inception_tree.c ex
 EVAL		=	sh_which.c ft_evaluate.c evaluate_redirect.c evaluate_builtin.c parent_fork.c sh_execv.c
 AUTOCP		=	auto_complete.c complete_bin.c shadow.c
 
-SRCS		=	$(SRC) $(SIGNAL) $(TERM) $(HISTORY) $(BUILTIN) $(EVAL) $(ANALIZE) $(AST) $(AUTOCP)
+SRCS		=	$(SRC) $(SIGNAL) $(TERM) $(HISTORY) $(BUILTIN) $(EVAL) $(ANALIZE) $(AST) $(AUTOCP) $(EDITOR)
 
 #***************** DEPS ******************#
 
@@ -117,6 +119,10 @@ E0M			=	 "\e[0m"
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRAUT)/%.c
+				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
+
+%.o		:		../$(DIREDT)/%.c
 				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 

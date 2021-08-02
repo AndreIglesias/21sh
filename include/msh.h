@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/24 19:57:57 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/31 22:28:03 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,22 @@
 # define LOCK "\uE0A2"
 # define ARROW "\uE0B0"
 # define WORRA "\uE0B2"
+# define TRIANG "\uE0B3"
 
 # define MINERR "\e[38;2;255;0;0m\e[5mminishell: "
 # define HRY_SIZE 100
 # define BUF_LINE 10
+# define PROMPT_LEN 4
 # define SYE "\e[1mminishell: syntax error "
+
+typedef struct s_coords
+{
+	long	len;
+	long	ll;
+	long	lc;
+	long	cl;
+	long	cc;
+}	t_coords;
 
 /*
 ** type (1, cmd) (2, op)
@@ -142,12 +153,14 @@ typedef struct s_shell
 	t_history		*history;
 	t_history		*history_cursor;
 	t_history		*shadow;
+	size_t			prompt_x;
+	size_t			prompt_y;
 	char			*line;
-	size_t			line_size;
+	long			line_size;
 	char			**cmd_line;
 	int				ncmd;
 	char			*line_tmp;
-	size_t			line_cursor;
+	long			line_cursor;
 	t_trie			*ev;
 	t_events		*events;
 	t_ast			**cmds;
@@ -181,10 +194,26 @@ void		store_envar(char **ev);
 ssize_t		get_cmd(void);
 int			keys_event(char *buf);
 void		ft_prompt(void);
-int			ctrl_l(void);
-int			move_ctrl(char *buf, char *cl, char *cr);
-int			jump_sides(char *buf);
+void		porcelain_prompt(char *branch);
 
+/*
+**		line_editor
+*/
+
+int			next_space(char *str, int i);
+int			next_char(char *str, int i);
+
+
+int			move_arrows(char *buf);
+t_coords	cursor_position(void);
+
+int			ctrl_l(void);
+int			move_ctrl(char *buf);
+int			jump_sides(char *buf);
+int			move_cursor(char *buf);
+
+int			delete_key(void);
+int			revdel_key(void);
 /*
 **		autocomplete
 */
@@ -278,6 +307,7 @@ void		sh_execv(char *name, char **av);
 void		xcmd(char *cmd[]);
 void		xcmd2(char *cmd[]);
 char		*xbuff(char *cmd[], int nl);
+int			xcmdfd(char *cmd[]);
 
 void		stdin_to_bin(t_ast *cmds);
 void		save_envp(t_trie *root, char *str, int lvl);

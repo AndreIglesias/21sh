@@ -6,24 +6,11 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/24 13:15:41 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/24 13:52:09 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/28 18:14:59 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
-
-static char	*get_home_dir(t_trie *ev, char *path)
-{
-	char	*tmp;
-
-	tmp = get_value(ev, "HOME");
-	if (tmp)
-	{
-		tmp = ft_strjoin(tmp, &path[1]);
-		return (tmp);
-	}
-	return (NULL);
-}
 
 static void	update_ev(char *key, char *argv, int f)
 {
@@ -73,9 +60,7 @@ void	sh_cd(int ac, char **av)
 		return (cd_alone());
 	if (ac != 2)
 		return (cd_more());
-	if (av[1] && av[1][0] == '~')
-		tmp = get_home_dir(g_sh->ev, av[1]);
-	else if (av[1] && av[1][0] == '-' && !av[1][1])
+	if (av[1] && av[1][0] == '-' && !av[1][1])
 		tmp = ft_strdup(get_value(g_sh->ev, "OLDPWD"));
 	else
 		tmp = ft_strdup(av[1]);

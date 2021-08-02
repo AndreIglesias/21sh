@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:29:37 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/07/17 15:20:12 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/02 00:59:33 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_listi
 	struct s_listi	*next;
 }					t_listi;
 
+int					ft_repet_fd(char c, int i, const int fd);
 char				**ft_avjoin(char **av, int *ac, char *str);
 int					ft_isprintable(char *str);
 char				*ft_strpop(char *str, size_t i);
@@ -57,7 +58,7 @@ void				*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void				*ft_memmove(void *dst, const void *src, size_t len);
 void				*ft_memchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
-size_t				ft_strlen(const char *s);
+long				ft_strlen(const char *s);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
 int					ft_isalnum(int c);

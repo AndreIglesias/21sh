@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:19:46 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/17 19:19:46 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/31 18:55:36 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strpop(char *str, size_t i)
 {
-	if (str && i <= ft_strlen(str))
+	if (str && i <= (size_t)ft_strlen(str))
 	{
 		str[i] = 0;
 		if (str[i + 1])

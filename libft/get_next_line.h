@@ -6,7 +6,7 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:20:59 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/05/19 21:05:53 by jiglesia         ###   ########.fr       */
+/*   Updated: 2021/07/31 18:54:56 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@
 # include "libft.h"
 
 int		get_next_line(int fd, char **line);
-size_t	ft_strlen(const char *s);
+long	ft_strlen(const char *s);
 
 #endif

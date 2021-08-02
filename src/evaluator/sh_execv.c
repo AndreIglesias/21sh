@@ -6,7 +6,7 @@
 /*   By: jiglesia <jiglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 00:51:32 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/07/24 20:05:35 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/24 21:11:02 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,43 @@ char	*xbuff(char *cmd[], int nl)
 	if (pid)
 	{
 		close(pipefd[1]);
-		while (get_next_line(pipefd[0], &line) > 0 && nl-- > 0);
+		while (get_next_line(pipefd[0], &line) > 0 && nl-- > 0)
+			free(line);
+		close(pipefd[0]);
+		parent_fork(pid);
 		return (line);
 	}
-	else
-	{
-		close(pipefd[0]);
-		pipefd[0] = open("/dev/null", O_WRONLY);
-		dup2(pipefd[0], 2);
-		close(pipefd[0]);
-		dup2(pipefd[1], 1);
-		close(pipefd[1]);
-		sh_execv(cmd[0], cmd);
-		sh_exit(NULL);
-	}
+	close(pipefd[0]);
+	pipefd[0] = open("/dev/null", O_WRONLY);
+	dup2(pipefd[0], 2);
+	close(pipefd[0]);
+	dup2(pipefd[1], 1);
+	close(pipefd[1]);
+	sh_execv(cmd[0], cmd);
+	sh_exit(NULL);
 	return (line);
+}
+
+int	xcmdfd(char *cmd[])
+{
+	int		pid;
+	int		pipefd[2];
+
+	pipe(pipefd);
+	pid = fork();
+	if (pid)
+	{
+		close(pipefd[1]);
+		parent_fork(pid);
+		return (pipefd[0]);
+	}
+	close(pipefd[0]);
+	pipefd[0] = open("/dev/null", O_WRONLY);
+	dup2(pipefd[0], 2);
+	close(pipefd[0]);
+	dup2(pipefd[1], 1);
+	close(pipefd[1]);
+	sh_execv(cmd[0], cmd);
+	sh_exit(NULL);
+	return (1);
 }

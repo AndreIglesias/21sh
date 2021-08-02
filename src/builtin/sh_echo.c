@@ -6,16 +6,21 @@
 /*   By: jiglesia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 23:36:58 by jiglesia          #+#    #+#             */
-/*   Updated: 2021/07/23 19:32:57 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/28 23:44:09 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-static void	put_line_space(char *str)
+static void	put_echo(int i, char **value, int argc)
 {
-	ft_putstr(str);
-	ft_putchar(' ');
+	while (i < argc)
+	{
+		ft_putstr(value[i]);
+		if (i + 1 < argc)
+			ft_putchar(' ');
+		i++;
+	}
 }
 
 void	sh_echo(int	argc, char **value)
@@ -38,8 +43,7 @@ void	sh_echo(int	argc, char **value)
 				break ;
 			i++;
 		}
-		while (value[i])
-			put_line_space(value[i++]);
+		put_echo(i, value, argc);
 		if (!flag)
 			write(1, "\n", 1);
 	}

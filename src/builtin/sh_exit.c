@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:34 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/17 19:17:35 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/28 21:40:59 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ void	sh_exit(char *value)
 	if (fd == -1)
 		ft_puterror(BOLD"minishell: ~/.minishell_history not generated\n"E0M, 0);
 	free_g_sh();
-	ft_putstr(tgetstr("ve", NULL));
+	ft_putstr_fd(tgetstr("ve", NULL), 0);
 	exit(exit_status);
 }
