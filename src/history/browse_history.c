@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 16:49:04 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/20 20:45:42 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/02 16:37:17 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 static void	change_history(char *str)
 {
-	int	i;
+	/*int	i;
 
 	i = g_sh->line_cursor;
 	while (i-- > 0)
 		ft_putstr_fd(g_sh->events->lf, 0);
-	ft_putstr_fd(g_sh->events->ce, 0);
+		ft_putstr_fd(g_sh->events->ce, 0);*/
+	clear_line();
 	g_sh->line = str;
 	g_sh->line_cursor = ft_strlen(g_sh->line);
 	ft_putstr_fd(g_sh->line, 0);

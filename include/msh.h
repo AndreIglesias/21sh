@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/07/31 22:28:03 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/02 16:35:45 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,7 @@ int			next_char(char *str, int i);
 
 int			move_arrows(char *buf);
 t_coords	cursor_position(void);
+void		clear_line(void);
 
 int			ctrl_l(void);
 int			move_ctrl(char *buf);
