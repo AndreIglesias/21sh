@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/02 19:07:05 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/03 01:18:46 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,8 @@ typedef struct s_shell
 	size_t			prompt_x;
 	size_t			prompt_y;
 	char			*line;
+	long			select_start;
+	long			select_end;
 	long			line_size;
 	char			**cmd_line;
 	int				ncmd;
@@ -202,7 +204,7 @@ void		porcelain_prompt(char *branch);
 
 int			next_space(char *str, int i);
 int			next_char(char *str, int i);
-
+int			ft_select(void);
 
 int			move_arrows(char *buf);
 t_coords	cursor_position(void);
@@ -215,6 +217,7 @@ int			move_cursor(char *buf);
 
 int			delete_key(void);
 int			revdel_key(void);
+
 /*
 **		autocomplete
 */

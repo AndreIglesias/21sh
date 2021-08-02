@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/02 19:17:14 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/03 01:18:51 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static char	g_end[] = {27, 91, 70, 0};
 
 int	move_cursor(char *buf)
 {
-	g_sh->line_size = ft_strlen(g_sh->line);
 	if (ft_strlen(buf) == 6)
 	{
 		if (!ft_strcmp(g_cu, buf) || !ft_strcmp(g_cd, buf)
@@ -98,14 +97,20 @@ int	keys_event(char *buf)
 
 	if (buf[0] == 4)
 		sh_exit(NULL);
+	g_sh->line_size = ft_strlen(g_sh->line);
 	mcursor = move_cursor(buf);
 	if (mcursor != 42)
 		return (mcursor);
 	if (!ft_strcmp(g_sh->events->up, buf) || !ft_strcmp(g_sh->events->dw, buf))
 		return (browse_history(buf));
-	if (ft_strlen(buf) == 1 && buf[0] == 12)
-		return (ctrl_l());
-	if (ft_strlen(buf) == 1 && buf[0] == 9)
-		return (auto_complete());
+	if (ft_strlen(buf) == 1)
+	{
+		if (buf[0] == 12)
+			return (ctrl_l());
+		if (buf[0] == 9)
+			return (auto_complete());
+		if (buf[0] == 1)
+			return (ft_select());
+	}
 	return (check_buffer(buf));
 }
