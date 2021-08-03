@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/03 12:37:42 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/03 17:27:14 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	main(int ac __attribute__((unused)), char **av __attribute__((unused)),
 	signal(SIGTSTP, sigtstp_shell);
 	g_sh = ft_shell();
 	g_sh->builtins = builtins;
+	g_sh->clip = NULL;
 	if (!g_sh)
 		exit(EXIT_FAILURE);
 	store_envar(ev);

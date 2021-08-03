@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 20:54:43 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/03 01:18:51 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/03 17:31:14 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,7 @@ int	keys_event(char *buf)
 		if (buf[0] == 1)
 			return (ft_select());
 	}
+	if (ft_strlen(buf) == 2 && clipboard(buf) != 42)
+		return (0);
 	return (check_buffer(buf));
 }

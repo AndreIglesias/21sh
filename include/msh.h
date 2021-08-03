@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/03 12:47:53 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/03 17:39:19 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ typedef struct s_shell
 	int				ncmd;
 	char			*line_tmp;
 	long			line_cursor;
+	char			*clip;
 	t_trie			*ev;
 	t_events		*events;
 	t_ast			**cmds;
@@ -195,6 +196,7 @@ void		sig_child(int sig);
 t_shell		*ft_shell(void);
 void		store_envar(char **ev);
 ssize_t		get_cmd(void);
+void		write_input(char *buf);
 int			keys_event(char *buf);
 void		ft_prompt(void);
 void		porcelain_prompt(char *branch);
@@ -208,6 +210,7 @@ int			next_char(char *str, int i);
 
 int			ft_select(void);
 void		move_select(int direction);
+int			clipboard(char *buf);
 
 int			move_arrows(char *buf);
 t_coords	cursor_position(void);

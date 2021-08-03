@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 19:17:23 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/03 01:08:11 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/04 00:05:52 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,21 @@
 **	RIGHT 27 91 67
 */
 
-static void	write_input(char *buf)
+void	write_input(char *buf)
 {
+	long	len;
+
 	g_sh->line = ft_strins(g_sh->line, buf, g_sh->line_cursor - 1);
 	if (g_sh->line && g_sh->line_cursor < ft_strlen(g_sh->line))
 	{
-		ft_putstr_fd(g_sh->events->sc, 0);
+		len = ft_strlen(&g_sh->line[g_sh->line_cursor]);
 		ft_putstr_fd(&g_sh->line[g_sh->line_cursor], 0);
-		ft_putstr_fd(g_sh->events->rc, 0);
+		g_sh->line_cursor = ft_strlen(g_sh->line);
+		while (len-- > 0)
+		{
+			if (move_arrows(g_sh->events->lf) == 2)
+				ft_putstr_fd(g_sh->events->lf, 0);
+		}
 	}
 	history_shadow();
 }
