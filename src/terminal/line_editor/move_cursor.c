@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/30 16:23:15 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/02 15:56:59 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/03 13:04:06 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	move_arrows(char *buf)
 	c0 = cursor_position();
 	if (!ft_strcmp(g_sh->events->lf, buf) && g_sh->line_cursor)
 	{
+		move_select(1);
 		g_sh->line_cursor--;
 		if ((c0.cl && c0.cc == 0) || (!c0.cl && !c0.cc))
 		{
@@ -32,6 +33,7 @@ int	move_arrows(char *buf)
 	if (!ft_strcmp(g_sh->events->rg, buf) && g_sh->line_cursor
 		< g_sh->line_size)
 	{
+		move_select(2);
 		g_sh->line_cursor++;
 		if ((!c0.cl && c0.cc == c0.len - PROMPT_LEN - 1)
 				|| (c0.cl && c0.cc == c0.len - 1))
@@ -65,13 +67,19 @@ void	move_vertically(char *buf)
 	dw = g_sh->line_cursor + (c.cc + (c.len - c.cc));
 	if (!ft_strcmp(g_cu, buf) && c.cl > 0 && up >= 0)
 	{
-		g_sh->line_cursor = up;
-		ft_putstr_fd(g_sh->events->up, 0);
+		while (up < g_sh->line_cursor)
+		{
+			if (move_arrows(g_sh->events->lf) == 2)
+				ft_putstr_fd(g_sh->events->lf, 0);
+		}
 	}
 	else if (!ft_strcmp(g_cd, buf) && c.cl < c.ll && dw <= g_sh->line_size)
 	{
-		g_sh->line_cursor = dw;
-		ft_putstr_fd(g_sh->events->dw, 0);
+		while (g_sh->line_cursor < dw)
+		{
+			if (move_arrows(g_sh->events->rg) == 2)
+				ft_putstr_fd(g_sh->events->rg, 0);
+		}
 	}
 }
 

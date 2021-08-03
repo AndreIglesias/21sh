@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 21:36:00 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/03 01:13:24 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/03 12:37:42 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	init_line(void)
 	g_sh->prompt_y = 0;
 	g_sh->select_start = -1;
 	g_sh->select_end = -1;
+	g_sh->select_direction = 0;
 }
 
 void	ft_minishell(ssize_t ready)
