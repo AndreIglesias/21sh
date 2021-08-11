@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 14:04:26 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/03 17:39:19 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/11 05:51:54 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ typedef struct s_shell
 	size_t			prompt_y;
 	char			*line;
 	long			select_start;
-	long			select_end;
 	int				select_direction;
 	long			line_size;
 	char			**cmd_line;

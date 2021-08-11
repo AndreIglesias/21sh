@@ -6,58 +6,46 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 17:23:54 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/03 17:43:17 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/11 05:54:52 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-static char	g_copy[] = {27, 99, 0};
-static char	g_paste[] = {27, 118, 0};
-static char	g_cut[] = {27, 120, 0};
-
-static int	ft_copy(void)
-{
-	long	a;
-	long	b;
-
-	if (g_sh->select_start != -1 && g_sh->select_end != -1)
-	{
-		if (g_sh->clip)
-			free(g_sh->clip);
-		a = g_sh->select_start;
-		b = g_sh->select_end;
-		if (a > b)
-		{
-			a = g_sh->select_end;
-			b = g_sh->select_start;
-		}
-		g_sh->clip = ft_strndup(&g_sh->line[a], b - a);
-	}
-	return (0);
-}
-
 static int	ft_paste(void)
 {
+	//long	len;
 	if (g_sh->clip)
 	{
 		write_input(g_sh->clip);
+		g_sh->select_start = -1;
+		/*len = ft_strlen(g_sh->clip) + 1;
+		while (len-- > 0)
+		{
+			if (move_arrows(g_sh->events->rg) == 2)
+				ft_putstr_fd(g_sh->events->rg, 0);
+				}*/
 	}
 	return (0);
 }
 
 static int	ft_cut(void)
 {
+	g_sh->select_start = -1;
 	return (0);
 }
 
+/*
+**	copy = ctrl + b
+**	paste = ctrl + v
+**	cut = ctrl + x
+*/
+
 int	clipboard(char *buf)
 {
-	if (!ft_strcmp(g_copy, buf))
-		return (ft_copy());
-	if (!ft_strcmp(g_paste, buf))
+	if (buf[0] == 22)
 		return (ft_paste());
-	if (!ft_strcmp(g_cut, buf))
+	if (buf[0] == 24)
 		return (ft_cut());
 
 	return (42);
