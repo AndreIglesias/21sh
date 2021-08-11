@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 19:24:57 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/08/11 05:54:27 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/08/11 06:02:24 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	ft_copy(void)
 			a = g_sh->line_cursor;
 			b = g_sh->select_start;
 		}
-		g_sh->clip = ft_strndup(&g_sh->line[a], b - a - 1);
+		g_sh->clip = ft_strndup(&g_sh->line[a], b - a);
 	}
 	return (0);
 }
