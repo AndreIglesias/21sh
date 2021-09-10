@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/08/03 17:36:48 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/09/10 22:25:31 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -107,43 +107,43 @@ E0M			=	 "\e[0m"
 #************************ DEPS COMPILATION *************************
 
 %.o		:		../$(DIRSRC)/%.c
-				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@printf $(GREEN)"Generating 21sh objects... %-33.33s\r" $@
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRSIG)/%.c
-				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@printf $(GREEN)"Generating 21sh objects... %-33.33s\r" $@
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRTRM)/%.c
-				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@printf $(GREEN)"Generating 21sh objects... %-33.33s\r" $@
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRAUT)/%.c
-				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@printf $(GREEN)"Generating 21sh objects... %-33.33s\r" $@
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIREDT)/%.c
-				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@printf $(GREEN)"Generating 21sh objects... %-33.33s\r" $@
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRHIS)/%.c
-				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@printf $(GREEN)"Generating 21sh objects... %-33.33s\r" $@
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRBIN)/%.c
-				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@printf $(GREEN)"Generating 21sh objects... %-33.33s\r" $@
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRANA)/%.c
-				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@printf $(GREEN)"Generating 21sh objects... %-33.33s\r" $@
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRAST)/%.c
-				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@printf $(GREEN)"Generating 21sh objects... %-33.33s\r" $@
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIREVL)/%.c
-				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@printf $(GREEN)"Generating 21sh objects... %-33.33s\r" $@
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 #************************ MAIN COMPILATION *************************
@@ -156,7 +156,7 @@ $(NAME)	:		ftlib $(OBJS)
 				@$(ECHO) '              |  /---------------------\  |'
 				@$(ECHO) '              | |  '$(GREEN)'    I GIVE YOU  '$(RED)'     | |'
 				@$(ECHO) '              | |  '$(GREEN)'   My beautiful '$(RED)'     | |'
-				@$(ECHO) '              | |  '$(GREEN)'    minishell   '$(RED)'     | |'
+				@$(ECHO) '              | |  '$(GREEN)'       21sh     '$(RED)'     | |'
 				@$(ECHO) '              | |  '$(GREEN)$(BLINK)'       C:\>     '$(E0M)$(BOLD)$(RED)'     | |'
 				@$(ECHO) '              | |                       | |'
 				@$(ECHO) '              |  \_____________________/  |'
